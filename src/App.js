@@ -8,6 +8,11 @@ import Inicio from "./Inicio/inicio";
 // Usuario
 import CrearUsuario from "./Usuario/crearUsuario";
 import LoginUsuario from './Usuario/loginUsuario';
+// Admin
+import CrearAdmin from './Usuario/crearAdmin';
+import LoginAdmin from "./Usuario/loginAdmin";
+// Productos
+import ListaProductos from './Productos/listaProductos';
 
 function App() {
   return (
@@ -16,8 +21,11 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Inicio/>}/>
+          <Route path='/crear-admin' element={<CrearAdmin/>}/>
+          <Route path='/login-admin' element={<LoginAdmin/>}/>
           <Route path='/crear-usuario' element={<CrearUsuario/>}/>
           <Route path='/login-usuario' element={<LoginUsuario/>}/>
+          <Route path='/productos' element={<ListaProductos/>}/>
         </Routes>
       </NavbarProvider>
     </BrowserRouter>

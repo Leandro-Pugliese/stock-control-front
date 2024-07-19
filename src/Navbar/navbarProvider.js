@@ -8,7 +8,7 @@ export function useNavbarContext() {
 
 export function NavbarProvider({children}) {
     return (
-        <navbarContext.Provider>
+        <navbarContext.Provider value={{}}>
             {children}
         </navbarContext.Provider>
     )

@@ -2,7 +2,7 @@ import "../App.css"
 import { useState, useEffect } from "react";
 import axios from "../axios"
 
-function LoginUsuario() {
+function LoginAdmin() {
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -13,6 +13,7 @@ function LoginUsuario() {
     // Values de los inputs
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [pin, setPin] = useState("");
 
     // Hooks para guardar y pasar input value al body del post.
     const onChangeEmail = function (evento) {
@@ -21,11 +22,14 @@ function LoginUsuario() {
     const onChangePassword = function (evento) {
         setPassword(evento.target.value);
     };
+    const onChangePin = function (evento) {
+        setPin(evento.target.value);
+    };
 
     // Función para enviar petición a la api.
-    const loginUsuario = async () => {
+    const loginAdmin = async () => {
         try {
-            if (email === "" || password === "") {
+            if (email === "" || password === "" || pin === "") {
                 const msj = "¡Debes completar todos los campos!";
                 setMensaje(msj);
                 setShowErrorMsj(true);
@@ -36,9 +40,9 @@ function LoginUsuario() {
             // Armamos la config de axios para enviar la petición.
             const config = {
                 method: "post",
-                url: "/usuario/login",
+                url: "/admin/login",
                 json: true,
-                data: { email, password },
+                data: { email, password, pin },
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -48,9 +52,9 @@ function LoginUsuario() {
             //console.log(response);
             let data = response.data;
             // Guardamos el token en session storage.
-            sessionStorage.setItem("token", data.token);
+            sessionStorage.setItem("tokenAdmin", data.token);
             // Armamos msj personalizado para el ususario.
-            const msj = `Bienvenido ${data.user.username}`;
+            const msj = `Bienvenido ${data.admin.username}`;
             setMensaje(msj);
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
@@ -79,7 +83,7 @@ function LoginUsuario() {
 
     return (
         <div>
-            <p>Login Usuario</p>
+            <p>Login Admin</p>
             <div>
                 <div className="">
                     <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
@@ -98,7 +102,10 @@ function LoginUsuario() {
                     }
                 </div>
                 <div className="">
-                    <button onClick={loginUsuario}> Ingresar </button>
+                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                </div>
+                <div className="">
+                    <button onClick={loginAdmin}> Ingresar </button>
                 </div>
             </div>
             {(showErrorMsj) &&
@@ -120,4 +127,4 @@ function LoginUsuario() {
     );
 }
 
-export default LoginUsuario;
+export default LoginAdmin;
