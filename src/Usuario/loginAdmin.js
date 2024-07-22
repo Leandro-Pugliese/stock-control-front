@@ -52,7 +52,8 @@ function LoginAdmin() {
             //console.log(response);
             let data = response.data;
             // Guardamos el token en session storage.
-            sessionStorage.setItem("tokenAdmin", data.token);
+            sessionStorage.setItem("token", data.token);
+            sessionStorage.setItem("user", "admin");
             // Armamos msj personalizado para el ususario.
             const msj = `Bienvenido ${data.admin.username}`;
             setMensaje(msj);

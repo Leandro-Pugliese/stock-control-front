@@ -49,12 +49,16 @@ function LoginUsuario() {
             let data = response.data;
             // Guardamos el token en session storage.
             sessionStorage.setItem("token", data.token);
+            sessionStorage.setItem("user", "usuario");
             // Armamos msj personalizado para el ususario.
-            const msj = `Bienvenido ${data.user.username}`;
+            const msj = `Bienvenido ${data.user.username}, iniciaste sesión exitosamente.`;
             setMensaje(msj);
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
             setShowMsj(true);
+            setTimeout(function () {
+                window.location.href = "/"
+              }, 800);
         } catch (error) {
             //console.log(error)
             let msj = error.response.data;

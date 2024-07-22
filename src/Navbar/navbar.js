@@ -8,11 +8,11 @@ function Navbar() {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        setToken(localStorage.getItem("token"));
+        setToken(sessionStorage.getItem("token"));
     }, []);
 
     const logOut = () => {
-        localStorage.clear()
+        sessionStorage.clear();
     }
     // --------------------------------------------
     // Funcion para el menú desplegable.---------------------------------------------
@@ -39,10 +39,26 @@ function Navbar() {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" id="navbarDropdown" onClick={abrirMenu} role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu </a>
                             <ul className={menuVisible} aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="/crear-usuario">Registrarse</a></li>
-                                <li><a className="dropdown-item" href="/login-usuario">Iniciar Sesión</a></li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                {
+                                    (!token) &&
+                                    <li><a className="dropdown-item" href="/crear-usuario"> Registrarse </a></li>
+                                }
+                                {
+                                    (!token) &&
+                                    <li><a className="dropdown-item" href="/login-usuario"> Iniciar Sesión </a></li>
+                                }
+                                {
+                                    (token) &&
+                                    <li><a className="dropdown-item" href="/" onClick={logOut}> Salir </a></li>
+                                }
+                                {
+                                    (token) &&
+                                    <li><hr className="dropdown-divider" /></li>
+                                }
+                                {
+                                    (token) &&
+                                    <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                }
                             </ul>
                         </li>
                     </ul>
