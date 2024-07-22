@@ -1,0 +1,31 @@
+.container__main {
+    display: flex;
+    flex-direction: row;
+}
+.container__general {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    border: solid 0.1rem gray;
+    box-sizing: border-box;
+    border-bottom: none;
+    min-height: 90vh;
+}
+.titulo {
+    margin-left: 0.5rem;
+}
+.producto__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left: 0.5rem;
+    min-height: 40%;
+}
+.producto__stock {
+    display: flex;
+    flex-direction: row;
+}
+.producto__componentes {
+    display: flex;
+    flex-direction: row;
+}

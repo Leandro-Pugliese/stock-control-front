@@ -1,0 +1,21 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    border: solid 0.1rem gray;
+    box-sizing: border-box;
+    border-bottom: none;
+}
+.sidebar h4 {
+    margin-left: 0.3rem;
+}
+.sidebar button {
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    padding-bottom: 0.2rem;
+    margin-top: 0.3rem;
+}
+.sidebar button:hover {
+    background-color: gainsboro;
+}
