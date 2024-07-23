@@ -2,11 +2,13 @@
     display: flex;
     flex-direction: column;
     width: 15%;
-    border: solid 0.1rem gray;
+    min-height: 100%;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
+    border-right: solid 0.1rem rgba(33, 37, 41, 1);
     box-sizing: border-box;
-    border-bottom: none;
 }
 .sidebar h4 {
+    padding-top: 0.2rem;
     margin-left: 0.3rem;
 }
 .sidebar button {

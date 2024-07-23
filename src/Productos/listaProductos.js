@@ -3,21 +3,22 @@ import "./productos.css";
 import { useState, useEffect } from "react";
 import axios from "../axios";
 import Sidebar from "../Sidebar/sidebar";
+import { useNavbarContext } from "../Navbar/navbarProvider";
 
 function ListaProductos() {
 
-    //-------------------------------------------------
-    //Autenticación de sesión.
-    const [token, setToken] = useState(null);
-
+    // Contexto para navbProvider.
+    const navContext = useNavbarContext()
     useEffect(() => {
-        setToken(sessionStorage.getItem("token"));
-    },[])
-
-    const logOut = () => {
-        sessionStorage.clear()
-    }
-    //-------------------------------------------------
+        navContext.cambiarKey("PRODUCTO");
+    // eslint-disable-next-line
+    }, []);
+    
+    // Hooks para mostrar msj al usuario.
+    const [mensaje, setMensaje] = useState("");
+    const [showErrorMsj, setShowErrorMsj] = useState(false);
+    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
+    const [showMsj, setShowMsj] = useState(false);
 
     // Hooks para renderizado de lista de productos o formulario de carga de producto y lista de insumos.
     const [insumos, setInsumos] = useState([]);
@@ -26,10 +27,18 @@ function ListaProductos() {
     const renderProductosLista = () => {
         setShowListaProductos(true);
         setShowCargarProducto(false);
+        setShowProducto(false);
+        setShowErrorMsj(false);
+        setShowErrorMsjPost(false);
+        setShowMsj(false);
     }
     const renderProductosCarga = async() => {
         setShowListaProductos(false);
         setShowCargarProducto(true);
+        setShowProducto(false);
+        setShowErrorMsj(false);
+        setShowErrorMsjPost(false);
+        setShowMsj(false);
         // Pedimos la lista de los insumos para cargar en el producto.
         try {
             // Verifico el tipo de usuario y cargo su token.
@@ -80,14 +89,7 @@ function ListaProductos() {
             setShowErrorMsjPost(true);
             setShowMsj(false);
         }
-        
     }
-
-    // Hooks para mostrar msj al usuario.
-    const [mensaje, setMensaje] = useState("");
-    const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
-    const [showMsj, setShowMsj] = useState(false);
     
     // Hooks para info de la petición.
     const [productos, setProductos] = useState([]);
@@ -158,7 +160,6 @@ function ListaProductos() {
     const [componentes, setComponentes] = useState([]);
     const [categoria, setCategoria] = useState("");
     const [descripcion, setDescripcion] = useState("");
-
     const onChangeSku = function (evento) {
         setSku(evento.target.value);
     };
@@ -168,7 +169,8 @@ function ListaProductos() {
     const onChangeDescripcion = function (evento) {
         setDescripcion(evento.target.value);
     };
-    // Hooks y función para cargr stock.
+
+    // Hooks y función para cargar stock.
     const [stockColor, setStockColor] = useState("");
     const [stockUnidades, setStockUnidades] = useState("");
     const onChangeStockColor = function (evento) {
@@ -211,7 +213,11 @@ function ListaProductos() {
         }
         stockCopia.push(nuevoObjStock);
         setStock(stockCopia);
+        setShowErrorMsj(false);
+        setShowErrorMsjPost(false);
+        setShowMsj(false);
     }
+
     // Hooks y función para cargar componentes.
     const [componenteNombre, setComponenteNombre] = useState("-");
     const [componenteCantidad, setComponenteCantidad] = useState(0);
@@ -256,11 +262,29 @@ function ListaProductos() {
         }
         componentesCopia.push(nuevoObjComponente);
         setComponentes(componentesCopia);
+        setShowErrorMsj(false);
+        setShowErrorMsjPost(false);
+        setShowMsj(false);
     }
 
+    // Eliminar stock / componentes de la lista.
+    const eliminarStock = (color) => {
+        let stockCopia = [...stock];
+        const listaFiltrada = stockCopia.filter((elemento) => elemento.color !== color);
+        setStock(listaFiltrada);
+    }
+    const eliminarComponente = (insumo) => {
+        let componentesCopia = [...componentes];
+        const listaFiltrada = componentesCopia.filter((elemento) => elemento.insumo !== insumo);
+        setComponentes(listaFiltrada);
+    }
+
+    // Hooks y config para crear producto.
+    const [productoCargado, setProductoCargado] = useState({});
+    const [showProducto, setShowProducto] = useState(false);
     const cargarProducto = async () => {
         try {
-            if (sku === "" || categoria === "" || descripcion === "") {
+            if (sku === "" || categoria === "" || descripcion === "" || stock.length === 0 || componentes.length === 0) {
                 const msj = "Debes completar todos los campos.";
                 setMensaje(msj);
                 setShowErrorMsj(true);
@@ -315,7 +339,10 @@ function ListaProductos() {
             const response = await axios(config);
             //console.log(response);
             let data = response.data;
-            console.log(data);
+            setMensaje(data.msj);
+            setShowMsj(true);
+            setProductoCargado(data.producto);
+            setShowProducto(true);
             //console.log(data);
         } catch (error) {
             //console.log(error)
@@ -325,6 +352,18 @@ function ListaProductos() {
             setShowErrorMsjPost(true);
             setShowMsj(false);
         }
+    }
+    const cargarNuevoProducto = () => {
+        setSku("");
+        setStock([])
+        setComponentes([]);
+        setCategoria("");
+        setDescripcion("");
+        setStockColor("");
+        setStockUnidades("");
+        setComponenteNombre("-");
+        setComponenteCantidad(0);
+        setShowProducto(false);
     }
 
     return (
@@ -336,7 +375,7 @@ function ListaProductos() {
             {
                 (showListaProductos) &&
                 <div className="container__general">
-                    <p className="titulo"> Lista Productos </p>
+                    <h3 className="titulo"> Lista Productos </h3>
                     {
                     productos.map((element, index) => (
                         <div className="producto__data" key={index}>
@@ -374,75 +413,118 @@ function ListaProductos() {
             {
                 (showCargarProducto) &&
                 <div className="container__general">
-                    <p className="titulo"> Cargar Producto </p>
-                    <div className="">
-                        <input onChange={onChangeSku} className="" id="skuInput" type="text" placeholder="Sku..."/>
-                    </div>
-                    <div className="">
-                        <input onChange={onChangeCategoria} className="" id="categoriaInput" type="text" placeholder="Categoría..."/>
-                    </div>
-                    <div className="">
-                        <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
-                    </div>
-                    <div className="">
-                        <input onChange={onChangeStockColor} className="" id="colorStockInput" type="text" placeholder="Color..."/>
-                        <input onChange={onChangeStockUnidades} className="" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
-                        <button onClick={addStock}>Agregar al stock</button>
-                        {
-                            (stock.length >= 1) &&
-                            <div>
-                            {
-                                stock.map((elemento, indice) => (
-                                    <div key={indice}>
-                                        <div>{`${elemento.color}(${elemento.unidades})`}</div>
-                                    </div>
-                                ))
-                            }
+                    <h3 className="titulo"> Cargar Producto </h3>
+                    {
+                        (!showProducto) &&
+                        <div>
+                            <div className="">
+                                <input onChange={onChangeSku} className="" id="skuInput" type="text" placeholder="Sku..."/>
                             </div>
-                        }
-                    </div>
-                    <div>
-                        <select onChange={onChangeComponenteNombre} defaultValue="-">
-                            <option value="-">-</option>
-                        {
-                            insumos.map((element, index) => (
-                                <option key={index} value={element.nombre}>
-                                    {element.nombre}
-                                </option>
-                            ))
-                        }
-                        </select>
-                        <input onChange={onChangeComponenteCantidad} className="" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
-                        <button onClick={addComponente}>Agregar componente</button>
-                        {
-                            (componentes.length >= 1) &&
-                            <div>
-                            {
-                                componentes.map((elemento, indice) => (
-                                    <div key={indice}>
-                                        <div>{`${elemento.insumo}(${elemento.cantidad})`}</div>
-                                    </div>
-                                ))
-                            }
+                            <div className="">
+                                <input onChange={onChangeCategoria} className="" id="categoriaInput" type="text" placeholder="Categoría..."/>
                             </div>
-                        }
-                    </div>
-                    <div>
-                        <button onClick={cargarProducto}> CARGAR </button>
-                    </div>
-                    {(showErrorMsj) &&
+                            <div className="">
+                                <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
+                            </div>
+                            <div className="">
+                                <input onChange={onChangeStockColor} className="" id="colorStockInput" type="text" placeholder="Color..."/>
+                                <input onChange={onChangeStockUnidades} className="" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
+                                <button onClick={addStock}>Agregar al stock</button>
+                                {
+                                    (stock.length >= 1) &&
+                                    <div className="lista__items">
+                                    {
+                                        stock.map((elemento, indice) => (
+                                            <div key={indice}>
+                                                {`[${elemento.color}: ${elemento.unidades}]`}
+                                                <button className="x__button" onClick={() => eliminarStock(elemento.color)}>
+                                                    <i className="fa-solid fa-circle-xmark"></i>
+                                                </button>
+                                            </div>
+                                        ))
+                                    }
+                                    </div>
+                                }
+                            </div>
+                            <div>
+                                <select onChange={onChangeComponenteNombre} defaultValue="-">
+                                    <option value="-">-</option>
+                                {
+                                    insumos.map((element, index) => (
+                                        <option key={index} value={element.nombre}>
+                                            {element.nombre}
+                                        </option>
+                                    ))
+                                }
+                                </select>
+                                <input onChange={onChangeComponenteCantidad} className="" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
+                                <button onClick={addComponente}>Agregar componente</button>
+                                {
+                                    (componentes.length >= 1) &&
+                                    <div className="lista__items">
+                                    {
+                                        componentes.map((elemento, indice) => (
+                                            <div key={indice}>
+                                                {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                                <button className="x__button" onClick={() => eliminarComponente(elemento.insumo)}>
+                                                    <i className="fa-solid fa-circle-xmark"></i>
+                                                </button>
+                                            </div>
+                                        ))
+                                    }
+                                    </div>
+                                }
+                            </div>
+                            <div>
+                                <button onClick={cargarProducto}> CARGAR </button>
+                            </div>
+                        </div>
+                    }
+                    {
+                        (showErrorMsj) &&
                         <div>
                             <p>{mensaje}</p>
                         </div>
                     }
-                    {(showMsj) && 
+                    {
+                        (showMsj) && 
                         <div>
                             <p>{mensaje}</p>
                         </div>
                     }
-                    {(showErrorMsjPost) && 
+                    {
+                        (showErrorMsjPost) && 
                         <div>
                             <p>{mensaje}</p>
+                        </div>
+                    }
+                    {
+                        (showProducto) &&
+                        <div className="productoCargado">
+                            <div>SKU: {productoCargado.sku}</div>
+                            <div>Categoría: {productoCargado.categoria}</div>
+                            <div>Descripción: {productoCargado.descripcion}</div>
+                            <div className="lista__items">Stock:
+                                {
+                                    productoCargado.stock.map((elemento, indice) => (
+                                        <div key={indice}>
+                                            {`[${elemento.color}: ${elemento.unidades}]`}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            <div className="lista__items">Componentes:
+                                {
+                                    productoCargado.componentes.map((elemento, indice) => (
+                                        <div key={indice}>
+                                            {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            <div>
+                                <button onClick={cargarNuevoProducto}> CARGAR NUEVO PRODUCTO </button>
+                            </div>
                         </div>
                     }
                 </div>

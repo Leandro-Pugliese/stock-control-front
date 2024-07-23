@@ -13,6 +13,8 @@ import CrearAdmin from './Usuario/crearAdmin';
 import LoginAdmin from "./Usuario/loginAdmin";
 // Productos
 import ListaProductos from './Productos/listaProductos';
+// Footer
+import Footer from './Footer/footer';
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path='/login-usuario' element={<LoginUsuario/>}/>
           <Route path='/productos' element={<ListaProductos/>}/>
         </Routes>
+        <Footer/>
       </NavbarProvider>
     </BrowserRouter>
   );
