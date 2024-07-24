@@ -103,8 +103,8 @@ function CrearUsuario() {
     };
 
     return (
-        <div>
-            <p>Crear Usuario</p>
+        <div className="main__container">
+            <h3>Crear Usuario</h3>
             <div>
                 <div className="">
                     <input onChange={onChangeUsername} className="" id="userInput" type="text" placeholder="Usuario..."/>

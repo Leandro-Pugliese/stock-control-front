@@ -13,6 +13,9 @@ function ListaProductos() {
         navContext.cambiarKey("PRODUCTO");
     // eslint-disable-next-line
     }, []);
+
+    // Contexto para la sidebar
+    const sidebarKey = "LISTA PRODUCTOS";
     
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -364,6 +367,23 @@ function ListaProductos() {
         setComponenteNombre("-");
         setComponenteCantidad(0);
         setShowProducto(false);
+        setShowErrorMsj(false);
+        setShowErrorMsjPost(false);
+        setShowMsj(false);
+    }
+
+    //Funciones para modificar el producto.
+    const modificarStock = async(sku) => {
+        sessionStorage.setItem("skuModificar", sku);
+        window.location.href = "/productos/update-stock"
+    }
+    const modificarComponentes = async(sku) => {
+        sessionStorage.setItem("skuModificar", sku);
+        window.location.href = "/productos/update-componentes"
+    }
+    const modificarCategoria = async(sku) => {
+        sessionStorage.setItem("skuModificar", sku);
+        window.location.href = "/productos/update-categoria"
     }
 
     return (
@@ -371,6 +391,7 @@ function ListaProductos() {
             <Sidebar 
                 renderProductosLista={renderProductosLista}
                 renderProductosCarga={renderProductosCarga}
+                sidebarKey={sidebarKey}
             />
             {
                 (showListaProductos) &&
@@ -379,31 +400,61 @@ function ListaProductos() {
                     {
                     productos.map((element, index) => (
                         <div className="producto__data" key={index}>
-                            <p> SKU: {element.sku} </p>
-                            <div className="producto__stock">
-                                <p> STOCK:</p> 
-                                {
-                                    element.stock.map((elemento, indice) => (
-                                        <div key={indice}> 
-                                            <p> {elemento.color}, ({elemento.unidades}) </p>
-                                        </div>
-                                    ))
-                                }
+                            <div className="data__container">
+                                <div> SKU </div>
+                                <div> {element.sku} </div>
                             </div>
-                            <div className="producto__componentes">
-                                <p> COMPONENTES: </p>
-                                {
-                                    element.componentes.map((elemento, indice) => (
-                                        <div key={indice}> 
-                                            <p> {`${elemento.insumo}(${elemento.cantidad})`} </p>
-                                        </div>
-                                    ))
-                                }
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> STOCK  </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarStock(element.sku)}>Modificar</button>
+                                    </div>
+                                </div> 
+                                <div className="producto__stock">
+                                    {
+                                        element.stock.map((elemento, indice) => (
+                                            <div className="stock__container" key={indice}> 
+                                                {`[${elemento.color}: ${elemento.unidades}]`}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
                             </div>
-                            <p> CATEGORÍA: {element.categoria} </p>
-                            <p> DESCRIPCIÓN: {element.descripcion}</p>
-                            <div>
-                                <hr/>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> COMPONENTES </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarComponentes(element.sku)}>Modificar</button> 
+                                    </div>
+                                </div>
+                                <div className="producto__componentes">
+                                    {
+                                        element.componentes.map((elemento, indice) => (
+                                            <div className="componente__container" key={indice}> 
+                                                {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> CATEGORÍA </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                    </div>
+                                </div> 
+                                <div> {element.categoria} </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> DESCRIPCIÓN </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar">Modificar</button> 
+                                    </div>
+                                </div>
+                                <div>{element.descripcion} </div>
                             </div>
                         </div>
                     ))
@@ -448,7 +499,7 @@ function ListaProductos() {
                             </div>
                             <div>
                                 <select onChange={onChangeComponenteNombre} defaultValue="-">
-                                    <option value="-">-</option>
+                                    <option value="-">Componente...</option>
                                 {
                                     insumos.map((element, index) => (
                                         <option key={index} value={element.nombre}>

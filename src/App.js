@@ -13,6 +13,7 @@ import CrearAdmin from './Usuario/crearAdmin';
 import LoginAdmin from "./Usuario/loginAdmin";
 // Productos
 import ListaProductos from './Productos/listaProductos';
+import UpdateStock from "./Productos/updateStockProducto";
 // Footer
 import Footer from './Footer/footer';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/crear-usuario' element={<CrearUsuario/>}/>
           <Route path='/login-usuario' element={<LoginUsuario/>}/>
           <Route path='/productos' element={<ListaProductos/>}/>
+          <Route path='/productos/update-stock' element={<UpdateStock/>}/>
         </Routes>
         <Footer/>
       </NavbarProvider>

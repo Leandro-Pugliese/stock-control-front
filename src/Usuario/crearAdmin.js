@@ -1,4 +1,5 @@
-import "../App.css"
+import "../App.css";
+import "./usuario.css";
 import { useState, useEffect } from "react";
 import axios from "../axios"
 
@@ -130,8 +131,8 @@ function CrearAdmin() {
     };
 
     return (
-        <div>
-            <p>Crear Admin</p>
+        <div className="main__container">
+            <h3>Crear Admin</h3>
             <div>
                 <div className="">
                     <input onChange={onChangeUsername} className="" id="userInput" type="text" placeholder="Usuario..."/>
