@@ -5,7 +5,7 @@ import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 
-function UpdateStock() {
+function UpdateComponentes() {
 
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -25,9 +25,9 @@ function UpdateStock() {
 
     // Hooks para value inputs
     const [sku, setSku] = useState("");
-    const [stock, setStock] = useState([]);
+    const [componentes, setComponentes] = useState([]);
     const [operacion, setOperacion] = useState("-");
-    const [color, setColor] = useState("");
+    const [insumo, setInsumo] = useState("");
     const [cantidad, setCantidad] = useState(0);
     
     //Obtenemos el sku del storage antes de buscar el producto para ver su stock.
@@ -40,23 +40,75 @@ function UpdateStock() {
         setSkuData();
     }, []);
     useEffect(() => {
-        productoData()
-    // eslint-disable-next-line
+        productoData();
+        insumos();
+        // eslint-disable-next-line
     }, [skuCargado]);
+
+    // Traemos la lista de insumos para usarla en el select.
+    const [insumosLista, setInsumosLista] = useState([]);
+    const insumos = async() => {
+        try {
+            // Verifico el tipo de usuario y cargo su token.
+            const user = sessionStorage.getItem("user");
+            const tokenAxios = sessionStorage.getItem("token");
+            let config = {};
+            // Armamos la config de axios para enviar la petición (varía si es un usuario o un administrador).
+            if (user === "usuario") {
+                config = {
+                    method: "get",
+                    url: "/insumos",
+                    json: true,
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": tokenAxios,
+                    },
+                };
+            } else if (user === "admin") {
+                config = {
+                    method: "get",
+                    url: "/insumos-admin",
+                    json: true,
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": tokenAxios,
+                    },
+                };
+                
+            } else {
+                const msj = `Error: No se detecto el formato de usuario.`;
+                setMensaje(msj);
+                setShowErrorMsj(true);
+                setShowErrorMsjPost(false);
+                setShowMsj(true);
+                return
+            }
+            // llamado axios con la config lista.
+            const response = await axios(config);
+            let data = response.data;
+            setInsumosLista(data);
+        } catch (error) {
+            let msj = error.response.data;
+            setMensaje(msj);
+            setShowErrorMsj(false);
+            setShowErrorMsjPost(true);
+            setShowMsj(false);
+        }
+    }
 
     const onChangeOperacion = function (evento) {
         setOperacion(evento.target.value);
     };
-    const onChangeColor = function (evento) {
-        let colorEnMayusculas = evento.target.value.toUpperCase()
-        setColor(colorEnMayusculas);
+    const onChangeInsumo = function (evento) {
+        let insumoEnMayusculas = evento.target.value.toUpperCase()
+        setInsumo(insumoEnMayusculas);
     };
     const onChangeCantidad = function (evento) {
         let num = Number(evento.target.value);
         setCantidad(num);
     };
 
-    //Data del producto para ver stock.
+    //Data del producto para ver los componentes.
     const productoData = async () => {
         try {
             // Atajamos el error cuando se ejecuta la primera vez, por si no llega a cargar el sku antes de enviar la petición.
@@ -101,7 +153,7 @@ function UpdateStock() {
             // llamado axios con la config lista.
             const response = await axios(config);
             let data = response.data;
-            setStock(data.stock)
+            setComponentes(data.componentes);
         } catch (error) {
             let msj = error.response.data;
             setMensaje(msj);
@@ -111,12 +163,11 @@ function UpdateStock() {
         }
     } 
     
-
     // Update del producto.
     const [anularBoton, setAnularBoton] = useState(false);
-    const updateStock = async () => {
+    const updateComponentes = async () => {
         try {
-            if (operacion === "-" || color === "") {
+            if (operacion === "-" || insumo === "") {
                 const msj = "Debes completar todos los campos.";
                 setMensaje(msj);
                 setShowErrorMsj(true);
@@ -140,9 +191,9 @@ function UpdateStock() {
             if (user === "usuario") {
                 config = {
                     method: "put",
-                    url: "/producto/update-stock",
+                    url: "/producto/update-componentes",
                     json: true,
-                    data: {sku, operacion, color, cantidad},
+                    data: {sku, operacion, insumo, cantidad},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -151,9 +202,9 @@ function UpdateStock() {
             } else if (user === "admin") {
                 config = {
                     method: "put",
-                    url: "/producto/update-stock-admin",
+                    url: "/producto/update-componentes-admin",
                     json: true,
-                    data: {sku, operacion, color, cantidad},
+                    data: {sku, operacion, insumo, cantidad},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -193,13 +244,13 @@ function UpdateStock() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Stock Producto</h3>
+                <h3>Modificar Componentes Producto</h3>
                 <div>Sku: {sku}</div> 
                 <div className="stock__lista">
-                    <div>Stock: </div>
-                    {stock.map((elemento, indice) => (
+                    <div>Componentes: </div>
+                    {componentes.map((elemento, indice) => (
                         <div className="stock__object" key={indice}>
-                            {`[${elemento.color}: ${elemento.unidades}]`}
+                            {`[${elemento.insumo}: ${elemento.cantidad}]`}
                         </div>
                     ))}
                 </div>
@@ -211,7 +262,16 @@ function UpdateStock() {
                     </select>
                 </div>
                 <div className="">
-                    <input onChange={onChangeColor} className="" id="colorInput" type="text" placeholder="Color..."/>
+                    <select onChange={onChangeInsumo} defaultValue="-">
+                        <option value="-">Componente...</option>
+                        {
+                            insumosLista.map((elemento, indice) => (
+                                <option key={indice} value={elemento.nombre}>
+                                    {elemento.nombre}
+                                </option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <div className="">
                     <input onChange={onChangeCantidad} className="" id="cantidadInput" type="number" placeholder="Cantidad..."/>
@@ -219,10 +279,9 @@ function UpdateStock() {
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button onClick={updateStock}> Aceptar </button>
+                        <button onClick={updateComponentes}> Aceptar </button>
                     </div>
                 }
-                
                 {
                     (showErrorMsj) &&
                     <div>
@@ -246,4 +305,4 @@ function UpdateStock() {
     );
 }
 
-export default UpdateStock;
+export default UpdateComponentes;

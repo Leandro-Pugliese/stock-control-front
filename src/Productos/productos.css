@@ -80,3 +80,13 @@
     justify-content: center;
     align-items: left;
 }
+
+/* UPDATE STOCK */
+.stock__lista {
+    display: flex;
+    margin-bottom: 1rem;
+}
+.stock__object {
+    margin-left: 0.5rem;
+}
+

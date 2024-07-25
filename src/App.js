@@ -14,6 +14,8 @@ import LoginAdmin from "./Usuario/loginAdmin";
 // Productos
 import ListaProductos from './Productos/listaProductos';
 import UpdateStock from "./Productos/updateStockProducto";
+import UpdateComponentes from './Productos/updateComponentes';
+import UpdateCategoria from './Productos/updateCategoria';
 // Footer
 import Footer from './Footer/footer';
 
@@ -30,6 +32,8 @@ function App() {
           <Route path='/login-usuario' element={<LoginUsuario/>}/>
           <Route path='/productos' element={<ListaProductos/>}/>
           <Route path='/productos/update-stock' element={<UpdateStock/>}/>
+          <Route path='/productos/update-componentes' element={<UpdateComponentes/>}/>
+          <Route path='/productos/update-categoria' element={<UpdateCategoria/>}/>
         </Routes>
         <Footer/>
       </NavbarProvider>

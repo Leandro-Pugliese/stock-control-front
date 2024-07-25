@@ -451,7 +451,7 @@ function ListaProductos() {
                                 <div className="container__dataFija">
                                     <div className="dataFija__titulo"> DESCRIPCIÓN </div>
                                     <div className="dataFija__boton">
-                                        <button className="boton__modificar">Modificar</button> 
+                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
                                     </div>
                                 </div>
                                 <div>{element.descripcion} </div>

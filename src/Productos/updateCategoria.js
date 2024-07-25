@@ -5,7 +5,7 @@ import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 
-function UpdateStock() {
+function UpdateCategoria() {
 
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -25,10 +25,8 @@ function UpdateStock() {
 
     // Hooks para value inputs
     const [sku, setSku] = useState("");
-    const [stock, setStock] = useState([]);
-    const [operacion, setOperacion] = useState("-");
-    const [color, setColor] = useState("");
-    const [cantidad, setCantidad] = useState(0);
+    const [categoria, setCategoria] = useState("");
+    const [descripcion, setDescripcion] = useState("");
     
     //Obtenemos el sku del storage antes de buscar el producto para ver su stock.
     const [skuCargado, setSkuCargado] = useState(false);
@@ -40,23 +38,18 @@ function UpdateStock() {
         setSkuData();
     }, []);
     useEffect(() => {
-        productoData()
-    // eslint-disable-next-line
+        productoData();
+        // eslint-disable-next-line
     }, [skuCargado]);
 
-    const onChangeOperacion = function (evento) {
-        setOperacion(evento.target.value);
+    const onChangeCategoria = function (evento) {
+        setCategoria(evento.target.value);
     };
-    const onChangeColor = function (evento) {
-        let colorEnMayusculas = evento.target.value.toUpperCase()
-        setColor(colorEnMayusculas);
+    const onChangeDescripcion = function (evento) {
+        setDescripcion(evento.target.value);
     };
-    const onChangeCantidad = function (evento) {
-        let num = Number(evento.target.value);
-        setCantidad(num);
-    };
-
-    //Data del producto para ver stock.
+    
+    //Data del producto para ver descripción y categoría.
     const productoData = async () => {
         try {
             // Atajamos el error cuando se ejecuta la primera vez, por si no llega a cargar el sku antes de enviar la petición.
@@ -101,7 +94,8 @@ function UpdateStock() {
             // llamado axios con la config lista.
             const response = await axios(config);
             let data = response.data;
-            setStock(data.stock)
+            setCategoria(data.categoria);
+            setDescripcion(data.descripcion);
         } catch (error) {
             let msj = error.response.data;
             setMensaje(msj);
@@ -111,21 +105,12 @@ function UpdateStock() {
         }
     } 
     
-
     // Update del producto.
-    const [anularBoton, setAnularBoton] = useState(false);
-    const updateStock = async () => {
+    const [anularBoton, setAnularBoton] = useState(true);
+    const updateCategoria = async () => {
         try {
-            if (operacion === "-" || color === "") {
+            if (categoria === "" || descripcion === "") {
                 const msj = "Debes completar todos los campos.";
-                setMensaje(msj);
-                setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(false);
-                return
-            }
-            if (cantidad <= 0) {
-                const msj = "La cantidad no puede ser menor o igual a 0.";
                 setMensaje(msj);
                 setShowErrorMsj(true);
                 setShowErrorMsjPost(false);
@@ -140,9 +125,9 @@ function UpdateStock() {
             if (user === "usuario") {
                 config = {
                     method: "put",
-                    url: "/producto/update-stock",
+                    url: "/producto/update-categoria",
                     json: true,
-                    data: {sku, operacion, color, cantidad},
+                    data: {sku, categoria, descripcion},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -151,9 +136,9 @@ function UpdateStock() {
             } else if (user === "admin") {
                 config = {
                     method: "put",
-                    url: "/producto/update-stock-admin",
+                    url: "/producto/update-categoria-admin",
                     json: true,
-                    data: {sku, operacion, color, cantidad},
+                    data: {sku, categoria, descripcion},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -187,42 +172,68 @@ function UpdateStock() {
         }
     } 
 
+    // Botones para modifcar solo lo que necesites.
+    const [modCategoria, setModCatategoria] = useState(false);
+    const [modDescripcion, setModDescripcion] = useState(false);
+    const habilitarModificarInput = (inputTipo) => {
+        if (inputTipo === "Categoria") {
+            setModCatategoria(prevState => !prevState);
+            setCategoria("");
+            setAnularBoton(false); // Solo muestro el boton para hacer el update si el ususario quiere modificar algo.
+        } else if (inputTipo === "Descripcion") {
+            setModDescripcion(prevState => !prevState);
+            setDescripcion("");
+            setAnularBoton(false); 
+        }
+    }
+
     return (
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Stock Producto</h3>
+                <h3>Modificar Categoría y Descripción Producto</h3>
                 <div>Sku: {sku}</div> 
-                <div className="stock__lista">
-                    <div>Stock: </div>
-                    {stock.map((elemento, indice) => (
-                        <div className="stock__object" key={indice}>
-                            {`[${elemento.color}: ${elemento.unidades}]`}
+                <div className="">
+                    {
+                        (!modCategoria) &&
+                        <div>
+                            Categoría: {categoria}
+                            <button onClick={() => habilitarModificarInput("Categoria")}>Modificar</button>
                         </div>
-                    ))}
+                    }
+                    
                 </div>
+                {
+                    (modCategoria) &&
+                    <div className="">
+                        <input onChange={onChangeCategoria} className="" id="categoriaInput" type="text" placeholder="Categoría..."/>
+                    </div>
+                }
                 <div className="">
-                    <select onChange={onChangeOperacion} defaultValue="-">
-                        <option value="-">Operación...</option>
-                        <option value="ADD">Agregar</option>
-                        <option value="REMOVE">Quitar</option>
-                    </select>
+                    
+                    {
+                        (!modDescripcion) &&
+                        <div>
+                            Descripción: {descripcion}
+                            <button onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                        </div>
+                    }
                 </div>
-                <div className="">
-                    <input onChange={onChangeColor} className="" id="colorInput" type="text" placeholder="Color..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeCantidad} className="" id="cantidadInput" type="number" placeholder="Cantidad..."/>
-                </div>
+                {
+                    (modDescripcion) &&
+                    <div className="">
+                        <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
+                    </div>
+                }
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button onClick={updateStock}> Aceptar </button>
+                        <button onClick={updateCategoria}> Aceptar </button>
+                        <button onClick={() => window.location.reload()}> Atras </button>
                     </div>
                 }
-                
                 {
                     (showErrorMsj) &&
                     <div>
@@ -246,4 +257,4 @@ function UpdateStock() {
     );
 }
 
-export default UpdateStock;
+export default UpdateCategoria;
