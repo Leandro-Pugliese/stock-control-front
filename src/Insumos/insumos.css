@@ -1,0 +1,17 @@
+.container__main {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 auto;
+}
+.container__general {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
+    padding-top: 0.3rem;
+    padding-left: 0.5rem;
+    box-sizing: border-box;
+}
+.titulo {
+    margin-left: 0.5rem;
+}

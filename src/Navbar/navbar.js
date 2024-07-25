@@ -65,13 +65,13 @@ function Navbar() {
                                 }
                                 {
                                     (token && navContext.productoKey) &&
-                                    <li><a className="dropdown-item" href="#"> Insumos </a></li>
+                                    <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
                                 }
                                 {
                                     (token && navContext.allKey) &&
                                     <div>
                                         <li><a className="dropdown-item" href="/productos"> Productos </a></li>
-                                        <li><a className="dropdown-item" href="#"> Insumos </a></li>
+                                        <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
                                     </div>
                                 }
                             </ul>

@@ -1,21 +1,20 @@
 import "../App.css";
-import "./productos.css";
+import "./insumos.css";
 import { React, useState, useEffect} from "react";
-import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
+import axios from "../axios"
 
-function UpdateCategoria() {
+function UpdateInsumo() {
 
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
-        navContext.cambiarKey("PRODUCTO");
-    // eslint-disable-next-line
+        navContext.cambiarKey("INSUMO");
     }, []);
 
-    // Contexto para la sidebar
-    const sidebarKey = "UPDATE PRODUCTO";
+    // Contexto para la sidebar.
+    const sidebarKey = "UPDATE INSUMO";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -23,37 +22,31 @@ function UpdateCategoria() {
     const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
-    // Hooks para value inputs
-    const [sku, setSku] = useState("");
-    const [categoria, setCategoria] = useState("");
+    // Values de los inputs
+    const [nombre, setNombre] = useState("");
+    const [precio, setPrecio] = useState(0);
     const [descripcion, setDescripcion] = useState("");
-    
-    //Obtenemos el sku del storage antes de buscar el producto para ver su stock.
-    const [skuCargado, setSkuCargado] = useState(false);
-    const setSkuData = () => {
-        setSku(sessionStorage.getItem("skuModificar"));
-        setSkuCargado(true)
+
+    //Obtenemos el ID del storage antes de buscar el insumo.
+    const [_id, setId] = useState("");
+    const [idCargado, setIdCargado] = useState(false);
+    const getIdData = () => {
+        setId(sessionStorage.getItem("insumoID"));
+        setIdCargado(true)
     }
     useEffect(() => {
-        setSkuData();
+        getIdData();
     }, []);
     useEffect(() => {
-        productoData();
+        insumoData();
         // eslint-disable-next-line
-    }, [skuCargado]);
+    }, [idCargado]);
 
-    const onChangeCategoria = function (evento) {
-        setCategoria(evento.target.value);
-    };
-    const onChangeDescripcion = function (evento) {
-        setDescripcion(evento.target.value);
-    };
-    
     //Data del producto para ver descripción y categoría.
-    const productoData = async () => {
+    const insumoData = async () => {
         try {
-            // Atajamos el error cuando se ejecuta la primera vez, por si no llega a cargar el sku antes de enviar la petición.
-            if (sku === "") {
+            // Atajamos el error cuando se ejecuta la primera vez, por si no llega a cargar el id antes de enviar la petición.
+            if (_id === "") {
                 return
             }
             // Verifico el tipo de usuario y cargo su token.
@@ -64,9 +57,9 @@ function UpdateCategoria() {
             if (user === "usuario") {
                 config = {
                     method: "post",
-                    url: "/producto",
+                    url: "/insumo",
                     json: true,
-                    data: {sku},
+                    data: {_id},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -75,9 +68,9 @@ function UpdateCategoria() {
             } else if (user === "admin") {
                 config = {
                     method: "post",
-                    url: "/producto-admin",
+                    url: "/insumo-admin",
                     json: true,
-                    data: {sku},
+                    data: {_id},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -94,7 +87,8 @@ function UpdateCategoria() {
             // llamado axios con la config lista.
             const response = await axios(config);
             let data = response.data;
-            setCategoria(data.categoria);
+            setNombre(data.nombre)
+            setPrecio(data.precio);
             setDescripcion(data.descripcion);
         } catch (error) {
             let msj = error.response.data;
@@ -104,13 +98,31 @@ function UpdateCategoria() {
             setShowMsj(false);
         }
     } 
-    
-    // Update del producto.
+
+    // Hooks para guardar y pasar input value.
+    const onChangePrecio = function (evento) {
+        let num = Number(evento.target.value);
+        setPrecio(num);
+    };
+    const onChangeDescripcion = function (evento) {
+        setDescripcion(evento.target.value);
+    };
+
+    // Update insumo.
     const [anularBoton, setAnularBoton] = useState(true);
-    const updateCategoria = async () => {
+    const [anularBotonesModificar, setAnularBotonesModificar] = useState(false);
+    const updateInsumo = async () => {
         try {
-            if (categoria === "" || descripcion === "") {
+            if (descripcion === "") {
                 const msj = "Debes completar todos los campos.";
+                setMensaje(msj);
+                setShowErrorMsj(true);
+                setShowErrorMsjPost(false);
+                setShowMsj(false);
+                return
+            }
+            if (precio <= 0) {
+                const msj = "El precio no puede ser menor o igual a cero.";
                 setMensaje(msj);
                 setShowErrorMsj(true);
                 setShowErrorMsjPost(false);
@@ -125,9 +137,9 @@ function UpdateCategoria() {
             if (user === "usuario") {
                 config = {
                     method: "put",
-                    url: "/producto/update-categoria",
+                    url: "/insumo/update",
                     json: true,
-                    data: {sku, categoria, descripcion},
+                    data: {_id ,precio, descripcion},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -136,9 +148,9 @@ function UpdateCategoria() {
             } else if (user === "admin") {
                 config = {
                     method: "put",
-                    url: "/producto/update-categoria-admin",
+                    url: "/insumo/update-admin",
                     json: true,
-                    data: {sku, categoria, descripcion},
+                    data: {_id, precio, descripcion},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -156,13 +168,14 @@ function UpdateCategoria() {
             const response = await axios(config);
             let data = response.data;
             setMensaje(data);
+            setShowMsj(true);
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
-            setShowMsj(true);
             setAnularBoton(true);
+            setAnularBotonesModificar(true);
             setTimeout(function () {
-                window.location.href = "/productos"
-              }, 1000);
+                window.location.href = "/insumos"
+              }, 800);
         } catch (error) {
             let msj = error.response.data;
             setMensaje(msj);
@@ -170,15 +183,15 @@ function UpdateCategoria() {
             setShowErrorMsjPost(true);
             setShowMsj(false);
         }
-    } 
+    }
 
     // Botones para modifcar solo lo que necesites.
-    const [modCategoria, setModCatategoria] = useState(false);
+    const [modPrecio, setModPrecio] = useState(false);
     const [modDescripcion, setModDescripcion] = useState(false);
     const habilitarModificarInput = (inputTipo) => {
-        if (inputTipo === "Categoria") {
-            setModCatategoria(prevState => !prevState);
-            setCategoria("");
+        if (inputTipo === "Precio") {
+            setModPrecio(prevState => !prevState);
+            setPrecio(0);
             setAnularBoton(false); // Solo muestro el boton para hacer el update si el ususario quiere modificar algo.
         } else if (inputTipo === "Descripcion") {
             setModDescripcion(prevState => !prevState);
@@ -193,29 +206,37 @@ function UpdateCategoria() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Categoría y Descripción Producto</h3>
-                <div>Sku: {sku}</div> 
-                <div className="">
+                <h3 className="titulo"> Modificar Insumo </h3>
+                    <div>Insumo: {nombre}</div>
+                    <div className="">
                     {
-                        (!modCategoria) &&
+                        (!modPrecio) &&
                         <div>
-                            Categoría: {categoria}
-                            <button onClick={() => habilitarModificarInput("Categoria")}>Modificar</button>
+                            Precio: ${precio}
+                            {
+                                (!anularBotonesModificar) &&
+                                <button onClick={() => habilitarModificarInput("Precio")}>Modificar</button>
+                            }
+                            
                         </div>
                     }
-                </div>
-                {
-                    (modCategoria) &&
-                    <div className="">
-                        <input onChange={onChangeCategoria} className="" id="categoriaInput" type="text" placeholder="Categoría..."/>
                     </div>
-                }
-                <div className="">
+                    {
+                        (modPrecio) &&
+                        <div className="">
+                            <input onChange={onChangePrecio} className="" id="precioInput" type="number" placeholder="Precio..."/>
+                        </div>
+                    }
+                    <div className="">
                     {
                         (!modDescripcion) &&
                         <div>
                             Descripción: {descripcion}
-                            <button onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                            {
+                                (!anularBotonesModificar) &&
+                                <button onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                            }
+                            
                         </div>
                     }
                 </div>
@@ -228,7 +249,7 @@ function UpdateCategoria() {
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button onClick={updateCategoria}> Aceptar </button>
+                        <button onClick={updateInsumo}> Aceptar </button>
                         <button onClick={() => window.location.reload()}> Atras </button>
                     </div>
                 }
@@ -255,4 +276,4 @@ function UpdateCategoria() {
     );
 }
 
-export default UpdateCategoria;
+export default UpdateInsumo;
