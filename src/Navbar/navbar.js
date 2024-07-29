@@ -1,8 +1,12 @@
-import "../App.css"
+import "../App.css";
 import { React, useState, useEffect} from "react";
+import { useNavbarContext } from "./navbarProvider";
 
 
 function Navbar() {
+    // Contexto para navbProvider.
+    const navContext = useNavbarContext();
+
     // --------------------------------------------
     // Recupero del token para corroboración de sesión para la navbar.
     const [token, setToken] = useState(null);
@@ -56,8 +60,19 @@ function Navbar() {
                                     <li><hr className="dropdown-divider" /></li>
                                 }
                                 {
-                                    (token) &&
+                                    (token && navContext.insumoKey) &&
                                     <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                }
+                                {
+                                    (token && navContext.productoKey) &&
+                                    <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                }
+                                {
+                                    (token && navContext.allKey) &&
+                                    <div>
+                                        <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                        <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                    </div>
                                 }
                             </ul>
                         </li>

@@ -83,8 +83,8 @@ function LoginAdmin() {
     };
 
     return (
-        <div>
-            <p>Login Admin</p>
+        <div className="main__container">
+            <h3>Login Admin</h3>
             <div>
                 <div className="">
                     <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>

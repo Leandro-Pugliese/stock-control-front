@@ -1,0 +1,92 @@
+.container__main {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 auto;
+}
+.container__general {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
+    padding-top: 0.3rem;
+    padding-left: 0.5rem;
+    box-sizing: border-box;
+}
+.titulo {
+    margin-left: 0.5rem;
+}
+.producto__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.3rem;
+    padding: 0.5rem;
+    border: double 0.2rem rgba(33, 37, 41, 1);
+    background-color: rgba(128, 128, 128, 0.25) ;
+}
+.data__container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.1rem 0.2rem;
+    margin: 0.2rem 0rem;
+    background-color: rgba(128, 128, 128, 0.5);
+    border: solid 0.1rem rgba(128, 128, 128, 0.5);
+    border-radius: 0.2rem;
+}
+.container__dataFija {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.dataFija__titulo {
+    width: 50%;
+}
+.dataFija__boton {
+    display: flex;
+    justify-content: right;
+    width: 50%;
+}
+.boton__modificar {
+    margin: 0rem 0.2rem;
+    padding: 0rem 0.2rem;
+    background-color: gainsboro;
+    border: solid 0.1rem gainsboro;
+    border-radius: 0.3rem;
+}
+.producto__stock {
+    display: flex;
+    flex-direction: row;
+}
+.producto__componentes {
+    display: flex;
+    flex-direction: row;
+}
+.lista__items {
+   display: flex;
+   flex-direction: row;
+}
+.x__button {
+    background-color: transparent;
+    border: none;
+    margin-right: 0.4rem;
+    padding: 0;
+    padding-left: 0.1rem;
+}
+.productoCargado {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+/* UPDATE STOCK */
+.stock__lista {
+    display: flex;
+    margin-bottom: 1rem;
+}
+.stock__object {
+    margin-left: 0.5rem;
+}
+

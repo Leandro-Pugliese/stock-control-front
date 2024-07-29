@@ -1,0 +1,41 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    min-height: 100%;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
+    border-right: solid 0.1rem rgba(33, 37, 41, 1);
+    box-sizing: border-box;
+}
+.container__botones {
+    display: flex;
+    flex-direction: column;
+}
+.sidebar h4 {
+    padding-top: 0.2rem;
+    margin-left: 0.3rem;
+}
+.sidebar button {
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    padding-bottom: 0.2rem;
+    padding-left: 0.35rem;
+    margin-top: 0.3rem;
+}
+.sidebar button:hover {
+    background-color: gainsboro;
+}
+.sidebar a {
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    padding-left: 0.4rem;
+    padding-bottom: 0.2rem;
+    margin-top: 0.3rem;
+    text-decoration: none;
+    color: black;
+}
+.sidebar a:hover {
+    background-color: gainsboro;
+}

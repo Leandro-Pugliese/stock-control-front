@@ -82,8 +82,8 @@ function LoginUsuario() {
     };
 
     return (
-        <div>
-            <p>Login Usuario</p>
+        <div className="main__container">
+            <h3>Login Usuario</h3>
             <div>
                 <div className="">
                     <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
