@@ -3,7 +3,8 @@ import "./insumos.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
-import axios from "../axios"
+import axios from "../axios";
+import Mensajes from "../Componentes/mensajes";
 
 function ListaInsumos() {
 
@@ -103,6 +104,12 @@ function ListaInsumos() {
                     ))
                 }
             </div>
+            <Mensajes 
+                mensaje={mensaje}
+                showMsj={showMsj}
+                showErrorMsj={showErrorMsj}
+                showErrorMsjPost={showErrorMsjPost}
+            />
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "../axios";
 import Sidebar from "../Sidebar/sidebar";
 import { useNavbarContext } from "../Navbar/navbarProvider";
+import Mensajes from "../Componentes/mensajes";
 
 function ListaProductos() {
 
@@ -531,24 +532,12 @@ function ListaProductos() {
                             </div>
                         </div>
                     }
-                    {
-                        (showErrorMsj) &&
-                        <div>
-                            <p>{mensaje}</p>
-                        </div>
-                    }
-                    {
-                        (showMsj) && 
-                        <div>
-                            <p>{mensaje}</p>
-                        </div>
-                    }
-                    {
-                        (showErrorMsjPost) && 
-                        <div>
-                            <p>{mensaje}</p>
-                        </div>
-                    }
+                    <Mensajes 
+                        mensaje={mensaje}
+                        showMsj={showMsj}
+                        showErrorMsj={showErrorMsj}
+                        showErrorMsjPost={showErrorMsjPost}
+                    />
                     {
                         (showProducto) &&
                         <div className="productoCargado">

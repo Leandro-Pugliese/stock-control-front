@@ -1,6 +1,9 @@
 import "../App.css";
+import "./usuario.css";
 import { useState, useEffect } from "react";
 import axios from "../axios";
+import Mensajes from "../Componentes/mensajes";
+import ShowPassword from "../Componentes/verPassword";
 
 
 function CrearUsuario() {
@@ -112,18 +115,13 @@ function CrearUsuario() {
                 <div className="">
                     <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
-                <div className="">
+                <div className="showPassword__container">
                     <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
-                    {(botonShowPassword) && 
-                        <button className="eyeButton" onClick={verPassword}>
-                            <i className="fa-solid fa-eye"></i>
-                        </button>
-                    }
-                    {(!botonShowPassword) && 
-                        <button className="eyeButton" onClick={hidePassword}>
-                            <i className="fa-solid fa-eye-slash"></i>
-                        </button>
-                    }
+                    <ShowPassword 
+                        botonShowPassword={botonShowPassword}
+                        verPassword={verPassword}
+                        hidePassword={hidePassword}
+                    />
                 </div>
                 <div className="">
                     <input onChange={onChangePassword2} className="" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
@@ -135,21 +133,12 @@ function CrearUsuario() {
                     <button onClick={crearUsuario}> Registrar </button>
                 </div>
             </div>
-            {(showErrorMsj) &&
-                <div>
-                    <p>{mensaje}</p>
-                </div>
-            }
-            {(showMsj) && 
-                <div>
-                    <p>{mensaje}</p>
-                </div>
-            }
-            {(showErrorMsjPost) && 
-                <div>
-                    <p>{mensaje}</p>
-                </div>
-            }
+            <Mensajes 
+                mensaje={mensaje}
+                showMsj={showMsj}
+                showErrorMsj={showErrorMsj}
+                showErrorMsjPost={showErrorMsjPost}
+            />
         </div>
     );
 }

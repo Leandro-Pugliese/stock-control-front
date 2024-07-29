@@ -11,6 +11,9 @@ import LoginUsuario from './Usuario/loginUsuario';
 // Admin
 import CrearAdmin from './Usuario/crearAdmin';
 import LoginAdmin from "./Usuario/loginAdmin";
+import ListaUsuarios from './Usuario/listaUsuarios';
+import HabilitarUsuario from './Usuario/habilitarUsuario';
+import BorrarUsuario from './Usuario/borrarUsuario';
 // Productos
 import ListaProductos from './Productos/listaProductos';
 import UpdateStock from "./Productos/updateStockProducto";
@@ -31,9 +34,13 @@ function App() {
         <Routes>
           {/* Inicio */}
           <Route path='/' element={<Inicio/>}/>
-          {/* Usuarios */}
+          {/* Admin */}
           <Route path='/crear-admin' element={<CrearAdmin/>}/>
           <Route path='/login-admin' element={<LoginAdmin/>}/>
+          <Route path='/admin/lista-usuarios' element={<ListaUsuarios/>}/>
+          <Route path='/admin/habilitar-usuario' element={<HabilitarUsuario/>}/>
+          <Route path='/admin/borrar-usuario' element={<BorrarUsuario/>}/>
+          {/* Usuario */}
           <Route path='/crear-usuario' element={<CrearUsuario/>}/>
           <Route path='/login-usuario' element={<LoginUsuario/>}/>
           {/* Productos */}

@@ -4,6 +4,7 @@ import { React, useState, useEffect} from "react";
 import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
+import Mensajes from "../Componentes/mensajes";
 
 function UpdateCategoria() {
 
@@ -232,24 +233,12 @@ function UpdateCategoria() {
                         <button onClick={() => window.location.reload()}> Atras </button>
                     </div>
                 }
-                {
-                    (showErrorMsj) &&
-                    <div>
-                        <p>{mensaje}</p>
-                    </div>
-                }
-                {
-                    (showMsj) &&
-                    <div>
-                        <p>{mensaje}</p>
-                    </div>
-                }
-                {
-                    (showErrorMsjPost) &&
-                    <div>
-                        <p>{mensaje}</p>
-                    </div>
-                }
+                <Mensajes 
+                    mensaje={mensaje}
+                    showMsj={showMsj}
+                    showErrorMsj={showErrorMsj}
+                    showErrorMsjPost={showErrorMsjPost}
+                />
             </div>
         </div>
     );
