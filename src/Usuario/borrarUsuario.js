@@ -62,6 +62,9 @@ function BorrarUsuario() {
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
             setShowMsj(true);
+            setTimeout(function () {
+                window.location.href = "/admin/lista-usuarios"
+            }, 1200);
         } catch (error) {
             let msj = error.response.data;
             setMensaje(msj);

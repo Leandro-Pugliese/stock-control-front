@@ -69,6 +69,10 @@ function Navbar() {
                                             (user === "admin") &&
                                             <li><a className="dropdown-item" href="/admin/lista-usuarios"> Usuarios </a></li>
                                         }
+                                        {
+                                            (user === "usuario") &&
+                                            <li><a className="dropdown-item" href="/usuario/update-password"> Mod. Contraseña </a></li>
+                                        }
                                     </div>
                                 }
                                 {
@@ -78,6 +82,10 @@ function Navbar() {
                                         {
                                             (user === "admin") &&
                                             <li><a className="dropdown-item" href="/admin/lista-usuarios"> Usuarios </a></li>
+                                        }
+                                        {
+                                            (user === "usuario") &&
+                                            <li><a className="dropdown-item" href="/usuario/update-password"> Mod. Contraseña </a></li>
                                         }
                                     </div>
                                 }
@@ -90,10 +98,21 @@ function Navbar() {
                                             (user === "admin") &&
                                             <li><a className="dropdown-item" href="admin/lista-usuarios"> Usuarios </a></li>
                                         }
+                                        {
+                                            (user === "usuario") &&
+                                            <li><a className="dropdown-item" href="/usuario/update-password"> Mod. Contraseña </a></li>
+                                        }
                                     </div>
                                 }
                                 {
                                     (token && navContext.adminKey) &&
+                                    <div>
+                                        <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                        <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                    </div>
+                                }
+                                {
+                                    (token && navContext.userKey) &&
                                     <div>
                                         <li><a className="dropdown-item" href="/productos"> Productos </a></li>
                                         <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>

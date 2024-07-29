@@ -49,7 +49,7 @@ function Sidebar( {renderProductosLista, renderProductosCarga, sidebarKey} ) {
                     <a href="/admin/lista-usuarios"> Lista Usuarios </a>
                     <a href="/admin/habilitar-usuario"> Habilitar Usuario </a>
                     <a href="/admin/borrar-usuario"> Borrar Usuario </a>
-                    <a href="/"> Mi Cuenta </a>
+                    <a href="/admin/update-password"> Cambiar Contraseña </a>
                 </div>
             }
         </aside>

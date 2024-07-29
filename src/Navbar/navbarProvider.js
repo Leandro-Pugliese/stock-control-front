@@ -13,6 +13,7 @@ export function NavbarProvider({children}) {
     const [insumoKey, setInsumoKey] = useState(null);
     const [allKey, setAllKey] = useState(null);
     const [adminKey, setAdminKey] = useState(null);
+    const [userKey, setUserKey] = useState(null);
 
     const cambiarKey = (indicador) => {
         if (indicador === "ALL") {
@@ -20,25 +21,36 @@ export function NavbarProvider({children}) {
             setInsumoKey(null);
             setAllKey(true);
             setAdminKey(null);
+            setUserKey(null);
         } else if (indicador === "PRODUCTO") {
             setProductoKey(true);
             setInsumoKey(null);
             setAllKey(null);
             setAdminKey(null);
+            setUserKey(null);
         } else if  (indicador === "INSUMO") {
             setProductoKey(null);
             setInsumoKey(true);
             setAllKey(null);
             setAdminKey(null);
+            setUserKey(null);
         } else if  (indicador === "ADMIN") {
             setProductoKey(null);
             setInsumoKey(null);
             setAllKey(null);
             setAdminKey(true);
+            setUserKey(null);
+        }
+        else if  (indicador === "USER") {
+            setProductoKey(null);
+            setInsumoKey(null);
+            setAllKey(null);
+            setAdminKey(null);
+            setUserKey(true);
         }
     }
     return (
-        <navbarContext.Provider value={{cambiarKey, productoKey, insumoKey, allKey, adminKey}}>
+        <navbarContext.Provider value={{cambiarKey, productoKey, insumoKey, allKey, adminKey, userKey}}>
             {children}
         </navbarContext.Provider>
     )

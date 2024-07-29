@@ -8,12 +8,14 @@ import Inicio from "./Inicio/inicio";
 // Usuario
 import CrearUsuario from "./Usuario/crearUsuario";
 import LoginUsuario from './Usuario/loginUsuario';
+import UpdatePasswordUsuario from './Usuario/updateUsuario';
 // Admin
 import CrearAdmin from './Usuario/crearAdmin';
 import LoginAdmin from "./Usuario/loginAdmin";
 import ListaUsuarios from './Usuario/listaUsuarios';
 import HabilitarUsuario from './Usuario/habilitarUsuario';
 import BorrarUsuario from './Usuario/borrarUsuario';
+import UpdatePasswordAdmin from './Usuario/updateAdmin';
 // Productos
 import ListaProductos from './Productos/listaProductos';
 import UpdateStock from "./Productos/updateStockProducto";
@@ -37,12 +39,14 @@ function App() {
           {/* Admin */}
           <Route path='/crear-admin' element={<CrearAdmin/>}/>
           <Route path='/login-admin' element={<LoginAdmin/>}/>
+          <Route path='/admin/update-password' element={<UpdatePasswordAdmin/>}/>
           <Route path='/admin/lista-usuarios' element={<ListaUsuarios/>}/>
           <Route path='/admin/habilitar-usuario' element={<HabilitarUsuario/>}/>
           <Route path='/admin/borrar-usuario' element={<BorrarUsuario/>}/>
           {/* Usuario */}
           <Route path='/crear-usuario' element={<CrearUsuario/>}/>
           <Route path='/login-usuario' element={<LoginUsuario/>}/>
+          <Route path='/usuario/update-password' element={<UpdatePasswordUsuario/>}/>
           {/* Productos */}
           <Route path='/productos' element={<ListaProductos/>}/>
           <Route path='/productos/update-stock' element={<UpdateStock/>}/>
