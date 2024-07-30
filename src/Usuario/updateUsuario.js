@@ -58,6 +58,14 @@ function UpdatePasswordUsuario() {
                 setShowMsj(false);
                 return
             }
+            if (nuevaPassword.length <= 7) {
+                const msj = "¡La contraseña debe tener al menos 8 caracteres!";
+                setMensaje(msj);
+                setShowErrorMsj(true);
+                setShowErrorMsjPost(false);
+                setShowMsj(false);
+                return
+            }
             // Armamos la config de axios para enviar la petición.
             const tokenAxios = sessionStorage.getItem("token");
             const config = {

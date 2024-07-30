@@ -16,6 +16,8 @@ function ListaInsumos() {
 
     // Contexto para la sidebar.
     const sidebarKey = "LISTA INSUMOS";
+    // Indicador para filtros.
+    const indicador = "INSUMOS";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");

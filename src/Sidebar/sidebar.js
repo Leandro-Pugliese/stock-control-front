@@ -1,7 +1,12 @@
 import "../App.css";
 import "./sidebar.css";
+import Filtros from "../Componentes/filtros";
 
-function Sidebar( {renderProductosLista, renderProductosCarga, sidebarKey} ) {
+function Sidebar({  renderProductosLista, renderProductosCarga, sidebarKey, 
+                    indicador, filtrar, productos, insumos, 
+                    handleChangeSku, handleChangeStockMin, handleChangeStockMax,
+                    handleChangeInsumo, handleChangeCategoria, categoriasProductos
+                }){
 
     return (
         <aside className="sidebar">
@@ -11,6 +16,18 @@ function Sidebar( {renderProductosLista, renderProductosCarga, sidebarKey} ) {
                     <h4> Productos </h4>
                     <button onClick={renderProductosLista}> Lista </button>
                     <button onClick={renderProductosCarga}> Cargar </button>
+                    <Filtros 
+                        indicador={indicador}
+                        productos={productos}
+                        categoriasProductos={categoriasProductos}
+                        handleChangeSku={handleChangeSku}
+                        handleChangeStockMin={handleChangeStockMin}
+                        handleChangeStockMax={handleChangeStockMax}
+                        handleChangeInsumo={handleChangeInsumo}
+                        handleChangeCategoria={handleChangeCategoria}
+                        insumos={insumos}
+                        filtrar={filtrar}
+                    />
                 </div>
             }
             {

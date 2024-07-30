@@ -17,6 +17,8 @@ function ListaProductos() {
 
     // Contexto para la sidebar
     const sidebarKey = "LISTA PRODUCTOS";
+    // Indicador para filtros.
+    const [indicador, setIndicador] = useState("PRODUCTOS");
     
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -29,21 +31,19 @@ function ListaProductos() {
     const [showListaProductos, setShowListaProductos] = useState(true);
     const [showCargarProducto, setShowCargarProducto] = useState(false);
     const renderProductosLista = () => {
-        setShowListaProductos(true);
-        setShowCargarProducto(false);
-        setShowProducto(false);
-        setShowErrorMsj(false);
-        setShowErrorMsjPost(false);
-        setShowMsj(false);
+        //Recargamos la pagina para limpiar tambien los filtros y cargar nueva lista de forma más fácil.
+        window.location.reload()
     }
-    const renderProductosCarga = async() => {
+    const renderProductosCarga = () => {
         setShowListaProductos(false);
         setShowCargarProducto(true);
         setShowProducto(false);
         setShowErrorMsj(false);
         setShowErrorMsjPost(false);
         setShowMsj(false);
-        // Pedimos la lista de los insumos para cargar en el producto.
+        setIndicador("CARGA");
+    }
+    const insumosLista = async () => {
         try {
             // Verifico el tipo de usuario y cargo su token.
             const user = sessionStorage.getItem("user");
@@ -156,6 +156,7 @@ function ListaProductos() {
 
     useEffect(() => {
         listaProductos()
+        insumosLista()
     },[])
 
     // Values de los inputs para cargar producto
@@ -387,15 +388,154 @@ function ListaProductos() {
         window.location.href = "/productos/update-categoria"
     }
 
+
+    // Filtros ----------------------------------------------------------------
+    const [filtrosActivos, setFiltrosActivos] = useState(false);
+    const [listaProductosFiltrados, setListaProductosFiltrados] = useState([]);
+    const [filtroSku, setFiltroSku] = useState("");
+    const [filtroStockMin, setFiltroStockMin] = useState(1);
+    const [filtroStockMax, setFiltroStockMax] = useState(1000);
+    const [filtroInsumo, setFiltroInsumo] = useState("");
+    const [filtroCategoria, setFiltroCategoria] = useState("");
+    const handleChangeSku = (evento) => {
+        setFiltroSku(evento.target.value);
+    }
+    const handleChangeStockMin = (evento) => {
+        let numMin = Number(evento.target.value);
+        setFiltroStockMin(numMin);
+    }
+    const handleChangeStockMax = (evento) => {
+        let numMax = Number(evento.target.value);
+        setFiltroStockMax(numMax);
+    }
+    const handleChangeInsumo = (evento) => {
+        setFiltroInsumo(evento.target.value);
+    }
+    const handleChangeCategoria = (evento) => {
+        setFiltroCategoria(evento.target.value);
+    }
+    //Función para poder usar el filtro de las categorias del producto ya predeterminadas.
+    const [categoriasProductos, setCategoriasProductos] = useState([]);
+    const depurarCategorias = () => {
+        // Separo todas las categorias en una lista, va a repetir muchas.
+        let categoriasTotales = [];
+        productos.map((elemento) => (
+            categoriasTotales.push(elemento.categoria)
+        ))
+        //Veo cuantas veces se repiten y solo me quedo el nombre una vez para usarlo en el select del filtro.
+        let categoriasRepetidas = [];
+        let repetidos = categoriasTotales.reduce((counter, value) => { if (!counter[value]) counter[value] = 1; else counter[value]++; return counter }, []);
+        Object.entries(repetidos).forEach(counter => categoriasRepetidas.push({ categoria: counter[0], vecesRepetida: counter[1] }));
+        setCategoriasProductos(categoriasRepetidas);
+    }
+    useEffect(() => {
+        depurarCategorias()
+    },[productos])
+
+    const filtrar = () => {
+        let cumplenFiltro = []
+        productos.filter((producto) => {
+            const { sku, stock, componentes, categoria } = producto;
+            const cumpleSku = sku.includes(filtroSku);
+            const stockTotal = stock.reduce((acc, item) => acc + item.unidades, 0);
+            const cumpleStock = stockTotal >= filtroStockMin && stockTotal <= filtroStockMax;
+            const cumpleInsumo = filtroInsumo === "" || componentes.some((comp) => comp.insumo.includes(filtroInsumo));
+            const cumpleCategoria = categoria.includes(filtroCategoria);
+            if (cumpleSku && cumpleCategoria && cumpleInsumo && cumpleStock) {
+                cumplenFiltro.push(producto)
+            }
+        })
+        setListaProductosFiltrados(cumplenFiltro);
+        setFiltrosActivos(true);
+    }
+
     return (
         <div className="container__main">
             <Sidebar 
                 renderProductosLista={renderProductosLista}
                 renderProductosCarga={renderProductosCarga}
                 sidebarKey={sidebarKey}
+                indicador={indicador}
+                handleChangeSku={handleChangeSku}
+                handleChangeStockMin={handleChangeStockMin}
+                handleChangeStockMax={handleChangeStockMax}
+                handleChangeInsumo={handleChangeInsumo}
+                handleChangeCategoria={handleChangeCategoria}
+                filtrar={filtrar}
+                productos={productos}
+                insumos={insumos}
+                categoriasProductos={categoriasProductos}
             />
             {
-                (showListaProductos) &&
+                (showListaProductos && filtrosActivos) &&
+                <div className="container__general">
+                    <h3 className="titulo">Productos Filtrados</h3>
+                    {
+                        listaProductosFiltrados.map((element, index) => (
+                        <div className="producto__data" key={index}>
+                            <div className="data__container">
+                                <div> SKU </div>
+                                <div> {element.sku} </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> STOCK  </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarStock(element.sku)}>Modificar</button>
+                                    </div>
+                                </div> 
+                                <div className="producto__stock">
+                                    {
+                                        element.stock.map((elemento, indice) => (
+                                            <div className="stock__container" key={indice}> 
+                                                {`[${elemento.color}: ${elemento.unidades}]`}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> COMPONENTES </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarComponentes(element.sku)}>Modificar</button> 
+                                    </div>
+                                </div>
+                                <div className="producto__componentes">
+                                    {
+                                        element.componentes.map((elemento, indice) => (
+                                            <div className="componente__container" key={indice}> 
+                                                {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> CATEGORÍA </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                    </div>
+                                </div> 
+                                <div> {element.categoria} </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> DESCRIPCIÓN </div>
+                                    <div className="dataFija__boton">
+                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                    </div>
+                                </div>
+                                <div>{element.descripcion} </div>
+                            </div>
+                        </div>
+                        ))
+                    }
+                </div>
+            }
+            {
+                (showListaProductos && !filtrosActivos) &&
                 <div className="container__general">
                     <h3 className="titulo"> Lista Productos </h3>
                     {
