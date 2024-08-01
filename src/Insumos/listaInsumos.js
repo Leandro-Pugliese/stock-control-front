@@ -78,7 +78,7 @@ function ListaInsumos() {
     }
 
     useEffect(() => {
-        insumosLista()
+        insumosLista();
     },[])
 
     const modificarInsumo = (_id) => {
@@ -86,16 +86,56 @@ function ListaInsumos() {
         window.location.href = "/update-insumo"
     }
 
+    // Filtros
+    const [filtrosActivos, setFiltrosActivos] = useState(false);
+    const [listaInsumosFiltrados, setListaInsumosFiltrados] = useState([]);
+    const [filtroNombre, setFiltroNombre] = useState("");
+    const [filtroPrecioMin, setFiltroPrecioMin] = useState(1);
+    const [filtroPrecioMax, setFiltroPrecioMax] = useState(1000000);
+    
+    const handleChangeInsumoNombre = (evento) => {
+        setFiltroNombre(evento.target.value);
+    }
+    const handleChangePrecioMin = (evento) => {
+        let numMin = Number(evento.target.value);
+        setFiltroPrecioMin(numMin);
+    }
+    const handleChangePrecioMax = (evento) => {
+        let numMax = Number(evento.target.value);
+        setFiltroPrecioMax(numMax);
+    }
+
+    const filtrar = () => {
+        let cumplenFiltro = []
+        insumos.filter((insumo) => {
+            const { nombre, precio } = insumo;
+            const cumpleNombre = nombre.includes(filtroNombre);
+            const cumplePrecio = precio >= filtroPrecioMin && precio <= filtroPrecioMax;
+            if (cumpleNombre && cumplePrecio) {
+                cumplenFiltro.push(insumo);
+            }
+        })
+        setListaInsumosFiltrados(cumplenFiltro);
+        setFiltrosActivos(true);
+    }
     
     return (
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
+                indicador={indicador}
+                handleChangeInsumoNombre={handleChangeInsumoNombre}
+                handleChangePrecioMin={handleChangePrecioMin}
+                handleChangePrecioMax={handleChangePrecioMax}
+                filtrar={filtrar}
+                insumos={insumos}
             />
-            <div className="container__general">
+            {
+                (filtrosActivos) &&
+                <div className="container__general">
                 <h3 className="titulo"> Lista Insumos </h3>
                 {
-                    insumos.map((elemento, indice) => (
+                    listaInsumosFiltrados.map((elemento, indice) => (
                         <div className="" key={indice}> 
                             <div>Insumo: {elemento.nombre}</div> 
                             <div>Precio: ${elemento.precio}</div>
@@ -105,7 +145,25 @@ function ListaInsumos() {
                         </div>
                     ))
                 }
-            </div>
+                </div>
+            }
+            {
+                (!filtrosActivos) &&
+                <div className="container__general">
+                    <h3 className="titulo"> Lista Insumos </h3>
+                    {
+                        insumos.map((elemento, indice) => (
+                            <div className="" key={indice}> 
+                                <div>Insumo: {elemento.nombre}</div> 
+                                <div>Precio: ${elemento.precio}</div>
+                                <div>Descripción: {elemento.descripcion}</div>
+                                <button onClick={() => modificarInsumo(elemento._id)}>Modificar</button>
+                                <hr/>
+                            </div>
+                        ))
+                    }
+                </div>
+            }
             <Mensajes 
                 mensaje={mensaje}
                 showMsj={showMsj}

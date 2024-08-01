@@ -5,7 +5,8 @@ import Filtros from "../Componentes/filtros";
 function Sidebar({  renderProductosLista, renderProductosCarga, sidebarKey, 
                     indicador, filtrar, productos, insumos, 
                     handleChangeSku, handleChangeStockMin, handleChangeStockMax,
-                    handleChangeInsumo, handleChangeCategoria, categoriasProductos
+                    handleChangeInsumo, handleChangeCategoria, categoriasProductos,
+                    handleChangeInsumoNombre, handleChangePrecioMin, handleChangePrecioMax
                 }){
 
     return (
@@ -42,6 +43,15 @@ function Sidebar({  renderProductosLista, renderProductosCarga, sidebarKey,
                 <div className="container__botones">
                     <h4> Insumos </h4>
                     <a href="/crear-insumo"> Cargar </a>
+                    <Filtros 
+                        indicador={indicador}
+                        handleChangeInsumo={handleChangeInsumo}
+                        handleChangeInsumoNombre={handleChangeInsumoNombre} 
+                        handleChangePrecioMin={handleChangePrecioMin} 
+                        handleChangePrecioMax={handleChangePrecioMax}
+                        insumos={insumos}
+                        filtrar={filtrar}
+                    />
                 </div>
             }
             {

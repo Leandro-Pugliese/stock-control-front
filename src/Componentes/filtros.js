@@ -5,10 +5,9 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Filtros({  indicador, productos, insumos, filtrar,
                     handleChangeSku, handleChangeStockMin, handleChangeStockMax,
-                    handleChangeInsumo, handleChangeCategoria, categoriasProductos
+                    handleChangeInsumo, handleChangeCategoria, categoriasProductos,
+                    handleChangeInsumoNombre, handleChangePrecioMin, handleChangePrecioMax
                 }) {
-    //Filtros productos (SKU, STOCKMIN, STOCKMAX, CATEGORIA, COMPONENTE(INSUMO)).
-    //Filtros insumos (nombre, precio=x, precioMin, precioMax).
     
     return (
         <div>
@@ -24,7 +23,7 @@ function Filtros({  indicador, productos, insumos, filtrar,
                                 Sku
                             </label>
                             <select onChange={handleChangeSku} className="">
-                                <option value="">-</option>
+                                <option value="">Todos</option>
                                 {
                                     productos.map((elemento, indice) => (
                                         <option key={indice} value={elemento.sku}>
@@ -67,7 +66,7 @@ function Filtros({  indicador, productos, insumos, filtrar,
                                 Categoría
                             </label>
                             <select onChange={handleChangeCategoria} className="">
-                                <option value="">-</option>
+                                <option value="">Todas</option>
                                 {
                                     categoriasProductos.map((elemento, indice) => (
                                         <option key={indice} value={elemento.categoria}>
@@ -82,41 +81,30 @@ function Filtros({  indicador, productos, insumos, filtrar,
                 {
                     (indicador === "INSUMOS") &&
                     <div>
-                        <div className="">
+                        <div className="filtro__container">
                             <label>Nombre</label>
-                            <select  className="">
+                            <select  className="" onChange={handleChangeInsumoNombre}>
+                                <option value="">Todos</option>
                             {
                                 insumos.map((elemento, indice) => (
-                                    <option key={indice} value={elemento}>
+                                    <option key={indice} value={elemento.nombre}>
                                         {elemento.nombre}
                                     </option>
                                 ))
                             }
                             </select>
                         </div>
-                        <div className="">
-                            <label>Precio exacto</label>
-                            <select  className="">
-                            {
-                                insumos.map((elemento, indice) => (
-                                    <option key={indice} value={elemento}>
-                                        {elemento.precio}
-                                    </option>
-                                ))
-                            }
-                            </select>
-                        </div>
-                        <div className="">
+                        <div className="filtro__container">
                             <label>
                                 Precio Mínimo
-                                <input type="number" name="precioMin"  />
                             </label>
+                            <input type="number" name="precioMin" onChange={handleChangePrecioMin} defaultValue={1}/>
                         </div>
-                        <div className="">
+                        <div className="filtro__container">
                             <label>
                                 Precio Máximo
-                                <input type="number" name="precioMax"/>
                             </label>
+                            <input type="number" name="precioMax" onChange={handleChangePrecioMax} defaultValue={1000000}/>
                         </div>
                     </div>
                 }
