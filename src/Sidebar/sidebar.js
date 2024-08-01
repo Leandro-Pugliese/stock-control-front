@@ -69,6 +69,13 @@ function Sidebar({  renderProductosLista, renderProductosCarga, sidebarKey,
                     <a href="/admin/update-password"> Cambiar Contraseña </a>
                 </div>
             }
+            {
+                (sidebarKey === "RENTABILIDAD") &&
+                <div className="container__botones">
+                    <h4> Rentabilidad </h4>
+                    <a href="/productos"> Lista Productos </a>
+                </div>
+            }
         </aside>
     );
 }

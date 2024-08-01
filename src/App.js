@@ -21,6 +21,7 @@ import ListaProductos from './Productos/listaProductos';
 import UpdateStock from "./Productos/updateStockProducto";
 import UpdateComponentes from './Productos/updateComponentes';
 import UpdateCategoria from './Productos/updateCategoria';
+import Rentabilidad from './Productos/rentabilidad';
 // Insumos
 import CrearInsumo from './Insumos/crearInsumo';
 import ListaInsumos from './Insumos/listaInsumos';
@@ -52,6 +53,7 @@ function App() {
           <Route path='/productos/update-stock' element={<UpdateStock/>}/>
           <Route path='/productos/update-componentes' element={<UpdateComponentes/>}/>
           <Route path='/productos/update-categoria' element={<UpdateCategoria/>}/>
+          <Route path='/rentabilidad' element={<Rentabilidad/>}/>
           {/* Insumos */}
           <Route path='/crear-insumo' element={<CrearInsumo/>}/>
           <Route path='/insumos' element={<ListaInsumos/>}/>

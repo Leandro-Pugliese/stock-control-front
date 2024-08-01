@@ -154,9 +154,13 @@ function ListaProductos() {
         }
     }
 
+    // Veo si el usuario es admin para renderizar el boton de rentabilidad.
+    const [user, setUser] = useState([]);
+
     useEffect(() => {
-        listaProductos()
-        insumosLista()
+        setUser(sessionStorage.getItem("user"));
+        listaProductos();
+        insumosLista();
     },[])
 
     // Values de los inputs para cargar producto
@@ -387,6 +391,10 @@ function ListaProductos() {
         sessionStorage.setItem("skuModificar", sku);
         window.location.href = "/productos/update-categoria"
     }
+    const verRentabilidad = async(sku) => {
+        sessionStorage.setItem("sku", sku);
+        window.location.href = "/rentabilidad"
+    }
 
 
     // Filtros ----------------------------------------------------------------
@@ -474,7 +482,15 @@ function ListaProductos() {
                         listaProductosFiltrados.map((element, index) => (
                         <div className="producto__data" key={index}>
                             <div className="data__container">
-                                <div> SKU </div>
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> SKU </div>
+                                    {
+                                        (user === "admin") &&
+                                        <div className="dataFija__boton">
+                                            <button className="boton__modificar" onClick={() => verRentabilidad(element.sku)}>Rentabilidad</button>
+                                        </div>
+                                    }
+                                </div>
                                 <div> {element.sku} </div>
                             </div>
                             <div className="data__container">
@@ -542,7 +558,15 @@ function ListaProductos() {
                     productos.map((element, index) => (
                         <div className="producto__data" key={index}>
                             <div className="data__container">
-                                <div> SKU </div>
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> SKU </div>
+                                    {
+                                        (user === "admin") &&
+                                        <div className="dataFija__boton">
+                                            <button className="boton__modificar" onClick={() => verRentabilidad(element.sku)}>Rentabilidad</button>
+                                        </div>
+                                    }
+                                </div>
                                 <div> {element.sku} </div>
                             </div>
                             <div className="data__container">
