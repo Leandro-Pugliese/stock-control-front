@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+.filtros__general {
+    background-color: rgba(202, 202, 202, 0.6);
+    border: solid 0.5rem white;
+    border-radius: 0.6rem;
+}
+.icono__filtro {
+    padding-left: 0.5rem;
+    padding-top: 0.3rem;
+}
+.filtro__container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.boton__filtro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+.boton__filtro button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    border-color: black;
+    border-radius: 0.3rem;
+    color: whitesmoke;
+    padding: 0.2rem 0.5rem;
+}
+/*Como esta en la sidebar tengo que modificar igual el hover para que no me lo cambie.*/
+.boton__filtro button:hover {
+    background-color: black;
+    border-color: black;
+}
+.boton__filtro button:active {
+    scale: 0.9;
+}

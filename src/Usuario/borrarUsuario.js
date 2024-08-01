@@ -1,10 +1,23 @@
-import "../App.css"
-import { useState, useEffect } from "react";
-import axios from "../axios";
+import "../App.css";
+import "./usuario.css";
+import "../Productos/productos.css";
+import { React, useState, useEffect} from "react";
+import { useNavbarContext } from "../Navbar/navbarProvider";
+import Sidebar from "../Sidebar/sidebar";
+import axios from "../axios"
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
-function LoginAdmin() {
+function BorrarUsuario() {
+
+    // Contexto para navbProvider.
+    const navContext = useNavbarContext()
+    useEffect(() => {
+        navContext.cambiarKey("ADMIN");
+    }, []);
+
+    // Contexto para la sidebar.
+    const sidebarKey = "ADMIN MENU";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -13,60 +26,46 @@ function LoginAdmin() {
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [usuarioEmail, setUsuarioEmail] = useState("");
+    const [passwordAdmin, setPasswordAdmin] = useState("");
     const [pin, setPin] = useState("");
 
-    // Hooks para guardar y pasar input value al body del post.
-    const onChangeEmail = function (evento) {
-        setEmail(evento.target.value);
+    const onChangeUsuarioEmail = function (evento) {
+        let email = evento.target.value.toLowerCase()
+        setUsuarioEmail(email);
     };
-    const onChangePassword = function (evento) {
-        setPassword(evento.target.value);
+    const onChangePasswordAdmin = function (evento) {
+        setPasswordAdmin(evento.target.value);
     };
     const onChangePin = function (evento) {
         setPin(evento.target.value);
     };
 
     // Función para enviar petición a la api.
-    const loginAdmin = async () => {
+    const borrar = async () => {
         try {
-            if (email === "" || password === "" || pin === "") {
-                const msj = "¡Debes completar todos los campos!";
-                setMensaje(msj);
-                setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(false);
-                return
-            }
-            // Armamos la config de axios para enviar la petición.
+            const tokenAxios = sessionStorage.getItem("token");
             const config = {
                 method: "post",
-                url: "/admin/login",
+                url: "/admin/borrar-usuario",
                 json: true,
-                data: { email, password, pin },
+                data: {usuarioEmail, passwordAdmin, pin},
                 headers: {
-                  "Content-Type": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": tokenAxios,
                 },
             };
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let data = response.data;
-            // Guardamos el token en session storage.
-            sessionStorage.setItem("token", data.token);
-            sessionStorage.setItem("user", "admin");
-            // Armamos msj personalizado para el ususario.
-            const msj = `Bienvenido ${data.admin.username}`;
-            setMensaje(msj);
+            setMensaje(data);
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
             setShowMsj(true);
             setTimeout(function () {
-                window.location.href = "/"
-              }, 800);
+                window.location.href = "/admin/lista-usuarios"
+            }, 1200);
         } catch (error) {
-            //console.log(error)
             let msj = error.response.data;
             setMensaje(msj);
             setShowErrorMsj(false);
@@ -88,14 +87,17 @@ function LoginAdmin() {
     };
 
     return (
-        <div className="main__container">
-            <h3>Login Admin</h3>
-            <div>
+        <div className="container__main">
+            <Sidebar 
+                sidebarKey={sidebarKey}
+            />
+            <div className="container__general">
+                <h3 className="titulo"> Borrar Usuario </h3>
                 <div className="">
-                    <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
+                    <input onChange={onChangePasswordAdmin} className="" id="passwordInput" type={showPassword} placeholder="Contraseña admin..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
@@ -106,17 +108,17 @@ function LoginAdmin() {
                     <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
                 </div>
                 <div className="">
-                    <button onClick={loginAdmin}> Ingresar </button>
+                    <button onClick={borrar}> Borrar </button>
                 </div>
+                <Mensajes 
+                    mensaje={mensaje}
+                    showMsj={showMsj}
+                    showErrorMsj={showErrorMsj}
+                    showErrorMsjPost={showErrorMsjPost}
+                />
             </div>
-            <Mensajes 
-                mensaje={mensaje}
-                showMsj={showMsj}
-                showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
-            />
         </div>
     );
 }
 
-export default LoginAdmin;
+export default BorrarUsuario;

@@ -1,6 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 .main__container {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
     align-items: center;
 }
+.showPassword__container {
+    display: flex;
+    flex-direction: row;
+}
+.container__bloquear {
+    display: flex;
+    flex-direction: row;
+}
+.popUp__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.popUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 0.8rem;
+    z-index: 101;
+    min-height: 27%;
+}
+.close__container {
+    width: 100%;
+    margin-bottom: 0.7rem;
+    text-align: right;
+}
+.close__container button{
+    background-color: transparent;
+    border: transparent;
+}
+.bloquear__button {
+    margin-top: 0.5rem;
+}
+        
+

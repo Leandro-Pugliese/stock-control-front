@@ -3,7 +3,8 @@ import "./insumos.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
-import axios from "../axios"
+import axios from "../axios";
+import Mensajes from "../Componentes/mensajes";
 
 function CrearInsumo() {
 
@@ -52,7 +53,7 @@ function CrearInsumo() {
                 return
             }
             if (precio <= 0) {
-                const msj = "El precio nopuede ser menor o igual a cero.";
+                const msj = "El precio no puede ser menor o igual a cero.";
                 setMensaje(msj);
                 setShowErrorMsj(true);
                 setShowErrorMsjPost(false);
@@ -134,24 +135,12 @@ function CrearInsumo() {
                         </div>
                     </div>
                 }
-                {
-                    (showErrorMsj) &&
-                    <div>
-                        <p>{mensaje}</p>
-                    </div>
-                }
-                {
-                    (showMsj) &&
-                    <div>
-                        <p>{mensaje}</p>
-                    </div>
-                }
-                {
-                    (showErrorMsjPost) &&
-                    <div>
-                        <p>{mensaje}</p>
-                    </div>
-                }
+                <Mensajes 
+                    mensaje={mensaje}
+                    showMsj={showMsj}
+                    showErrorMsj={showErrorMsj}
+                    showErrorMsjPost={showErrorMsjPost}
+                />
                 {
                     (showInsumo) &&
                     <div>

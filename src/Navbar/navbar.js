@@ -8,10 +8,12 @@ function Navbar() {
     const navContext = useNavbarContext();
 
     // --------------------------------------------
-    // Recupero del token para corroboración de sesión para la navbar.
+    // Recupero del token y el tipo de usuario para corroboración de sesión para la navbar.
+    const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
 
     useEffect(() => {
+        setUser(sessionStorage.getItem("user"));
         setToken(sessionStorage.getItem("token"));
     }, []);
 
@@ -61,14 +63,56 @@ function Navbar() {
                                 }
                                 {
                                     (token && navContext.insumoKey) &&
-                                    <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                    <div>
+                                        <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                        {
+                                            (user === "admin") &&
+                                            <li><a className="dropdown-item" href="/admin/lista-usuarios"> Usuarios </a></li>
+                                        }
+                                        {
+                                            (user === "usuario") &&
+                                            <li><a className="dropdown-item" href="/usuario/update-password"> Mod. Contraseña </a></li>
+                                        }
+                                    </div>
                                 }
                                 {
                                     (token && navContext.productoKey) &&
-                                    <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                    <div>
+                                        <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                        {
+                                            (user === "admin") &&
+                                            <li><a className="dropdown-item" href="/admin/lista-usuarios"> Usuarios </a></li>
+                                        }
+                                        {
+                                            (user === "usuario") &&
+                                            <li><a className="dropdown-item" href="/usuario/update-password"> Mod. Contraseña </a></li>
+                                        }
+                                    </div>
                                 }
                                 {
                                     (token && navContext.allKey) &&
+                                    <div>
+                                        <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                        <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                        {
+                                            (user === "admin") &&
+                                            <li><a className="dropdown-item" href="admin/lista-usuarios"> Usuarios </a></li>
+                                        }
+                                        {
+                                            (user === "usuario") &&
+                                            <li><a className="dropdown-item" href="/usuario/update-password"> Mod. Contraseña </a></li>
+                                        }
+                                    </div>
+                                }
+                                {
+                                    (token && navContext.adminKey) &&
+                                    <div>
+                                        <li><a className="dropdown-item" href="/productos"> Productos </a></li>
+                                        <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>
+                                    </div>
+                                }
+                                {
+                                    (token && navContext.userKey) &&
                                     <div>
                                         <li><a className="dropdown-item" href="/productos"> Productos </a></li>
                                         <li><a className="dropdown-item" href="/insumos"> Insumos </a></li>

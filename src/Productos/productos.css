@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 .container__main {
     display: flex;
     flex-direction: row;
@@ -90,3 +91,49 @@
     margin-left: 0.5rem;
 }
 
+/* RENTABILIDAD */
+.titulo__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+.container__secundario {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.caluladora__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+    box-sizing: border-box;
+}
+.calculadora__fija {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-top: 1rem;
+}
+.calculadora__fija button {
+    width: 30%;
+    margin-top: 0.5rem;
+}
+.calculadora__funciones {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.calculadora__funciones input {
+    width: 50%;
+}
+.calculadora__funciones button {
+    width: 30%;
+    margin-top: 0.3rem;
+}

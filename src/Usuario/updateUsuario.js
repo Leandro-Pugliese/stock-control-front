@@ -1,13 +1,18 @@
-import "../App.css";
-import "./usuario.css";
+import "../App.css"
 import { useState, useEffect } from "react";
 import axios from "../axios";
+import { useNavbarContext } from "../Navbar/navbarProvider";
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
+function UpdatePasswordUsuario() {
 
-function CrearUsuario() {
-
+    // Contexto para navbProvider.
+    const navContext = useNavbarContext()
+    useEffect(() => {
+        navContext.cambiarKey("USER");
+    }, []);
+    
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
@@ -15,33 +20,29 @@ function CrearUsuario() {
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
-    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [claveAcceso, setClaveAcceso] = useState("");
+    const [passwordActual, setPasswordActual] = useState("");
+    const [nuevaPassword, setNuevaPassword] = useState("");
+    const [nuevaPassword2, setNuevaPassword2] = useState("");
 
     // Hooks para guardar y pasar input value al body del post.
-    const onChangeUsername = function (evento) {
-        setUsername(evento.target.value);
-    };
     const onChangeEmail = function (evento) {
         setEmail(evento.target.value);
     };
-    const onChangePassword = function (evento) {
-        setPassword(evento.target.value);
+    const onChangePasswordActual = function (evento) {
+        setPasswordActual(evento.target.value);
     };
-    const onChangePassword2 = function (evento) {
-        setPassword2(evento.target.value);
+    const onChangeNuevaPassword = function (evento) {
+        setNuevaPassword(evento.target.value);
     };
-    const onChangeClaveAcceso = function (evento) {
-        setClaveAcceso(evento.target.value);
+    const onChangeNuevaPassword2 = function (evento) {
+        setNuevaPassword2(evento.target.value);
     };
 
     // Función para enviar petición a la api.
-    const crearUsuario = async () => {
+    const updatePassword = async () => {
         try {
-            if (username === "" || email === "" || password === "" || password2 === "" || claveAcceso === "") {
+            if (email === "" || passwordActual === "" || nuevaPassword === "" || nuevaPassword2 === "") {
                 const msj = "¡Debes completar todos los campos!";
                 setMensaje(msj);
                 setShowErrorMsj(true);
@@ -49,15 +50,15 @@ function CrearUsuario() {
                 setShowMsj(false);
                 return
             }
-            if (password !== password2) {
-                const msj = "¡Las contraseñas ingresadas no coinciden!";
+            if (nuevaPassword !== nuevaPassword2) {
+                const msj = "¡Las contraseñas nuevas no coinciden!";
                 setMensaje(msj);
                 setShowErrorMsj(true);
                 setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
-            if (password.length <= 7 ) {
+            if (nuevaPassword.length <= 7) {
                 const msj = "¡La contraseña debe tener al menos 8 caracteres!";
                 setMensaje(msj);
                 setShowErrorMsj(true);
@@ -66,25 +67,28 @@ function CrearUsuario() {
                 return
             }
             // Armamos la config de axios para enviar la petición.
+            const tokenAxios = sessionStorage.getItem("token");
             const config = {
-                method: "post",
-                url: "/usuario/crear",
+                method: "put",
+                url: "/usuario/update",
                 json: true,
-                data: { username, email, password, claveAcceso },
+                data: {email, passwordActual, nuevaPassword},
                 headers: {
                   "Content-Type": "application/json",
+                  "Authorization": tokenAxios,
                 },
             };
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
-            let msj = response.data.msj;
-            setMensaje(msj);
+            let data = response.data;
+            setMensaje(data);
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
             setShowMsj(true);
+            setTimeout(function () {
+                window.location.href = "/"
+            }, 1000);
         } catch (error) {
-            //console.log(error)
             let msj = error.response.data;
             setMensaje(msj);
             setShowErrorMsj(false);
@@ -107,16 +111,13 @@ function CrearUsuario() {
 
     return (
         <div className="main__container">
-            <h3>Crear Usuario</h3>
+            <h3>Modificar Contraseña</h3>
             <div>
-                <div className="">
-                    <input onChange={onChangeUsername} className="" id="userInput" type="text" placeholder="Usuario..."/>
-                </div>
                 <div className="">
                     <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
+                    <input onChange={onChangePasswordActual} className="" id="passwordInput" type={showPassword} placeholder="Contraseña actual..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
@@ -124,13 +125,13 @@ function CrearUsuario() {
                     />
                 </div>
                 <div className="">
-                    <input onChange={onChangePassword2} className="" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
+                    <input onChange={onChangeNuevaPassword} className="" id="passInput" type={showPassword} placeholder="Nueva contraseña..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeClaveAcceso} className="" id="claveAccesoInput" type={showPassword} placeholder="Clave Acceso..."/>
+                    <input onChange={onChangeNuevaPassword2} className="" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..."/>
                 </div>
                 <div className="">
-                    <button onClick={crearUsuario}> Registrar </button>
+                    <button onClick={updatePassword}> Modificar </button>
                 </div>
             </div>
             <Mensajes 
@@ -143,4 +144,4 @@ function CrearUsuario() {
     );
 }
 
-export default CrearUsuario;
+export default UpdatePasswordUsuario;
