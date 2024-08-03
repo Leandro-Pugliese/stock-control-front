@@ -2,19 +2,19 @@ import "../App.css";
 
 function Mensajes({mensaje, showMsj, showErrorMsj, showErrorMsjPost}) {
   return (
-    <div>
+    <div className="container__mensajes">
         {(showErrorMsj) &&
-            <div>
+            <div className="mensaje__error">
                 <p>{mensaje}</p>
             </div>
         }
         {(showMsj) &&
-            <div>
+            <div className="mensaje__ok">
                 <p>{mensaje}</p>
             </div>
         }
         {(showErrorMsjPost) &&
-            <div>
+            <div className="mensaje__error">
                 <p>{mensaje}</p>
             </div>
         }

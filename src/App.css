@@ -657,6 +657,10 @@ progress {
   margin-right: auto;
   margin-left: auto;
 }
+/*Fixeamos el margin left en 6rem porque en auto mueve los elementos en distintas rutas.*/
+.container {
+  margin-left: 6rem;
+}
 
 @media (min-width: 576px) {
   .container-sm, .container {

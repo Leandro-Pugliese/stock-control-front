@@ -5,6 +5,8 @@ import axios from "../axios";
 import Sidebar from "../Sidebar/sidebar";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 function ListaProductos() {
 
@@ -633,37 +635,39 @@ function ListaProductos() {
                     {
                         (!showProducto) &&
                         <div>
-                            <div className="">
-                                <input onChange={onChangeSku} className="" id="skuInput" type="text" placeholder="Sku..."/>
+                            <div className="container__input">
+                                <input onChange={onChangeSku} className="input__producto" id="skuInput" type="text" placeholder="Sku..."/>
                             </div>
-                            <div className="">
-                                <input onChange={onChangeCategoria} className="" id="categoriaInput" type="text" placeholder="Categoría..."/>
+                            <div className="container__input">
+                                <input onChange={onChangeCategoria} className="input__producto" id="categoriaInput" type="text" placeholder="Categoría..."/>
                             </div>
-                            <div className="">
-                                <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
+                            <div className="container__input">
+                                <input onChange={onChangeDescripcion} className="input__producto" id="descripcionInput" type="text" placeholder="Descripción..."/>
                             </div>
-                            <div className="">
-                                <input onChange={onChangeStockColor} className="" id="colorStockInput" type="text" placeholder="Color..."/>
-                                <input onChange={onChangeStockUnidades} className="" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
-                                <button onClick={addStock}>Agregar al stock</button>
+                            <div className="container__input">
+                                <input onChange={onChangeStockColor} className="input__producto doble__input" id="colorStockInput" type="text" placeholder="Color..."/>
+                                <input onChange={onChangeStockUnidades} className="input__producto doble__input" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
+                                <button className="add__button" onClick={addStock}>
+                                    Agregar al stock
+                                </button>
+                            </div>
+                            {
+                                (stock.length >= 1) &&
+                                <div className="lista__items">
                                 {
-                                    (stock.length >= 1) &&
-                                    <div className="lista__items">
-                                    {
-                                        stock.map((elemento, indice) => (
-                                            <div key={indice}>
-                                                {`[${elemento.color}: ${elemento.unidades}]`}
-                                                <button className="x__button" onClick={() => eliminarStock(elemento.color)}>
-                                                    <i className="fa-solid fa-circle-xmark"></i>
-                                                </button>
-                                            </div>
-                                        ))
-                                    }
-                                    </div>
+                                    stock.map((elemento, indice) => (
+                                        <div key={indice}>
+                                            {`[${elemento.color}: ${elemento.unidades}]`}
+                                            <button className="x__button" onClick={() => eliminarStock(elemento.color)}>
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </button>
+                                        </div>
+                                    ))
                                 }
-                            </div>
-                            <div>
-                                <select onChange={onChangeComponenteNombre} defaultValue="-">
+                                </div>
+                            }
+                            <div className="container__input">
+                                <select className="input__producto doble__input" onChange={onChangeComponenteNombre} defaultValue="-">
                                     <option value="-">Componente...</option>
                                 {
                                     insumos.map((element, index) => (
@@ -673,25 +677,27 @@ function ListaProductos() {
                                     ))
                                 }
                                 </select>
-                                <input onChange={onChangeComponenteCantidad} className="" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
-                                <button onClick={addComponente}>Agregar componente</button>
-                                {
-                                    (componentes.length >= 1) &&
-                                    <div className="lista__items">
-                                    {
-                                        componentes.map((elemento, indice) => (
-                                            <div key={indice}>
-                                                {`[${elemento.insumo}: ${elemento.cantidad}]`}
-                                                <button className="x__button" onClick={() => eliminarComponente(elemento.insumo)}>
-                                                    <i className="fa-solid fa-circle-xmark"></i>
-                                                </button>
-                                            </div>
-                                        ))
-                                    }
-                                    </div>
-                                }
+                                <input onChange={onChangeComponenteCantidad} className="input__producto doble__input" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
+                                <button className="add__button" onClick={addComponente}>
+                                    Agregar componente
+                                </button>
                             </div>
-                            <div>
+                            {
+                                (componentes.length >= 1) &&
+                                <div className="lista__items">
+                                {
+                                    componentes.map((elemento, indice) => (
+                                        <div key={indice}>
+                                            {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                            <button className="x__button" onClick={() => eliminarComponente(elemento.insumo)}>
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </button>
+                                        </div>
+                                    ))
+                                }
+                                </div>
+                            }
+                            <div className="container__button">
                                 <button onClick={cargarProducto}> CARGAR </button>
                             </div>
                         </div>
