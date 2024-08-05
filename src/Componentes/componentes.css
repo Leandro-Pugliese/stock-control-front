@@ -1,4 +1,7 @@
+/* IMPORTACION DE FUENTE */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* FILTROS */
 .filtros__general {
     background-color: rgba(202, 202, 202, 0.6);
     border: solid 0.5rem white;
@@ -13,13 +16,13 @@
     flex-direction: column;
     padding: 0.5rem;
 }
-.boton__filtro {
+.container__boton-filtro {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 0.5rem;
 }
-.boton__filtro button {
+.boton__filtro {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,13 +32,8 @@
     color: whitesmoke;
     padding: 0.2rem 0.5rem;
 }
-/*Como esta en la sidebar tengo que modificar igual el hover para que no me lo cambie.*/
-.boton__filtro button:hover {
-    background-color: rgba(33, 37, 41, 1);
-    border-color: rgba(33, 37, 41, 1);
-}
-.boton__filtro button:active {
-    scale: 0.9;
+.boton__filtro:active {
+    scale: 0.95;    
 }
 
 /* MENSAJES */
@@ -47,4 +45,14 @@
 }
 .mensaje__ok {
     color: green;
+}
+
+/* PASSWORD BUTTON */
+.eyeButton {
+    min-width: 2.5rem;
+    background-color: transparent;
+    border: solid 0.2rem transparent;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+    margin: 0.3rem 0rem;
 }

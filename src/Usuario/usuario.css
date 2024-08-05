@@ -5,9 +5,38 @@
     flex: 1 0 auto;
     align-items: center;
 }
+.form__container {
+    margin-top: 2rem;   
+    padding: 0.3rem 1.5rem;
+    border: solid 0.2rem rgba(33, 37, 41, 1);
+    border-radius: 0.4rem;
+}
+.form__titulo {
+    margin-top: 0.7rem;
+    margin-bottom: 1rem;
+}
+.login__input {
+    background-color: gainsboro;
+    border: solid 0.2rem transparent;
+    border-radius: 0.3rem;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+    margin: 0.3rem 0rem;
+}
 .showPassword__container {
     display: flex;
     flex-direction: row;
+}
+.boton1 {
+    margin: 1rem 0.2rem;
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(33, 37, 41, 1);
+    border: solid 0.1rem rgba(33, 37, 41, 1);
+    border-radius: 0.3rem;
+    color: whitesmoke;
+}
+.boton1:active {
+    scale: 0.95;
 }
 .container__bloquear {
     display: flex;
@@ -34,6 +63,7 @@
     border-radius: 0.8rem;
     z-index: 101;
     min-height: 27%;
+    max-width: 40%;
 }
 .close__container {
     width: 100%;
@@ -47,5 +77,37 @@
 .bloquear__button {
     margin-top: 0.5rem;
 }
-        
+
+/* UPDATE PASSWORD */     
+.update__password {
+    width: 23%;
+}   
+
+/* LISTA USUARIOS */
+.listas__container {
+    display: flex;
+    flex-direction: row;
+}
+.lista__container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: center;
+    text-align: left;
+}
+#listaHabilitados {
+    border-right: solid 0.1rem black;
+    padding-right: 0.3rem;
+}
+#listaCreados {
+    padding: 0rem 0.3rem;
+}
+.datos__usuario {
+    background-color: gainsboro;
+    border: solid 0.2rem gainsboro;
+    border-radius: 0.3rem;
+    margin: 0rem 0.2rem;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0.2rem;
+}
 

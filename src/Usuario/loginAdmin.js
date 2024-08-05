@@ -89,24 +89,26 @@ function LoginAdmin() {
 
     return (
         <div className="main__container">
-            <h3>Login Admin</h3>
-            <div>
-                <div className="">
-                    <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
-                </div>
-                <div className="showPassword__container">
-                    <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
-                    <ShowPassword 
-                        botonShowPassword={botonShowPassword}
-                        verPassword={verPassword}
-                        hidePassword={hidePassword}
-                    />
-                </div>
-                <div className="">
-                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
-                </div>
-                <div className="">
-                    <button onClick={loginAdmin}> Ingresar </button>
+            <div className="form__container">
+                <h3 className="form__titulo">Login Admin</h3>
+                <div>
+                    <div className="">
+                        <input onChange={onChangeEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
+                    </div>
+                    <div className="showPassword__container">
+                        <input onChange={onChangePassword} className="login__input" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
+                        <ShowPassword 
+                            botonShowPassword={botonShowPassword}
+                            verPassword={verPassword}
+                            hidePassword={hidePassword}
+                        />
+                    </div>
+                    <div className="">
+                        <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    </div>
+                    <div className="">
+                        <button className="boton1" onClick={loginAdmin}> Ingresar </button>
+                    </div>
                 </div>
             </div>
             <Mensajes 

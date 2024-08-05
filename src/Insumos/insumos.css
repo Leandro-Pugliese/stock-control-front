@@ -15,3 +15,27 @@
 .titulo {
     margin-left: 0.5rem;
 }
+/* CARGAR INSUMO */
+.container__input {
+    display: flex;
+    flex-direction: row;
+    padding: 0.1rem 0.1rem;
+    margin: 0.2rem 0.2rem;
+    width: 80%;
+}
+.input__insumo {
+    width: 40%;
+    background-color: rgba(202, 202, 202, 0.6);
+    border: solid 0.2rem transparent;
+    border-radius: 0.3rem;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+}
+.input__insumo:focus {
+    border: solid 0.2rem rgba(202, 202, 202, 1);
+}
+.boton__modInsumo {
+    width: 20%;
+    margin: 0rem 0rem;
+    margin-top: 0.5rem;
+}

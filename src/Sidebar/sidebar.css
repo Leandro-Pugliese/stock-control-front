@@ -16,7 +16,7 @@
     padding-top: 0.2rem;
     margin-left: 0.3rem;
 }
-.sidebar button {
+.sidebar__button {
     text-align: left;
     border: none;
     background-color: transparent;
@@ -24,7 +24,7 @@
     padding-left: 0.35rem;
     margin-top: 0.3rem;
 }
-.sidebar button:hover {
+.sidebar__button:hover {
     background-color: gainsboro;
 }
 .sidebar a {

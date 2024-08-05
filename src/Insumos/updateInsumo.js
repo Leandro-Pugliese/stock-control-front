@@ -1,5 +1,6 @@
 import "../App.css";
 import "./insumos.css";
+import "../Productos/productos.css"
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
@@ -207,51 +208,53 @@ function UpdateInsumo() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3 className="titulo"> Modificar Insumo </h3>
-                    <div>Insumo: {nombre}</div>
-                    <div className="">
-                    {
-                        (!modPrecio) &&
-                        <div>
-                            Precio: ${precio}
-                            {
-                                (!anularBotonesModificar) &&
-                                <button onClick={() => habilitarModificarInput("Precio")}>Modificar</button>
-                            }
-                            
-                        </div>
-                    }
+                <h3 className="titulo"> Modificar </h3>
+                <div className="stock__sku">Insumo: {nombre}</div>
+                <div className="modificable__container">
+                    <div className="data__modificable">
+                        <label>
+                            Precio
+                        </label>
+                        {
+                            (!modPrecio) &&
+                            <div className="modificable">
+                                <p>${precio}</p>
+                                <button className="boton1" onClick={() => habilitarModificarInput("Precio")}>Modificar</button>
+                            </div>
+                        }
+                        {
+                            (modPrecio) &&
+                            <div className="container__input">
+                                <input onChange={onChangePrecio} className="input__insumo" id="precioInput" type="number" placeholder="Precio..." />
+                            </div>
+                        }
                     </div>
-                    {
-                        (modPrecio) &&
-                        <div className="">
-                            <input onChange={onChangePrecio} className="" id="precioInput" type="number" placeholder="Precio..."/>
-                        </div>
-                    }
-                    <div className="">
-                    {
-                        (!modDescripcion) &&
-                        <div>
-                            Descripción: {descripcion}
-                            {
-                                (!anularBotonesModificar) &&
-                                <button onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
-                            }
-                            
-                        </div>
-                    }
                 </div>
-                {
-                    (modDescripcion) &&
-                    <div className="">
-                        <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
+                <div className="modificable__container">
+                    <div className="data__modificable">
+                        <label>
+                            Descripción
+                        </label>
+                        {
+                            (!modDescripcion) &&
+                            <div className="modificable">
+                                <p>{descripcion}</p>
+                                <button className="boton1" onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                            </div>
+                        }
+                        {
+                            (modDescripcion) &&
+                            <div className="container__input">
+                                <input onChange={onChangeDescripcion} className="input__insumo" id="precioInput" type="text" placeholder="Descripción..." />
+                            </div>
+                        }
                     </div>
-                }
+                </div>
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button onClick={updateInsumo}> Aceptar </button>
-                        <button onClick={() => window.location.reload()}> Atras </button>
+                        <button className="boton1" onClick={updateInsumo}> Aceptar </button>
+                        <button className="boton1" onClick={() => window.location.reload()}> Atras </button>
                     </div>
                 }
                 <Mensajes 

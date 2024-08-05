@@ -108,8 +108,8 @@ function Filtros({  indicador, productos, insumos, filtrar,
                         </div>
                     </div>
                 }
-                <div className="boton__filtro">
-                    <button className="" onClick={() => {filtrar()}}> Filtrar </button>
+                <div className="container__boton-filtro">
+                    <button className="boton__filtro" onClick={() => {filtrar()}}> Filtrar </button>
                 </div>
             </div>
         }

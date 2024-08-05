@@ -184,65 +184,52 @@ function ListaUsuarios() {
         setBotonShowPassword(true);
     };
 
-    
-
     return (
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3 className="titulo"> Lista Usuarios </h3>
-                <div>
-                    <h4>Usuarios Habilitados</h4>
-                </div>
-                {
-                    usuariosHabilitados.map((elemento, indice) => (
-                        <div className="" key={indice}> 
-                            <div>Usuario: {elemento.username}</div> 
-                            <div>Email: {elemento.email}</div>
-                            <div>Clave de acceso: {elemento.claveAcceso}</div>
-                            <button onClick={() => activarPopUpDeshabilitar(elemento.email)}> Deshabilitar </button>
-                            <hr/>
-                        </div>
-                    ))
-                }
-                <div>
-                    <h4>Usuarios Creados</h4>
-                </div>
-                {
-                    usuariosCreados.map((elemento, indice) => (
-                        <div className="" key={indice}> 
-                            <div>Usuario: {elemento.username}</div> 
-                            <div>Email: {elemento.email}</div>
-                            {
-                                (elemento.bloqueado === false) &&
-                                <div className="container__bloquear">
-                                    <div>Bloqueado: No</div>
-                                    <button onClick={() => activarPopUpBloqueo(true, elemento._id, elemento.username)}> Bloquear </button>
+                <div className="listas__container">
+                    <div className="lista__container" id="listaHabilitados">
+                        <h4>Usuarios habilitados</h4>
+                        {
+                            usuariosHabilitados.map((elemento, indice) => (
+                                <div className="datos__usuario" key={indice}> 
+                                    <div>Usuario: {elemento.username}</div> 
+                                    <div>Email: {elemento.email}</div>
+                                    <div>Clave de acceso: {elemento.claveAcceso}</div>
+                                    <button className="boton1" onClick={() => activarPopUpDeshabilitar(elemento.email)}> Deshabilitar </button>
                                 </div>
-                            }
-                            {
-                                (elemento.bloqueado === true) &&
-                                <div className="container__bloquear">
-                                    <div>Bloqueado: Si</div>
-                                    <button onClick={() => activarPopUpBloqueo(false, elemento._id, elemento.username)}> Desbloquear </button>
+                            ))
+                        }
+                    </div>
+                    <div className="lista__container" id="listaCreados">
+                        <h4>Usuarios creados</h4>
+                        {
+                            usuariosCreados.map((elemento, indice) => (
+                                <div className="datos__usuario" key={indice}> 
+                                    <div>Usuario: {elemento.username}</div> 
+                                    <div>Email: {elemento.email}</div>
+                                    {
+                                        (elemento.bloqueado === false) &&
+                                        <div className="">
+                                            <div>Bloqueado: No</div>
+                                            <button className="boton1" onClick={() => activarPopUpBloqueo(true, elemento._id, elemento.username)}> Bloquear </button>
+                                        </div>
+                                    }
+                                    {
+                                        (elemento.bloqueado === true) &&
+                                        <div className="">
+                                            <div>Bloqueado: Si</div>
+                                            <button className="boton1" onClick={() => activarPopUpBloqueo(false, elemento._id, elemento.username)}> Desbloquear </button>
+                                        </div>
+                                    }
                                 </div>
-                            }
-                            <hr/>
-                        </div>
-                    ))
-                }
-                {
-                    // Solo mostramos msj de error si no esta activo el popUp.
-                    (!popUpActivo && !popUpActivo2) &&
-                    <Mensajes 
-                        mensaje={mensaje}
-                        showMsj={showMsj}
-                        showErrorMsj={showErrorMsj}
-                        showErrorMsjPost={showErrorMsjPost}
-                    />
-                }
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
             {
                 (popUpActivo) &&
@@ -259,15 +246,15 @@ function ListaUsuarios() {
                                 <div>
                                 {
                                     (bloqueo === true) &&
-                                    <p>¿Bloquear usuario: {username}?</p>
+                                    <p>¿Bloquear a {username}?</p>
                                 }
                                 {
                                     (bloqueo === false) &&
-                                    <p>¿Desbloquear usuario: {username}?</p>
+                                    <p>¿Desbloquear a {username}?</p>
                                 }
                                 </div>
                                 <div className="showPassword__container">
-                                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..." />
+                                    <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..." />
                                     <ShowPassword
                                         botonShowPassword={botonShowPassword}
                                         verPassword={verPassword}
@@ -277,11 +264,11 @@ function ListaUsuarios() {
                                 <div>
                                     {
                                         (bloqueo === true) &&
-                                        <button className="bloquear__button" onClick={bloquear}> Bloquear </button>
+                                        <button className="bloquear__button boton1" onClick={bloquear}> Bloquear </button>
                                     }
                                     {
                                         (bloqueo === false) &&
-                                        <button className="bloquear__button" onClick={bloquear}> Desbloquear </button>
+                                        <button className="bloquear__button boton1" onClick={bloquear}> Desbloquear </button>
                                     }
                                 </div>
                             </div>
@@ -309,7 +296,7 @@ function ListaUsuarios() {
                             <div>
                                 <div>¿Deshabilitar {usuarioEmail}?</div>
                                 <div className="showPassword__container">
-                                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..." />
+                                    <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..." />
                                     <ShowPassword
                                         botonShowPassword={botonShowPassword}
                                         verPassword={verPassword}
@@ -317,7 +304,7 @@ function ListaUsuarios() {
                                     />
                                 </div>
                                 <div> 
-                                    <button className="bloquear__button" onClick={deshabilitar}> Deshabilitar </button>
+                                    <button className="bloquear__button boton1" onClick={deshabilitar}> Deshabilitar </button>
                                 </div>
                             </div>
                         }

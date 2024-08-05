@@ -92,12 +92,12 @@ function BorrarUsuario() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3 className="titulo"> Borrar Usuario </h3>
+                <h3 className=""> Borrar usuario </h3>
                 <div className="">
-                    <input onChange={onChangeUsuarioEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePasswordAdmin} className="" id="passwordInput" type={showPassword} placeholder="Contraseña admin..."/>
+                    <input onChange={onChangePasswordAdmin} className="login__input" id="passwordInput" type={showPassword} placeholder="Contraseña admin..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
@@ -105,10 +105,10 @@ function BorrarUsuario() {
                     />
                 </div>
                 <div className="">
-                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
                 </div>
                 <div className="">
-                    <button onClick={borrar}> Borrar </button>
+                    <button className="boton1" onClick={borrar}> Borrar </button>
                 </div>
                 <Mensajes 
                     mensaje={mensaje}

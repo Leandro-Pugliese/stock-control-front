@@ -123,30 +123,30 @@ function UpdatePasswordAdmin() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Contraseña</h3>
+                <h3 className="">Modificar contraseña</h3>
                 <div>
                     <div className="">
-                        <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
+                        <input onChange={onChangeEmail} className="login__input update__password" id="emailInput" type="email" placeholder="Email..." />
                     </div>
                     <div className="showPassword__container">
-                        <input onChange={onChangePasswordActual} className="" id="passwordInput" type={showPassword} placeholder="Contraseña actual..."/>
-                        <ShowPassword 
+                        <input onChange={onChangePasswordActual} className="login__input update__password" id="passwordInput" type={showPassword} placeholder="Contraseña actual..." />
+                        <ShowPassword
                             botonShowPassword={botonShowPassword}
                             verPassword={verPassword}
                             hidePassword={hidePassword}
                         />
                     </div>
                     <div className="">
-                        <input onChange={onChangeNuevaPassword} className="" id="passInput" type={showPassword} placeholder="Nueva contraseña..."/>
+                        <input onChange={onChangeNuevaPassword} className="login__input update__password" id="passInput" type={showPassword} placeholder="Nueva contraseña..." />
                     </div>
                     <div className="">
-                        <input onChange={onChangeNuevaPassword2} className="" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..."/>
+                        <input onChange={onChangeNuevaPassword2} className="login__input update__password" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..." />
                     </div>
                     <div className="">
-                        <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                        <input onChange={onChangePin} className="login__input update__password" id="pinInput" type={showPassword} placeholder="Pin..." />
                     </div>
                     <div className="">
-                        <button onClick={updatePassword}> Modificar </button>
+                        <button className="boton1" onClick={updatePassword}> Modificar </button>
                     </div>
                 </div>
                 <Mensajes 

@@ -134,39 +134,41 @@ function CrearAdmin() {
 
     return (
         <div className="main__container">
-            <h3>Crear Admin</h3>
-            <div>
-                <div className="">
-                    <input onChange={onChangeUsername} className="" id="userInput" type="text" placeholder="Usuario..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeEmpresa} className="" id="empresaInput" type="text" placeholder="Empresa..."/>
-                </div>
-                <div className="showPassword__container">
-                    <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
-                    <ShowPassword 
-                        botonShowPassword={botonShowPassword}
-                        verPassword={verPassword}
-                        hidePassword={hidePassword}
-                    />
-                </div>
-                <div className="">
-                    <input onChange={onChangePassword2} className="" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangePin2} className="" id="pin2Input" type={showPassword} placeholder="Repita el pin..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeClaveAdm} className="" id="claveAdmInput" type={showPassword} placeholder="Clave..."/>
-                </div>
-                <div className="">
-                    <button onClick={crearAdmin}> Registrar </button>
+            <div className="form__container">
+                <h3 className="form__titulo">Crear Admin</h3>
+                <div>
+                    <div className="">
+                        <input onChange={onChangeUsername} className="login__input" id="userInput" type="text" placeholder="Usuario..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeEmpresa} className="login__input" id="empresaInput" type="text" placeholder="Empresa..."/>
+                    </div>
+                    <div className="showPassword__container">
+                        <input onChange={onChangePassword} className="login__input" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
+                        <ShowPassword 
+                            botonShowPassword={botonShowPassword}
+                            verPassword={verPassword}
+                            hidePassword={hidePassword}
+                        />
+                    </div>
+                    <div className="">
+                        <input onChange={onChangePassword2} className="login__input" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangePin2} className="login__input" id="pin2Input" type={showPassword} placeholder="Repita el pin..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeClaveAdm} className="login__input" id="claveAdmInput" type={showPassword} placeholder="Clave..."/>
+                    </div>
+                    <div className="">
+                        <button className="boton1" onClick={crearAdmin}> Registrar </button>
+                    </div>
                 </div>
             </div>
             <Mensajes 

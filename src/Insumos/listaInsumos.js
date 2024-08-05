@@ -1,5 +1,6 @@
 import "../App.css";
 import "./insumos.css";
+import "../Productos/productos.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
@@ -136,12 +137,28 @@ function ListaInsumos() {
                 <h3 className="titulo"> Lista Insumos </h3>
                 {
                     listaInsumosFiltrados.map((elemento, indice) => (
-                        <div className="" key={indice}> 
-                            <div>Insumo: {elemento.nombre}</div> 
-                            <div>Precio: ${elemento.precio}</div>
-                            <div>Descripción: {elemento.descripcion}</div>
-                            <button onClick={() => modificarInsumo(elemento._id)}>Modificar</button>
-                            <hr/>
+                        <div className="producto__data" key={indice}> 
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> Insumo </div>
+                                </div>
+                                <div>{elemento.nombre}</div>
+                            </div> 
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> Precio </div>
+                                </div>
+                                <div>${elemento.precio}</div>
+                            </div> 
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo"> Descripción </div>
+                                </div>
+                                <div>{elemento.descripcion}</div>
+                            </div> 
+                            <button className="boton1 boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                Modificar
+                            </button>
                         </div>
                     ))
                 }
@@ -153,12 +170,28 @@ function ListaInsumos() {
                     <h3 className="titulo"> Lista Insumos </h3>
                     {
                         insumos.map((elemento, indice) => (
-                            <div className="" key={indice}> 
-                                <div>Insumo: {elemento.nombre}</div> 
-                                <div>Precio: ${elemento.precio}</div>
-                                <div>Descripción: {elemento.descripcion}</div>
-                                <button onClick={() => modificarInsumo(elemento._id)}>Modificar</button>
-                                <hr/>
+                            <div className="producto__data" key={indice}> 
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> Insumo </div>
+                                    </div>
+                                    <div>{elemento.nombre}</div>
+                                </div> 
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> Precio </div>
+                                    </div>
+                                    <div>${elemento.precio}</div>
+                                </div> 
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> Descripción </div>
+                                    </div>
+                                    <div>{elemento.descripcion}</div>
+                                </div> 
+                                <button className="boton1 boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                    Modificar
+                                </button>
                             </div>
                         ))
                     }

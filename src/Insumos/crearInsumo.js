@@ -121,17 +121,17 @@ function CrearInsumo() {
                 {
                     (!showInsumo) &&
                     <div>
-                        <div className="">
-                            <input onChange={onChangeNombre} className="" id="nombreInput" type="text" placeholder="Nombre..."/>
+                        <div className="container__input">
+                            <input onChange={onChangeNombre} className="input__insumo" id="nombreInput" type="text" placeholder="Nombre..."/>
                         </div>
-                        <div className="">
-                            <input onChange={onChangePrecio} className="" id="precioInput" type="number" placeholder="Precio..."/>
+                        <div className="container__input">
+                            <input onChange={onChangePrecio} className="input__insumo" id="precioInput" type="number" placeholder="Precio..."/>
                         </div>
-                        <div className="">
-                            <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
+                        <div className="container__input">
+                            <input onChange={onChangeDescripcion} className="input__insumo" id="descripcionInput" type="text" placeholder="Descripción..."/>
                         </div>
-                        <div className="">
-                            <button onClick={crearInsumo}>Cargar</button>
+                        <div className="container__button">
+                            <button onClick={crearInsumo}> Cargar </button>
                         </div>
                     </div>
                 }

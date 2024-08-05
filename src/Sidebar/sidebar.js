@@ -15,8 +15,8 @@ function Sidebar({  renderProductosLista, renderProductosCarga, sidebarKey,
                 (sidebarKey === "LISTA PRODUCTOS") &&
                 <div className="container__botones">
                     <h4> Productos </h4>
-                    <button onClick={renderProductosLista}> Lista </button>
-                    <button onClick={renderProductosCarga}> Cargar </button>
+                    <button className="sidebar__button" onClick={renderProductosLista}> Lista </button>
+                    <button className="sidebar__button" onClick={renderProductosCarga}> Cargar </button>
                     <Filtros 
                         indicador={indicador}
                         productos={productos}

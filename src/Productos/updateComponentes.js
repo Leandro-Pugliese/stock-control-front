@@ -245,8 +245,8 @@ function UpdateComponentes() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Componentes Producto</h3>
-                <div>Sku: {sku}</div> 
+                <h3 className="titulo">Modificar Componentes</h3>
+                <div className="stock__sku">Sku: {sku}</div> 
                 <div className="stock__lista">
                     <div>Componentes: </div>
                     {componentes.map((elemento, indice) => (
@@ -255,15 +255,15 @@ function UpdateComponentes() {
                         </div>
                     ))}
                 </div>
-                <div className="">
-                    <select onChange={onChangeOperacion} defaultValue="-">
+                <div className="container__input">
+                    <select className="input__producto" onChange={onChangeOperacion} defaultValue="-">
                         <option value="-">Operación...</option>
                         <option value="ADD">Agregar</option>
                         <option value="REMOVE">Quitar</option>
                     </select>
                 </div>
-                <div className="">
-                    <select onChange={onChangeInsumo} defaultValue="-">
+                <div className="container__input">
+                    <select className="input__producto" onChange={onChangeInsumo} defaultValue="-">
                         <option value="-">Componente...</option>
                         {
                             insumosLista.map((elemento, indice) => (
@@ -274,12 +274,12 @@ function UpdateComponentes() {
                         }
                     </select>
                 </div>
-                <div className="">
-                    <input onChange={onChangeCantidad} className="" id="cantidadInput" type="number" placeholder="Cantidad..."/>
+                <div className="container__input">
+                    <input onChange={onChangeCantidad} className="input__producto" id="cantidadInput" type="number" placeholder="Cantidad..."/>
                 </div>
                 {
                     (!anularBoton) &&
-                    <div className="">
+                    <div className="container__button">
                         <button onClick={updateComponentes}> Aceptar </button>
                     </div>
                 }

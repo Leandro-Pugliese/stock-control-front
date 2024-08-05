@@ -95,18 +95,18 @@ function HabilitarUsuario() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3 className="titulo"> Habilitar Usuario </h3>
+                <h3 className=""> Habilitar Usuario </h3>
                 <div className="">
-                    <input onChange={onChangeUsuarioNombre} className="" id="nombreInput" type="text" placeholder="Usuario..."/>
+                    <input onChange={onChangeUsuarioNombre} className="login__input" id="nombreInput" type="text" placeholder="Usuario..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeUsuarioEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeClaveAcceso} className="" id="claveInput" type="text" placeholder="Clave de acceso..."/>
+                    <input onChange={onChangeClaveAcceso} className="login__input" id="claveInput" type="text" placeholder="Clave de acceso..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
@@ -114,7 +114,7 @@ function HabilitarUsuario() {
                     />
                 </div>
                 <div className="">
-                    <button onClick={habilitar}> Habilitar </button>
+                    <button className="boton1" onClick={habilitar}> Habilitar </button>
                 </div>
                 <Mensajes 
                     mensaje={mensaje}
