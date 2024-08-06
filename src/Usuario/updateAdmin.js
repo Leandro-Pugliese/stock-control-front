@@ -123,7 +123,7 @@ function UpdatePasswordAdmin() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3 className="">Modificar contraseña</h3>
+                <h3 className="titulo">Modificar contraseña</h3>
                 <div>
                     <div className="">
                         <input onChange={onChangeEmail} className="login__input update__password" id="emailInput" type="email" placeholder="Email..." />
@@ -145,8 +145,8 @@ function UpdatePasswordAdmin() {
                     <div className="">
                         <input onChange={onChangePin} className="login__input update__password" id="pinInput" type={showPassword} placeholder="Pin..." />
                     </div>
-                    <div className="">
-                        <button className="boton1" onClick={updatePassword}> Modificar </button>
+                    <div className="container__button">
+                        <button className="" onClick={updatePassword}> Modificar </button>
                     </div>
                 </div>
                 <Mensajes 

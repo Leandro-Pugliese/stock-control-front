@@ -1,0 +1,30 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(33, 37, 41, 1);
+    height: 3.5rem;
+}
+nav a {
+    color: whitesmoke;
+    text-decoration: none;
+    padding: 0rem 2.5rem;
+}
+nav a:hover {
+    color: whitesmoke;
+}
+nav ul {
+    list-style: none;
+    margin: 0rem 0rem;
+    padding: 0rem 0rem;
+}
+.inicioButton {
+    font-size: 1.2rem;
+}
+.openMenu {
+    margin-right: 2.5rem;
+}
+.dropIcon {
+    margin-left: 0.3rem;
+}

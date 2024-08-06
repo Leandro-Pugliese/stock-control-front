@@ -19,59 +19,79 @@
 .producto__data {
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    margin-left: 0.5rem;
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
     margin-right: 0.5rem;
-    margin-bottom: 1rem;
-    padding: 0.7rem;
-    background-color: rgba(202, 202, 202, 0.6);
-    border: solid 0.1rem rgba(202, 202, 202, 0.6);
-    border-radius: 0.3rem;
+    border: solid 0.15rem rgba(128, 128, 128, 1);
+    border-radius: 0.25rem;
+    gap: 10px;
 }
 .data__container {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     padding: 0.1rem 0.2rem;
     margin: 0.2rem 0rem;
     background-color: rgba(128, 128, 128, 0.3);
     border: solid 0.1rem rgba(128, 128, 128, 0.3);
-    border-radius: 0.2rem;
+    border-radius: 0.2rem; */
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
 }
 .container__dataFija {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     width: 100%;
     padding: 0.3rem 0rem;
+    font-weight: bold;
 }
 .dataFija__titulo {
-    width: 50%;
     font-weight: bold;
 }
 .dataFija__boton {
     display: flex;
     justify-content: right;
-    width: 50%;
+    /* width: 50%; */
 }
 .boton__modificar {
-    margin: 0rem 0.2rem;
-    padding: 0.1rem 0.2rem;
-    background-color: rgba(33, 37, 41, 1);
-    border: solid 0.1rem rgba(33, 37, 41, 1);
-    border-radius: 0.3rem;
-    width: 30%;
-    color: whitesmoke;
+    background-color: #0063ce;
+    color: #ffffff;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+}
+.boton__modificar:hover {
+    background-color: #0076f5;
+}
+.boton__modificar:active {
+    scale: 0.95;
 }
 .producto__stock {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     padding: 0.1rem 0rem;
+    width: 100%;
 }
 .producto__componentes {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     padding: 0.1rem 0rem;
+    width: 100%;
+}
+.dataVariable {
+    width: 100%;
 }
 
 /* CARGAR PRODUCTO */
@@ -119,11 +139,16 @@
 }
 .container__button button {
     width: 32%;
-    border: solid 0.1rem rgba(33, 37, 41, 1);
-    border-radius: 0.3rem;
-    background-color: rgba(33, 37, 41, 1);
+    border: solid 0.1rem #198754;
+    border-radius: 0.25rem;
+    background-color: #198754;
     color: whitesmoke;
     padding: 0.4rem 0rem;
+    transition: background-color ease-in-out 0.3;
+}
+.container__button button:hover {
+    background-color: #1fb143;
+    border-color: #1fb143;
 }
 .container__button button:active {
     scale: 0.95;
@@ -144,7 +169,7 @@
      padding-left: 0.1rem;
  }
 .x__button i {
-    color: rgba(133, 133, 133, 0.8);
+    color: red;
 }
  .productoCargado {
      display: flex;
@@ -203,43 +228,92 @@
     padding: 0.1rem 0.4rem;
 }
 /* RENTABILIDAD */
-.titulo__container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
 .container__secundario {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     width: 100%;
+    margin-top: 1rem;
 }
 .caluladora__container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    width: 50%;
+    align-items: left;
+    width: 45%;
+    border: solid 0.2rem rgba(33, 37, 41, 1);
+    border-radius: 0.3rem;
     box-sizing: border-box;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+}
+.caluladora__container p {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0.7rem 0.0rem;
+}
+.componentes__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.componente__container {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.costo__total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+    padding: 0.2rem 0.5rem;
 }
 .calculadora__fija {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
-.calculadora__fija button {
-    width: 30%;
-    margin-top: 0.5rem;
+.rent {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.detalles {
+    background-color: #ffffff;
+    padding: 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 0.7rem;
 }
 .calculadora__funciones {
     display: flex;
-    flex-direction: column;
-    width: 70%;
-    margin-top: 1rem;
+    flex-direction: row;
     margin-bottom: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.calculadora__funciones label {
+    font-size: 1em;
+    
+    display: block;
 }
 .calculadora__funciones input {
     width: 50%;
@@ -247,4 +321,8 @@
 .calculadora__funciones button {
     width: 30%;
     margin-top: 0.3rem;
+}
+.noMargin {
+    margin-top: 0.4rem;
+    margin-bottom: 0rem;
 }

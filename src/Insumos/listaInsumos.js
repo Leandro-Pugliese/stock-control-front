@@ -134,34 +134,34 @@ function ListaInsumos() {
             {
                 (filtrosActivos) &&
                 <div className="container__general">
-                <h3 className="titulo"> Lista Insumos </h3>
-                {
-                    listaInsumosFiltrados.map((elemento, indice) => (
-                        <div className="producto__data" key={indice}> 
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> Insumo </div>
-                                </div>
-                                <div>{elemento.nombre}</div>
-                            </div> 
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> Precio </div>
-                                </div>
-                                <div>${elemento.precio}</div>
-                            </div> 
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> Descripción </div>
-                                </div>
-                                <div>{elemento.descripcion}</div>
-                            </div> 
-                            <button className="boton1 boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
-                                Modificar
-                            </button>
-                        </div>
-                    ))
-                }
+                    <h3 className="titulo"> Lista Insumos </h3>
+                    {
+                        listaInsumosFiltrados.map((elemento, indice) => (
+                            <div className="insumo__data" key={indice}> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Insumo </div>
+                                    </div>
+                                    <div>{elemento.nombre}</div>
+                                </div> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Precio </div>
+                                    </div>
+                                    <div>${elemento.precio}</div>
+                                </div> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Descripción </div>
+                                    </div>
+                                    <div>{elemento.descripcion}</div>
+                                </div> 
+                                <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                    Modificar
+                                </button>
+                            </div>
+                        ))
+                    }
                 </div>
             }
             {
@@ -170,26 +170,26 @@ function ListaInsumos() {
                     <h3 className="titulo"> Lista Insumos </h3>
                     {
                         insumos.map((elemento, indice) => (
-                            <div className="producto__data" key={indice}> 
-                                <div className="data__container">
-                                    <div className="container__dataFija">
+                            <div className="insumo__data" key={indice}> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
                                         <div className="dataFija__titulo"> Insumo </div>
                                     </div>
                                     <div>{elemento.nombre}</div>
                                 </div> 
-                                <div className="data__container">
-                                    <div className="container__dataFija">
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
                                         <div className="dataFija__titulo"> Precio </div>
                                     </div>
                                     <div>${elemento.precio}</div>
                                 </div> 
-                                <div className="data__container">
-                                    <div className="container__dataFija">
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
                                         <div className="dataFija__titulo"> Descripción </div>
                                     </div>
                                     <div>{elemento.descripcion}</div>
                                 </div> 
-                                <button className="boton1 boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
                                     Modificar
                                 </button>
                             </div>

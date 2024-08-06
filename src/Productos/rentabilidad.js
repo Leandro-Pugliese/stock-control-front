@@ -170,7 +170,7 @@ function Rentabilidad() {
     }
 
     // Calculadora de rentabilidad.
-    const [calcularRent, setCalcularRent] = useState(100);
+    const [calcularRent, setCalcularRent] = useState(0);
     const rentabilidadPrecioFinal = (costoTotal, porcentajeRentabilidad) => {
         // El porcentaje de rentabilidad se divide por 100 para convertirlo en un decimal.
         let rentabilidad = costoTotal * (porcentajeRentabilidad / 100);
@@ -179,15 +179,6 @@ function Rentabilidad() {
     }
     const rentabilidadGanancia = (costoTotal, porcentajeRentabilidad) => {
         return costoTotal * (porcentajeRentabilidad / 100); 
-    }
-    
-    // Hooks para calculadora de rentabilidad.
-    const [showRent, setShowRent] = useState(false);
-    const calcular = () => {
-        if (showRent === true) {
-            setCalcularRent(100);
-        }
-        setShowRent(prevShowRent => !prevShowRent);
     }
     const onChangeCalcularRent = function (evento) {
         let num = Number(evento.target.value);
@@ -200,10 +191,10 @@ function Rentabilidad() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3> Rentabilidad </h3>
+                <h3 className="titulo"> Rentabilidad </h3>
                 <div className="">
-                    <div className=""> Sku: {sku} </div> 
-                    <div className="producto__stock"> Stock: 
+                    <div className="stock__sku"> Sku: {sku} </div> 
+                    <div className="stock__lista noMargin"> Stock: 
                         {
                             stock.map((elemento, indice) => (
                                 <div className="stock__container" key={indice}>
@@ -212,70 +203,57 @@ function Rentabilidad() {
                             ))
                         } 
                     </div> 
-                    <div className="producto__componentes"> Componentes: 
-                        {
-                            componentes.map((elemento, indice) => (
-                                <div className="componente__container" key={indice}>
-                                    {`[${elemento.insumo}: ${elemento.cantidad}]`}
-                                </div>
-                            ))
-                        } 
-                    </div> 
-                    <div className=""> Categoría: {categoria} </div> 
-                    <div className=""> Descripción: {descripcion} </div>
-                </div>
-                <div className="titulo__container"> 
-                    <h4> Calculadora </h4>
+                    <div className="stock__sku"> Categoría: {categoria} </div> 
+                    <div className="stock__sku"> Descripción: {descripcion} </div>
                 </div>
                 <div className="container__secundario">
                     <div className="caluladora__container">
-                        <p> Costos </p>
-                        <div className=""> Componentes: 
+                        <p> Costos Producto </p>
+                        <div className="componentes__lista"> 
                         {
                             costosFinal.map((elemento, indice) => (
                                 <div className="componente__container" key={indice}>
-                                    {`[${elemento.componente}: ${formateoMoneda(elemento.costo)}]`}
+                                    <div> {`${elemento.componente}:`} </div>
+                                    <div> {`${formateoMoneda(elemento.costo)}`} </div>
                                 </div>
                             ))
                         } 
-                        <div>Costo Total: {formateoMoneda(costoTotal)}</div>
+                        <div className="costo__total">
+                                <div> Costo Total: </div> 
+                                <div> {formateoMoneda(costoTotal)} </div>
+                            </div>
                     </div> 
                     </div>
                     <div className="caluladora__container">
-                        <p> Rentabilidad </p>
+                        <p> Rentabilidad Producto </p>
                         {/* El inicial por default lo dejo calculado en 100% */}
                         <div className="calculadora__fija">
-                            <div className="">Rent. 100%</div>
-                            <div className="">
-                                {`[Precio Final: ${formateoMoneda(rentabilidadPrecioFinal(costoTotal, 100))}]`}
-                                {` / [Ganancia: ${formateoMoneda(rentabilidadGanancia(costoTotal, 100))}]`}
+                            <div className="rent">Rent. 100%</div>
+                            <div className="detalles">
+                                <div>Precio Final:</div>
+                                <div>{formateoMoneda(rentabilidadPrecioFinal(costoTotal, 100))}</div>
+                            </div>
+                            <div className="detalles">
+                                <div>Ganancia:</div>
+                                <div>{formateoMoneda(rentabilidadGanancia(costoTotal, 100))}</div>
                             </div>
                         </div>
-                        {
-                            (!showRent) &&
-                            <div className="calculadora__funciones">
-                                <label>Rentabilidad Deseada...</label>
-                                <input onChange={onChangeCalcularRent} id="rentInput" type="number" placeholder="100%..."/>
-                                <button onClick={calcular}> Calcular </button>
-                                <Mensajes 
-                                    mensaje={mensaje}
-                                    showMsj={showMsj}
-                                    showErrorMsj={showErrorMsj}
-                                    showErrorMsjPost={showErrorMsjPost}
-                                />
+                        <div className="calculadora__funciones">
+                            <label className="">Rent. Deseada: </label>
+                            <input className="input__producto" onChange={onChangeCalcularRent} id="rentInput" type="number" placeholder="0%..." />
+                        </div>
+                        <div className="calculadora__fija">
+                            <div className="rent">Rent. {calcularRent}%</div>
+                            <div className="detalles">
+                                <div>Precio Final:</div>
+                                <div>{formateoMoneda(rentabilidadPrecioFinal(costoTotal, calcularRent))}</div>
                             </div>
-                        }
-                        {
-                            (showRent) &&
-                            <div className="calculadora__fija">
-                                <div className="">Rent. {calcularRent}%</div>
-                                <div className="">
-                                    {`[Precio Final: ${formateoMoneda(rentabilidadPrecioFinal(costoTotal, calcularRent))}]`}
-                                    {` / [Ganancia: ${formateoMoneda(rentabilidadGanancia(costoTotal, calcularRent))}]`}
-                                </div>
-                                <button onClick={calcular}> Volver </button>
+                            <div className="detalles">
+                                <div>Ganancia:</div>
+                                <div>{formateoMoneda(rentabilidadGanancia(costoTotal, calcularRent))}</div>
                             </div>
-                        }
+                        </div>
+                        
                     </div>
                 </div>
                 <Mensajes 

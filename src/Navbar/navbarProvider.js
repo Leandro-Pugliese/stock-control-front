@@ -50,7 +50,7 @@ export function NavbarProvider({children}) {
         }
     }
     return (
-        <navbarContext.Provider value={{cambiarKey, productoKey, insumoKey, allKey, adminKey, userKey}}>
+        <navbarContext.Provider value={{cambiarKey, allKey, productoKey, insumoKey, adminKey, userKey}}>
             {children}
         </navbarContext.Provider>
     )

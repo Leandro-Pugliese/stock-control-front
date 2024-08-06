@@ -80,7 +80,8 @@
 
 /* UPDATE PASSWORD */     
 .update__password {
-    width: 23%;
+    width: 32%;
+    margin-left: 0.2rem;
 }   
 
 /* LISTA USUARIOS */
@@ -111,3 +112,18 @@
     padding: 0.3rem 0.2rem;
 }
 
+/* HABILITAR USUARIO */
+.habilitarInput {
+    margin-left: 0.2rem;
+    width: 32%;
+}
+
+/* BORRAR USUARIO */
+#boton__eliminar {
+    background-color: rgb(204, 0, 0);
+    border-color: rgb(204, 0, 0);
+}
+#boton__eliminar:hover {
+    background-color: rgb(231, 0, 0);
+    border-color: rgb(231, 0, 0);
+}

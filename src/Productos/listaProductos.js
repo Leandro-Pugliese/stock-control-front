@@ -493,7 +493,7 @@ function ListaProductos() {
                                         </div>
                                     }
                                 </div>
-                                <div> {element.sku} </div>
+                                <div className="dataVariable"> {element.sku} </div>
                             </div>
                             <div className="data__container">
                                 <div className="container__dataFija">
@@ -522,7 +522,7 @@ function ListaProductos() {
                                 <div className="producto__componentes">
                                     {
                                         element.componentes.map((elemento, indice) => (
-                                            <div className="componente__container" key={indice}> 
+                                            <div className="" key={indice}> 
                                                 {`[${elemento.insumo}: ${elemento.cantidad}]`}
                                             </div>
                                         ))
@@ -536,7 +536,7 @@ function ListaProductos() {
                                         <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
                                     </div>
                                 </div> 
-                                <div> {element.categoria} </div>
+                                <div className="dataVariable"> {element.categoria} </div>
                             </div>
                             <div className="data__container">
                                 <div className="container__dataFija">
@@ -545,7 +545,7 @@ function ListaProductos() {
                                         <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
                                     </div>
                                 </div>
-                                <div>{element.descripcion} </div>
+                                <div className="dataVariable">{element.descripcion} </div>
                             </div>
                         </div>
                         ))
@@ -569,7 +569,7 @@ function ListaProductos() {
                                         </div>
                                     }
                                 </div>
-                                <div> {element.sku} </div>
+                                <div className="dataVariable"> {element.sku} </div>
                             </div>
                             <div className="data__container">
                                 <div className="container__dataFija">
@@ -598,7 +598,7 @@ function ListaProductos() {
                                 <div className="producto__componentes">
                                     {
                                         element.componentes.map((elemento, indice) => (
-                                            <div className="componente__container" key={indice}> 
+                                            <div className="" key={indice}> 
                                                 {`[${elemento.insumo}: ${elemento.cantidad}]`}
                                             </div>
                                         ))
@@ -612,7 +612,7 @@ function ListaProductos() {
                                         <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
                                     </div>
                                 </div> 
-                                <div> {element.categoria} </div>
+                                <div className="dataVariable"> {element.categoria} </div>
                             </div>
                             <div className="data__container">
                                 <div className="container__dataFija">
@@ -621,7 +621,7 @@ function ListaProductos() {
                                         <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
                                     </div>
                                 </div>
-                                <div>{element.descripcion} </div>
+                                <div className="dataVariable">{element.descripcion}</div>
                             </div>
                         </div>
                     ))

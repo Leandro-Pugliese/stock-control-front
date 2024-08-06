@@ -95,26 +95,26 @@ function HabilitarUsuario() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3 className=""> Habilitar Usuario </h3>
+                <h3 className="titulo"> Habilitar Usuario </h3>
                 <div className="">
-                    <input onChange={onChangeUsuarioNombre} className="login__input" id="nombreInput" type="text" placeholder="Usuario..."/>
+                    <input onChange={onChangeUsuarioNombre} className="login__input habilitarInput" id="nombreInput" type="text" placeholder="Usuario..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeUsuarioEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="login__input habilitarInput" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeClaveAcceso} className="login__input" id="claveInput" type="text" placeholder="Clave de acceso..."/>
+                    <input onChange={onChangeClaveAcceso} className="login__input habilitarInput" id="claveInput" type="text" placeholder="Clave de acceso..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    <input onChange={onChangePin} className="login__input habilitarInput" id="pinInput" type={showPassword} placeholder="Pin..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
                         hidePassword={hidePassword}
                     />
                 </div>
-                <div className="">
-                    <button className="boton1" onClick={habilitar}> Habilitar </button>
+                <div className="container__button">
+                    <button onClick={habilitar}> Habilitar </button>
                 </div>
                 <Mensajes 
                     mensaje={mensaje}

@@ -659,7 +659,11 @@ progress {
 }
 /*Fixeamos el margin left en 6rem porque en auto mueve los elementos en distintas rutas.*/
 .container {
-  margin-left: 6rem;
+  width: 100%;
+  margin-left: 0rem;
+  margin-right: 0rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
 }
 
 @media (min-width: 576px) {
@@ -3789,11 +3793,13 @@ textarea.form-control-lg {
 .navbar-brand {
   padding-top: var(--bs-navbar-brand-padding-y);
   padding-bottom: var(--bs-navbar-brand-padding-y);
-  margin-right: var(--bs-navbar-brand-margin-end);
+  /* margin-right: var(--bs-navbar-brand-margin-end); */
   font-size: var(--bs-navbar-brand-font-size);
   color: var(--bs-navbar-brand-color);
   text-decoration: none;
   white-space: nowrap;
+  width: 30%;
+  text-align: center;
 }
 .navbar-brand:hover, .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
@@ -3811,6 +3817,7 @@ textarea.form-control-lg {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  width: 70%;
 }
 .navbar-nav .show > .nav-link,
 .navbar-nav .nav-link.active {
@@ -7719,9 +7726,10 @@ textarea.form-control-lg {
   margin-left: 3rem !important;
 }
 
-.ms-auto {
+/* Aca ponemos el margin para posicionar el menu desplegable de la navbar */
+/* .ms-auto {
   margin-left: auto !important;
-}
+} */
 
 .p-0 {
   padding: 0 !important;
