@@ -191,38 +191,65 @@ function ListaUsuarios() {
             />
             <div className="container__general">
                 <div className="listas__container">
-                    <div className="lista__container" id="listaHabilitados">
-                        <h4>Usuarios habilitados</h4>
+                    <div className="lista__container">
+                        <h4 className="titulo">Usuarios habilitados</h4>
                         {
                             usuariosHabilitados.map((elemento, indice) => (
                                 <div className="datos__usuario" key={indice}> 
-                                    <div>Usuario: {elemento.username}</div> 
-                                    <div>Email: {elemento.email}</div>
-                                    <div>Clave de acceso: {elemento.claveAcceso}</div>
-                                    <button className="boton1" onClick={() => activarPopUpDeshabilitar(elemento.email)}> Deshabilitar </button>
+                                    <div className="dato">
+                                        <div>Usuario:</div> 
+                                        <div>{elemento.username}</div>
+                                    </div>
+                                    <div className="dato">
+                                        <div>Email:</div>
+                                        <div>{elemento.email}</div>
+                                    </div>
+                                    <div className="dato">
+                                        <div>Clave de acceso:</div>
+                                        <div>{elemento.claveAcceso}</div>
+                                    </div>
+                                    <button className="boton__modificar" id="botonDeshabilitar" onClick={() => activarPopUpDeshabilitar(elemento.email)}> Deshabilitar </button>
                                 </div>
                             ))
                         }
                     </div>
-                    <div className="lista__container" id="listaCreados">
+                    <div className="lista__container">
                         <h4>Usuarios creados</h4>
                         {
                             usuariosCreados.map((elemento, indice) => (
                                 <div className="datos__usuario" key={indice}> 
-                                    <div>Usuario: {elemento.username}</div> 
-                                    <div>Email: {elemento.email}</div>
+                                    <div className="dato">
+                                        <div>Usuario:</div>
+                                        <div>{elemento.username}</div> 
+                                    </div>
+                                    <div className="dato">
+                                        <div>Email:</div>
+                                        <div>{elemento.email}</div>
+                                    </div>
                                     {
                                         (elemento.bloqueado === false) &&
-                                        <div className="">
-                                            <div>Bloqueado: No</div>
-                                            <button className="boton1" onClick={() => activarPopUpBloqueo(true, elemento._id, elemento.username)}> Bloquear </button>
+                                        <div className="dato">
+                                            <div>Bloqueado:</div>
+                                            <div>No</div>
+                                        </div>
+                                    }
+                                    {    
+                                        (elemento.bloqueado === false) &&
+                                        <div>
+                                            <button className="boton__modificar" id="botonBloquear" onClick={() => activarPopUpBloqueo(true, elemento._id, elemento.username)}> Bloquear </button>
                                         </div>
                                     }
                                     {
                                         (elemento.bloqueado === true) &&
-                                        <div className="">
-                                            <div>Bloqueado: Si</div>
-                                            <button className="boton1" onClick={() => activarPopUpBloqueo(false, elemento._id, elemento.username)}> Desbloquear </button>
+                                        <div className="dato">
+                                            <div>Bloqueado:</div>
+                                            <div>Si</div>
+                                        </div>
+                                    }
+                                    {
+                                        (elemento.bloqueado === true) &&
+                                        <div>
+                                            <button className="boton__modificar" id="botonDesbloquear" onClick={() => activarPopUpBloqueo(false, elemento._id, elemento.username)}> Desbloquear </button>
                                         </div>
                                     }
                                 </div>

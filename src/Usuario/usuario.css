@@ -88,28 +88,46 @@
 .listas__container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .lista__container {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 45%;
     justify-content: center;
     text-align: left;
-}
-#listaHabilitados {
-    border-right: solid 0.1rem black;
-    padding-right: 0.3rem;
-}
-#listaCreados {
-    padding: 0rem 0.3rem;
+    margin: 0rem 0.5rem;
 }
 .datos__usuario {
-    background-color: gainsboro;
-    border: solid 0.2rem gainsboro;
+    background-color: #f0f0f0;
+    border: solid 0.2rem #f0f0f0;
     border-radius: 0.3rem;
     margin: 0rem 0.2rem;
     margin-bottom: 0.5rem;
     padding: 0.3rem 0.2rem;
+}
+.dato {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0.2rem;
+}
+#botonDeshabilitar {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+#botonBloquear {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+#botonDesbloquear {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
 }
 
 /* HABILITAR USUARIO */

@@ -522,7 +522,7 @@ function ListaProductos() {
                                 <div className="producto__componentes">
                                     {
                                         element.componentes.map((elemento, indice) => (
-                                            <div className="" key={indice}> 
+                                            <div className="stock__container" key={indice}> 
                                                 {`[${elemento.insumo}: ${elemento.cantidad}]`}
                                             </div>
                                         ))
@@ -582,7 +582,7 @@ function ListaProductos() {
                                     {
                                         element.stock.map((elemento, indice) => (
                                             <div className="stock__container" key={indice}> 
-                                                {`[${elemento.color}: ${elemento.unidades}]`}
+                                                {`${elemento.color} [${elemento.unidades}]`}
                                             </div>
                                         ))
                                     }
@@ -598,8 +598,8 @@ function ListaProductos() {
                                 <div className="producto__componentes">
                                     {
                                         element.componentes.map((elemento, indice) => (
-                                            <div className="" key={indice}> 
-                                                {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                            <div className="stock__container" key={indice}> 
+                                                {`${elemento.insumo} [${elemento.cantidad}]`}
                                             </div>
                                         ))
                                     }
