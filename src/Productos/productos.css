@@ -7,7 +7,7 @@
 .container__general {
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 80%;
     border-top: solid 0.1rem rgba(33, 37, 41, 1);
     padding-top: 0.3rem;
     padding-left: 0.5rem;
@@ -41,6 +41,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding: 0.3rem 0rem;
     font-weight: bold;
@@ -81,6 +82,7 @@
     border-radius: 0.3rem;
     padding: 0.1rem 0.4rem;
     margin: 0.2rem 0.2rem;
+    padding-top: 0.2rem;
 }
 .producto__componentes {
     display: flex;
@@ -146,8 +148,8 @@
     transition: background-color ease-in-out 0.3;
 }
 .container__button button:hover {
-    background-color: #1fb143;
-    border-color: #1fb143;
+    background-color: #1ba03c;
+    border-color: #1ba03c;
 }
 .container__button button:active {
     scale: 0.95;
@@ -156,6 +158,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
     padding: 0.1rem 0.1rem;
     margin: 0.2rem 0.2rem;
     width: 80%;
@@ -171,12 +174,15 @@
     color: red;
 }
  .productoCargado {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: left;
- }
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+.acomodar__lista {
+    justify-content: right;
+    margin: 0rem;
+}
 /* UPDATE STOCK */
 .stock__sku {
     display: flex;
@@ -205,16 +211,25 @@
     padding: 0.2rem 0.5rem;
     margin-bottom: 0.5rem;
     margin-right: 0.5rem;
-    border: solid 0.2rem rgba(33, 37, 41, 1);
+    border: solid 0.1rem rgb(90, 102, 114);
     border-radius: 0.3rem;
+    background-color: #f0f0f0;
 }
 .data__modificable label {
+    padding-left: 0.3rem;
+    padding-top: 0.1rem;
     font-weight: bold;
 }
 .modificable {
     display: flex;
-    flex-direction: column;
-    padding-left: 0.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    margin: 0.5rem 0.2rem;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .modificable p {
     margin: 0rem 0rem;
@@ -225,6 +240,17 @@
     width: 15%; 
     margin: 0.2rem;
     padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+}
+#botonAceptar {
+    background-color: #198754;
+    border-color: #198754;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+#botonCancelar {
+    background-color: rgb(231, 0, 0);
+    border-color: rgb(231, 0, 0);
 }
 /* RENTABILIDAD */
 .container__secundario {

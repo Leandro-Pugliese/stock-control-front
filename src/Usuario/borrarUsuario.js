@@ -9,15 +9,26 @@ import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
 function BorrarUsuario() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("ADMIN");
+    // eslint-disable-next-line
     }, []);
 
     // Contexto para la sidebar.
     const sidebarKey = "ADMIN MENU";
+    // Sub Contexto para la sidebar.
+    const sidebarSubKey = "BORRAR-USUARIO";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -90,11 +101,12 @@ function BorrarUsuario() {
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
+                sidebarSubKey={sidebarSubKey}
             />
             <div className="container__general">
                 <h3 className="titulo"> Borrar usuario </h3>
                 <div className="">
-                    <input onChange={onChangeUsuarioEmail} className="login__input habilitarInput" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="login__input habilitarInput" id="emailInput" type="email" placeholder="Email usuario..."/>
                 </div>
                 <div className="showPassword__container">
                     <input onChange={onChangePasswordAdmin} className="login__input habilitarInput" id="passwordInput" type={showPassword} placeholder="Contraseña admin..."/>

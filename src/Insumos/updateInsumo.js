@@ -8,11 +8,20 @@ import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateInsumo() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("INSUMO");
+    // eslint-disable-next-line
     }, []);
 
     // Contexto para la sidebar.
@@ -112,7 +121,6 @@ function UpdateInsumo() {
 
     // Update insumo.
     const [anularBoton, setAnularBoton] = useState(true);
-    const [anularBotonesModificar, setAnularBotonesModificar] = useState(false);
     const updateInsumo = async () => {
         try {
             if (descripcion === "") {
@@ -174,7 +182,6 @@ function UpdateInsumo() {
             setShowErrorMsj(false);
             setShowErrorMsjPost(false);
             setAnularBoton(true);
-            setAnularBotonesModificar(true);
             setTimeout(function () {
                 window.location.href = "/insumos"
               }, 800);
@@ -202,6 +209,11 @@ function UpdateInsumo() {
         }
     }
 
+    // Función para formatear número a moneda.
+    const formateoMoneda = (valor) => {
+        return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    }
+
     return (
         <div className="container__main">
             <Sidebar 
@@ -218,8 +230,8 @@ function UpdateInsumo() {
                         {
                             (!modPrecio) &&
                             <div className="modificable">
-                                <p>${precio}</p>
-                                <button className="boton1" onClick={() => habilitarModificarInput("Precio")}>Modificar</button>
+                                <p>{formateoMoneda(precio)}</p>
+                                <button className="boton__modificar" onClick={() => habilitarModificarInput("Precio")}>Modificar</button>
                             </div>
                         }
                         {
@@ -239,7 +251,7 @@ function UpdateInsumo() {
                             (!modDescripcion) &&
                             <div className="modificable">
                                 <p>{descripcion}</p>
-                                <button className="boton1" onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                                <button className="boton__modificar" onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
                             </div>
                         }
                         {
@@ -253,8 +265,8 @@ function UpdateInsumo() {
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button className="boton1" onClick={updateInsumo}> Aceptar </button>
-                        <button className="boton1" onClick={() => window.location.reload()}> Atras </button>
+                        <button className="boton1" id="botonAceptar" onClick={updateInsumo}> Aceptar </button>
+                        <button className="boton1" id="botonCancelar" onClick={() => window.location.reload()}> Atras </button>
                     </div>
                 }
                 <Mensajes 

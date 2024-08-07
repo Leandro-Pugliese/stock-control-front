@@ -1,5 +1,5 @@
 import "../App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
@@ -99,8 +99,8 @@ function LoginUsuario() {
                             hidePassword={hidePassword}
                         />
                     </div>
-                    <div className="">
-                        <button className="boton1" onClick={loginUsuario}> Ingresar </button>
+                    <div className="button-login__container">
+                        <button className="button__ingresar" onClick={loginUsuario}> Ingresar </button>
                     </div>
                 </div>
             </div>

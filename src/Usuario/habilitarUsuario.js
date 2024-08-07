@@ -9,15 +9,25 @@ import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
 function HabilitarUsuario() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("ADMIN");
+    // eslint-disable-next-line
     }, []);
-
     // Contexto para la sidebar.
     const sidebarKey = "ADMIN MENU";
+    // Sub Contexto para la sidebar.
+    const sidebarSubKey = "HABILITAR-USUARIO";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -93,6 +103,7 @@ function HabilitarUsuario() {
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
+                sidebarSubKey={sidebarSubKey}
             />
             <div className="container__general">
                 <h3 className="titulo"> Habilitar Usuario </h3>

@@ -1,6 +1,6 @@
 import "../App.css";
 import "./usuario.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
@@ -128,10 +128,10 @@ function CrearUsuario() {
                         <input onChange={onChangePassword2} className="login__input" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
                     </div>
                     <div className="">
-                        <input onChange={onChangeClaveAcceso} className="login__input" id="claveAccesoInput" type={showPassword} placeholder="Clave Acceso..."/>
+                        <input onChange={onChangeClaveAcceso} className="login__input" id="claveAccesoInput" type={showPassword} placeholder="Clave de acceso..."/>
                     </div>
-                    <div className="">
-                        <button className="boton1" onClick={crearUsuario}> Registrar </button>
+                    <div className="button-login__container">
+                        <button className="button__ingresar" onClick={crearUsuario}> Registrarse </button>
                     </div>
                 </div>
             </div>

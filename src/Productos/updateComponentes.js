@@ -7,10 +7,18 @@ import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateComponentes() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("PRODUCTO");
     // eslint-disable-next-line
     }, []);

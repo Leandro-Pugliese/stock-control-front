@@ -80,3 +80,38 @@
     margin: 0rem 0rem;
     margin-top: 0.5rem;
 }
+.insumo__cargado {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: #f0f0f0;
+    border: solid 0.1rem #f0f0f0;
+    border-radius: 0.3rem;
+    padding-top: 0.8rem;
+    margin: 0.3rem 0.5rem;
+}
+.dato__cargado {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.3rem 3rem;
+    padding: 0.5rem 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.boton-otro__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#botonCargarOtro {
+    width: 25%;
+    background-color: #198754;
+    border: solid 0.1rem #198754; 
+    color: whitesmoke;
+}
+#botonCargarOtro:hover {
+    background-color: #20aa6a;
+    border: solid 0.1rem #20aa6a; 
+}

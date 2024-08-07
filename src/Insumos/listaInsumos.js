@@ -8,11 +8,20 @@ import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 
 function ListaInsumos() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("INSUMO");
+    // eslint-disable-next-line
     }, []);
 
     // Contexto para la sidebar.
@@ -108,6 +117,7 @@ function ListaInsumos() {
 
     const filtrar = () => {
         let cumplenFiltro = []
+        // eslint-disable-next-line
         insumos.filter((insumo) => {
             const { nombre, precio } = insumo;
             const cumpleNombre = nombre.includes(filtroNombre);
@@ -120,6 +130,11 @@ function ListaInsumos() {
         setFiltrosActivos(true);
     }
     
+    // Función para formatear número a moneda.
+    const formateoMoneda = (valor) => {
+        return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    }
+
     return (
         <div className="container__main">
             <Sidebar 
@@ -148,7 +163,7 @@ function ListaInsumos() {
                                     <div className="container__dataFija-insumo">
                                         <div className="dataFija__titulo"> Precio </div>
                                     </div>
-                                    <div>${elemento.precio}</div>
+                                    <div>{formateoMoneda(elemento.precio)}</div>
                                 </div> 
                                 <div className="data__container-insumo">
                                     <div className="container__dataFija-insumo">
@@ -181,7 +196,7 @@ function ListaInsumos() {
                                     <div className="container__dataFija-insumo">
                                         <div className="dataFija__titulo"> Precio </div>
                                     </div>
-                                    <div>${elemento.precio}</div>
+                                    <div>{formateoMoneda(elemento.precio)}</div>
                                 </div> 
                                 <div className="data__container-insumo">
                                     <div className="container__dataFija-insumo">

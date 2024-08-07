@@ -11,15 +11,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 function ListaUsuarios() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("ADMIN");
+    // eslint-disable-next-line
     }, []);
-
     // Contexto para la sidebar.
     const sidebarKey = "ADMIN MENU";
+    // Sub Contexto para la sidebar.
+    const sidebarSubKey = "LISTA-USUARIOS";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -188,6 +198,7 @@ function ListaUsuarios() {
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
+                sidebarSubKey={sidebarSubKey}
             />
             <div className="container__general">
                 <div className="listas__container">
@@ -214,7 +225,7 @@ function ListaUsuarios() {
                         }
                     </div>
                     <div className="lista__container">
-                        <h4>Usuarios creados</h4>
+                        <h4 className="titulo">Usuarios creados</h4>
                         {
                             usuariosCreados.map((elemento, indice) => (
                                 <div className="datos__usuario" key={indice}> 

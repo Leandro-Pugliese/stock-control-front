@@ -1,24 +1,33 @@
 import "../App.css";
 import "./productos.css";
+import "../Insumos/insumos.css";
 import { useState, useEffect } from "react";
 import axios from "../axios";
 import Sidebar from "../Sidebar/sidebar";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Mensajes from "../Componentes/mensajes";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 function ListaProductos() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
         navContext.cambiarKey("PRODUCTO");
+        sesionIniciada();
     // eslint-disable-next-line
     }, []);
 
-    // Contexto para la sidebar
+    // Contexto para la sidebar.
     const sidebarKey = "LISTA PRODUCTOS";
+    // Sub Contexto para la sidebar.
+    const [sidebarSubKey, setSidebarSubKey] = useState("LISTA-PRODUCTOS");
     // Indicador para filtros.
     const [indicador, setIndicador] = useState("PRODUCTOS");
     
@@ -44,6 +53,7 @@ function ListaProductos() {
         setShowErrorMsjPost(false);
         setShowMsj(false);
         setIndicador("CARGA");
+        setSidebarSubKey("CARGAR-PRODUCTO");
     }
     const insumosLista = async () => {
         try {
@@ -163,6 +173,7 @@ function ListaProductos() {
         setUser(sessionStorage.getItem("user"));
         listaProductos();
         insumosLista();
+    // eslint-disable-next-line
     },[])
 
     // Values de los inputs para cargar producto
@@ -348,15 +359,14 @@ function ListaProductos() {
             }
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let data = response.data;
             setMensaje(data.msj);
             setShowMsj(true);
+            setShowErrorMsj(false);
+            setShowErrorMsjPost(false);
             setProductoCargado(data.producto);
             setShowProducto(true);
-            //console.log(data);
         } catch (error) {
-            //console.log(error)
             let msj = error.response.data;
             setMensaje(msj);
             setShowErrorMsj(false);
@@ -439,11 +449,13 @@ function ListaProductos() {
         setCategoriasProductos(categoriasRepetidas);
     }
     useEffect(() => {
-        depurarCategorias()
+        depurarCategorias();
+    // eslint-disable-next-line
     },[productos])
 
     const filtrar = () => {
         let cumplenFiltro = []
+        // eslint-disable-next-line
         productos.filter((producto) => {
             const { sku, stock, componentes, categoria } = producto;
             const cumpleSku = sku.includes(filtroSku);
@@ -465,6 +477,7 @@ function ListaProductos() {
                 renderProductosLista={renderProductosLista}
                 renderProductosCarga={renderProductosCarga}
                 sidebarKey={sidebarKey}
+                sidebarSubKey={sidebarSubKey}
                 indicador={indicador}
                 handleChangeSku={handleChangeSku}
                 handleChangeStockMin={handleChangeStockMin}
@@ -710,30 +723,55 @@ function ListaProductos() {
                     />
                     {
                         (showProducto) &&
-                        <div className="productoCargado">
-                            <div>SKU: {productoCargado.sku}</div>
-                            <div>Categoría: {productoCargado.categoria}</div>
-                            <div>Descripción: {productoCargado.descripcion}</div>
-                            <div className="lista__items">Stock:
-                                {
-                                    productoCargado.stock.map((elemento, indice) => (
-                                        <div key={indice}>
-                                            {`[${elemento.color}: ${elemento.unidades}]`}
-                                        </div>
-                                    ))
-                                }
+                        <div className="producto__data">
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo">SKU:</div>
+                                    <div>{productoCargado.sku}</div>
+                                </div>
                             </div>
-                            <div className="lista__items">Componentes:
-                                {
-                                    productoCargado.componentes.map((elemento, indice) => (
-                                        <div key={indice}>
-                                            {`[${elemento.insumo}: ${elemento.cantidad}]`}
-                                        </div>
-                                    ))
-                                }
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo">Categoría:</div>
+                                    <div> {productoCargado.categoria}</div>
+                                </div>
                             </div>
-                            <div>
-                                <button onClick={cargarNuevoProducto}> CARGAR NUEVO PRODUCTO </button>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div className="dataFija__titulo">Descripción:</div>
+                                    <div> {productoCargado.descripcion}</div>
+                                </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div>Stock:</div>
+                                    <div className="lista__items acomodar__lista">
+                                        {
+                                            productoCargado.stock.map((elemento, indice) => (
+                                                <div className="stock__container" key={indice}>
+                                                    {`[${elemento.color}: ${elemento.unidades}]`}
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="data__container">
+                                <div className="container__dataFija">
+                                    <div>Componentes:</div>
+                                    <div className="lista__items acomodar__lista">
+                                        {
+                                            productoCargado.componentes.map((elemento, indice) => (
+                                                <div className="stock__container" key={indice}>
+                                                    {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div className=".boton-otro__container">
+                                <button className="boton1" id="botonCargarOtro" onClick={cargarNuevoProducto}> CARGAR OTRO </button>
                             </div>
                         </div>
                     }

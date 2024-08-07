@@ -38,13 +38,13 @@ function Navbar() {
 
     return (
         <nav>
-            <a className="inicioButton" href="/"> Stock Control </a>
+            <p className="inicioButton" > Stock Control </p>
             <ul>
                 <li>
-                    <a className="openMenu" id="navbarDropdown" onClick={abrirMenu} role="button"> 
+                    <button className="openMenu" onClick={abrirMenu}> 
                         Menú 
                         <FontAwesomeIcon className="dropIcon" icon={faCaretDown}/>
-                    </a>
+                    </button>
                     <ul className={menuVisible}>
                         {
                             (!token) &&

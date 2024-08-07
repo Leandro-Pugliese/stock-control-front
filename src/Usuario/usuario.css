@@ -10,6 +10,7 @@
     padding: 0.3rem 1.5rem;
     border: solid 0.2rem rgba(33, 37, 41, 1);
     border-radius: 0.4rem;
+    padding-right: 0.4rem;
 }
 .form__titulo {
     margin-top: 0.7rem;
@@ -38,6 +39,24 @@
 .boton1:active {
     scale: 0.95;
 }
+.button-login__container {
+    margin: 0.7rem 0rem;
+}
+.button__ingresar {
+    width: 84%;
+    background-color: darkgreen;
+    border: solid 0.1rem darkgreen;
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+    color: whitesmoke;
+}
+.button__ingresar:hover {
+    background-color: green;
+    border-color: green;
+}
+.button__ingresar:active {
+    scale: 0.95;
+}
 .container__bloquear {
     display: flex;
     flex-direction: row;
@@ -59,7 +78,8 @@
     flex-direction: column;
     justify-content: flex-start;
     background: white;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    border: solid 0.5rem white;
     border-radius: 0.8rem;
     z-index: 101;
     min-height: 27%;
@@ -67,15 +87,18 @@
 }
 .close__container {
     width: 100%;
-    margin-bottom: 0.7rem;
+    margin-bottom: 1rem;
     text-align: right;
 }
 .close__container button{
     background-color: transparent;
     border: transparent;
+    color: red;
 }
 .bloquear__button {
     margin-top: 0.5rem;
+    background-color: rgb(204, 0, 0);
+    border-color: rgb(204, 0, 0);
 }
 
 /* UPDATE PASSWORD */     

@@ -7,11 +7,19 @@ import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateCategoria() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
         navContext.cambiarKey("PRODUCTO");
+        sesionIniciada();
     // eslint-disable-next-line
     }, []);
 
@@ -205,7 +213,7 @@ function UpdateCategoria() {
                             (!modCategoria) &&
                             <div className="modificable">
                                 <p>{categoria}</p>
-                                <button className="boton1" onClick={() => habilitarModificarInput("Categoria")}>Modificar</button>
+                                <button className="boton__modificar" onClick={() => habilitarModificarInput("Categoria")}>Modificar</button>
                             </div>
                         }
                         {
@@ -216,7 +224,7 @@ function UpdateCategoria() {
                         }
                     </div>
                 </div>
-                <div className="">
+                <div className="modificable__container">
                     <div className="data__modificable">
                         <label>
                             Descripción
@@ -225,7 +233,7 @@ function UpdateCategoria() {
                             (!modDescripcion) &&
                             <div className="modificable">
                                 <p>{descripcion}</p>
-                                <button className="boton1" onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                                <button className="boton__modificar" onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
                             </div>
                         }
                         {
@@ -239,8 +247,8 @@ function UpdateCategoria() {
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button className="boton1" onClick={updateCategoria}> Aceptar </button>
-                        <button className="boton1" onClick={() => window.location.reload()}> Atras </button>
+                        <button className="boton1" id="botonAceptar" onClick={updateCategoria}> Aceptar </button>
+                        <button className="boton1" id="botonCancelar" onClick={() => window.location.reload()}> Cancelar </button>
                     </div>
                 }
                 <Mensajes 

@@ -7,11 +7,20 @@ import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 
 function CrearInsumo() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("INSUMO");
+    // eslint-disable-next-line
     }, []);
 
     // Contexto para la sidebar.
@@ -111,6 +120,11 @@ function CrearInsumo() {
         }
     }
 
+    // Función para formatear número a moneda.
+    const formateoMoneda = (valor) => {
+        return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    }
+
     return (
         <div className="container__main">
             <Sidebar 
@@ -143,11 +157,22 @@ function CrearInsumo() {
                 />
                 {
                     (showInsumo) &&
-                    <div>
-                        <div>Insumo: {insumoCargado.nombre}</div>
-                        <div>Precio: ${insumoCargado.precio}</div>
-                        <div>Descripción: {insumoCargado.descripcion}</div>
-                        <button onClick={() => window.location.reload()}>Cargar otro</button>
+                    <div className="insumo__cargado">
+                        <div className="dato__cargado">
+                            <div>Insumo:</div>
+                            <div>{insumoCargado.nombre}</div>
+                        </div>
+                        <div className="dato__cargado">
+                            <div>Precio:</div>
+                            <div>{formateoMoneda(insumoCargado.precio)}</div>
+                        </div>
+                        <div className="dato__cargado">
+                            <div>Descripción:</div>
+                            <div>{insumoCargado.descripcion}</div>
+                        </div>
+                        <div className="boton-otro__container">
+                            <button className="boton1" id="botonCargarOtro" onClick={() => window.location.reload()}> Cargar otro </button>
+                        </div>
                     </div>
                 }
             </div>

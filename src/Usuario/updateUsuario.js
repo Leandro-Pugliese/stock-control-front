@@ -6,11 +6,20 @@ import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
 function UpdatePasswordUsuario() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("USER");
+        // eslint-disable-next-line
     }, []);
     
     // Hooks para mostrar msj al usuario.
@@ -131,8 +140,8 @@ function UpdatePasswordUsuario() {
                     <div className="">
                         <input onChange={onChangeNuevaPassword2} className="login__input" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..."/>
                     </div>
-                    <div className="">
-                        <button className="boton1" onClick={updatePassword}> Modificar </button>
+                    <div className="button-login__container">
+                        <button className="button__ingresar" onClick={updatePassword}> Modificar </button>
                     </div>
                 </div>
             </div>

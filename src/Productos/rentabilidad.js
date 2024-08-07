@@ -7,11 +7,19 @@ import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 
 function Rentabilidad() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
         navContext.cambiarKey("PRODUCTO");
+        sesionIniciada();
     // eslint-disable-next-line
     }, []);
 
@@ -153,7 +161,7 @@ function Rentabilidad() {
               componente: componente.insumo,
               costo: costo
             };
-            costosSeparados.push(objFinal);
+            return costosSeparados.push(objFinal);
         });
         setCostosFinal(costosSeparados);
         // Calculo el costo total del producto.
@@ -197,7 +205,7 @@ function Rentabilidad() {
                     <div className="stock__lista noMargin"> Stock: 
                         {
                             stock.map((elemento, indice) => (
-                                <div className="stock__container" key={indice}>
+                                <div className="" key={indice}>
                                     {`[${elemento.color}: ${elemento.unidades}]`}
                                 </div>
                             ))
