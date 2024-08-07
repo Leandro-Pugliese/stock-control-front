@@ -6,11 +6,20 @@ import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
 function UpdatePasswordUsuario() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("USER");
+        // eslint-disable-next-line
     }, []);
     
     // Hooks para mostrar msj al usuario.
@@ -111,27 +120,29 @@ function UpdatePasswordUsuario() {
 
     return (
         <div className="main__container">
-            <h3>Modificar Contraseña</h3>
-            <div>
-                <div className="">
-                    <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
-                </div>
-                <div className="showPassword__container">
-                    <input onChange={onChangePasswordActual} className="" id="passwordInput" type={showPassword} placeholder="Contraseña actual..."/>
-                    <ShowPassword 
-                        botonShowPassword={botonShowPassword}
-                        verPassword={verPassword}
-                        hidePassword={hidePassword}
-                    />
-                </div>
-                <div className="">
-                    <input onChange={onChangeNuevaPassword} className="" id="passInput" type={showPassword} placeholder="Nueva contraseña..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeNuevaPassword2} className="" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..."/>
-                </div>
-                <div className="">
-                    <button onClick={updatePassword}> Modificar </button>
+            <div className="form__container">
+                <h3 className="form__titulo">Mod. Contraseña</h3>
+                <div>
+                    <div className="">
+                        <input onChange={onChangeEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
+                    </div>
+                    <div className="showPassword__container">
+                        <input onChange={onChangePasswordActual} className="login__input" id="passwordInput" type={showPassword} placeholder="Contraseña actual..."/>
+                        <ShowPassword 
+                            botonShowPassword={botonShowPassword}
+                            verPassword={verPassword}
+                            hidePassword={hidePassword}
+                        />
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeNuevaPassword} className="login__input" id="passInput" type={showPassword} placeholder="Nueva contraseña..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeNuevaPassword2} className="login__input" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..."/>
+                    </div>
+                    <div className="button-login__container">
+                        <button className="button__ingresar" onClick={updatePassword}> Modificar </button>
+                    </div>
                 </div>
             </div>
             <Mensajes 

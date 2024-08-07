@@ -7,11 +7,19 @@ import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateCategoria() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
         navContext.cambiarKey("PRODUCTO");
+        sesionIniciada();
     // eslint-disable-next-line
     }, []);
 
@@ -194,43 +202,53 @@ function UpdateCategoria() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Categoría y Descripción Producto</h3>
-                <div>Sku: {sku}</div> 
-                <div className="">
-                    {
-                        (!modCategoria) &&
-                        <div>
-                            Categoría: {categoria}
-                            <button onClick={() => habilitarModificarInput("Categoria")}>Modificar</button>
-                        </div>
-                    }
-                </div>
-                {
-                    (modCategoria) &&
-                    <div className="">
-                        <input onChange={onChangeCategoria} className="" id="categoriaInput" type="text" placeholder="Categoría..."/>
+                <h3 className="titulo">Modificar categoría y descripción</h3>
+                <div className="stock__sku">Sku: {sku}</div> 
+                <div className="modificable__container">
+                    <div className="data__modificable">
+                        <label>
+                            Categoría
+                        </label>
+                        {
+                            (!modCategoria) &&
+                            <div className="modificable">
+                                <p>{categoria}</p>
+                                <button className="boton__modificar" onClick={() => habilitarModificarInput("Categoria")}>Modificar</button>
+                            </div>
+                        }
+                        {
+                            (modCategoria) &&
+                            <div className="container__input">
+                                <input onChange={onChangeCategoria} className="input__producto" id="categoriaInput" type="text" placeholder="Categoría..."/>
+                            </div>
+                        }
                     </div>
-                }
-                <div className="">
-                    {
-                        (!modDescripcion) &&
-                        <div>
-                            Descripción: {descripcion}
-                            <button onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
-                        </div>
-                    }
                 </div>
-                {
-                    (modDescripcion) &&
-                    <div className="">
-                        <input onChange={onChangeDescripcion} className="" id="descripcionInput" type="text" placeholder="Descripción..."/>
+                <div className="modificable__container">
+                    <div className="data__modificable">
+                        <label>
+                            Descripción
+                        </label>
+                        {
+                            (!modDescripcion) &&
+                            <div className="modificable">
+                                <p>{descripcion}</p>
+                                <button className="boton__modificar" onClick={() => habilitarModificarInput("Descripcion")}>Modificar</button>
+                            </div>
+                        }
+                        {
+                            (modDescripcion) &&
+                            <div className="container__input">
+                                <input onChange={onChangeDescripcion} className="input__producto" id="descripcionInput" type="text" placeholder="Descripción..." />
+                            </div>
+                        }
                     </div>
-                }
+                </div>
                 {
                     (!anularBoton) &&
                     <div className="">
-                        <button onClick={updateCategoria}> Aceptar </button>
-                        <button onClick={() => window.location.reload()}> Atras </button>
+                        <button className="boton1" id="botonAceptar" onClick={updateCategoria}> Aceptar </button>
+                        <button className="boton1" id="botonCancelar" onClick={() => window.location.reload()}> Cancelar </button>
                     </div>
                 }
                 <Mensajes 

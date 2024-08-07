@@ -9,15 +9,26 @@ import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
 function BorrarUsuario() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("ADMIN");
+    // eslint-disable-next-line
     }, []);
 
     // Contexto para la sidebar.
     const sidebarKey = "ADMIN MENU";
+    // Sub Contexto para la sidebar.
+    const sidebarSubKey = "BORRAR-USUARIO";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -90,14 +101,15 @@ function BorrarUsuario() {
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
+                sidebarSubKey={sidebarSubKey}
             />
             <div className="container__general">
-                <h3 className="titulo"> Borrar Usuario </h3>
+                <h3 className="titulo"> Borrar usuario </h3>
                 <div className="">
-                    <input onChange={onChangeUsuarioEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="login__input habilitarInput" id="emailInput" type="email" placeholder="Email usuario..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePasswordAdmin} className="" id="passwordInput" type={showPassword} placeholder="Contraseña admin..."/>
+                    <input onChange={onChangePasswordAdmin} className="login__input habilitarInput" id="passwordInput" type={showPassword} placeholder="Contraseña admin..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
@@ -105,10 +117,10 @@ function BorrarUsuario() {
                     />
                 </div>
                 <div className="">
-                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    <input onChange={onChangePin} className="login__input habilitarInput" id="pinInput" type={showPassword} placeholder="Pin..."/>
                 </div>
-                <div className="">
-                    <button onClick={borrar}> Borrar </button>
+                <div className="container__button">
+                    <button id="boton__eliminar" onClick={borrar}> Borrar </button>
                 </div>
                 <Mensajes 
                     mensaje={mensaje}

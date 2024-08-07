@@ -1,6 +1,6 @@
 import "../App.css";
 import "./usuario.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
@@ -107,30 +107,32 @@ function CrearUsuario() {
 
     return (
         <div className="main__container">
-            <h3>Crear Usuario</h3>
-            <div>
-                <div className="">
-                    <input onChange={onChangeUsername} className="" id="userInput" type="text" placeholder="Usuario..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
-                </div>
-                <div className="showPassword__container">
-                    <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
-                    <ShowPassword 
-                        botonShowPassword={botonShowPassword}
-                        verPassword={verPassword}
-                        hidePassword={hidePassword}
-                    />
-                </div>
-                <div className="">
-                    <input onChange={onChangePassword2} className="" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
-                </div>
-                <div className="">
-                    <input onChange={onChangeClaveAcceso} className="" id="claveAccesoInput" type={showPassword} placeholder="Clave Acceso..."/>
-                </div>
-                <div className="">
-                    <button onClick={crearUsuario}> Registrar </button>
+            <div className="form__container">
+                <h3 className="form__titulo">Crear usuario</h3>
+                <div>
+                    <div className="">
+                        <input onChange={onChangeUsername} className="login__input" id="userInput" type="text" placeholder="Usuario..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
+                    </div>
+                    <div className="showPassword__container">
+                        <input onChange={onChangePassword} className="login__input" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
+                        <ShowPassword 
+                            botonShowPassword={botonShowPassword}
+                            verPassword={verPassword}
+                            hidePassword={hidePassword}
+                        />
+                    </div>
+                    <div className="">
+                        <input onChange={onChangePassword2} className="login__input" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
+                    </div>
+                    <div className="">
+                        <input onChange={onChangeClaveAcceso} className="login__input" id="claveAccesoInput" type={showPassword} placeholder="Clave de acceso..."/>
+                    </div>
+                    <div className="button-login__container">
+                        <button className="button__ingresar" onClick={crearUsuario}> Registrarse </button>
+                    </div>
                 </div>
             </div>
             <Mensajes 

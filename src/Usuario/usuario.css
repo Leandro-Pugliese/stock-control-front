@@ -5,9 +5,57 @@
     flex: 1 0 auto;
     align-items: center;
 }
+.form__container {
+    margin-top: 2rem;   
+    padding: 0.3rem 1.5rem;
+    border: solid 0.2rem rgba(33, 37, 41, 1);
+    border-radius: 0.4rem;
+    padding-right: 0.4rem;
+}
+.form__titulo {
+    margin-top: 0.7rem;
+    margin-bottom: 1rem;
+}
+.login__input {
+    background-color: gainsboro;
+    border: solid 0.2rem transparent;
+    border-radius: 0.3rem;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+    margin: 0.3rem 0rem;
+}
 .showPassword__container {
     display: flex;
     flex-direction: row;
+}
+.boton1 {
+    margin: 1rem 0.2rem;
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(33, 37, 41, 1);
+    border: solid 0.1rem rgba(33, 37, 41, 1);
+    border-radius: 0.3rem;
+    color: whitesmoke;
+}
+.boton1:active {
+    scale: 0.95;
+}
+.button-login__container {
+    margin: 0.7rem 0rem;
+}
+.button__ingresar {
+    width: 84%;
+    background-color: darkgreen;
+    border: solid 0.1rem darkgreen;
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+    color: whitesmoke;
+}
+.button__ingresar:hover {
+    background-color: green;
+    border-color: green;
+}
+.button__ingresar:active {
+    scale: 0.95;
 }
 .container__bloquear {
     display: flex;
@@ -30,22 +78,93 @@
     flex-direction: column;
     justify-content: flex-start;
     background: white;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    border: solid 0.5rem white;
     border-radius: 0.8rem;
     z-index: 101;
     min-height: 27%;
+    max-width: 40%;
 }
 .close__container {
     width: 100%;
-    margin-bottom: 0.7rem;
+    margin-bottom: 1rem;
     text-align: right;
 }
 .close__container button{
     background-color: transparent;
     border: transparent;
+    color: red;
 }
 .bloquear__button {
     margin-top: 0.5rem;
+    background-color: rgb(204, 0, 0);
+    border-color: rgb(204, 0, 0);
 }
-        
 
+/* UPDATE PASSWORD */     
+.update__password {
+    width: 32%;
+    margin-left: 0.2rem;
+}   
+
+/* LISTA USUARIOS */
+.listas__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.lista__container {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    justify-content: center;
+    text-align: left;
+    margin: 0rem 0.5rem;
+}
+.datos__usuario {
+    background-color: #f0f0f0;
+    border: solid 0.2rem #f0f0f0;
+    border-radius: 0.3rem;
+    margin: 0rem 0.2rem;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0.2rem;
+}
+.dato {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0.2rem;
+}
+#botonDeshabilitar {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+#botonBloquear {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+#botonDesbloquear {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+
+/* HABILITAR USUARIO */
+.habilitarInput {
+    margin-left: 0.2rem;
+    width: 32%;
+}
+
+/* BORRAR USUARIO */
+#boton__eliminar {
+    background-color: rgb(204, 0, 0);
+    border-color: rgb(204, 0, 0);
+}
+#boton__eliminar:hover {
+    background-color: rgb(231, 0, 0);
+    border-color: rgb(231, 0, 0);
+}

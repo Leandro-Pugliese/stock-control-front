@@ -1,5 +1,5 @@
 import "../App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
@@ -85,21 +85,23 @@ function LoginUsuario() {
 
     return (
         <div className="main__container">
-            <h3>Login Usuario</h3>
-            <div>
-                <div className="">
-                    <input onChange={onChangeEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
-                </div>
-                <div className="showPassword__container">
-                    <input onChange={onChangePassword} className="" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
-                    <ShowPassword 
-                        botonShowPassword={botonShowPassword}
-                        verPassword={verPassword}
-                        hidePassword={hidePassword}
-                    />
-                </div>
-                <div className="">
-                    <button onClick={loginUsuario}> Ingresar </button>
+            <div className="form__container">
+                <h3 className="form__titulo">Iniciar sesión</h3>
+                <div>
+                    <div className="">
+                        <input onChange={onChangeEmail} className="login__input" id="emailInput" type="email" placeholder="Email..."/>
+                    </div>
+                    <div className="showPassword__container">
+                        <input onChange={onChangePassword} className="login__input" id="passwordInput" type={showPassword} placeholder="Contraseña..."/>
+                        <ShowPassword 
+                            botonShowPassword={botonShowPassword}
+                            verPassword={verPassword}
+                            hidePassword={hidePassword}
+                        />
+                    </div>
+                    <div className="button-login__container">
+                        <button className="button__ingresar" onClick={loginUsuario}> Ingresar </button>
+                    </div>
                 </div>
             </div>
             <Mensajes 

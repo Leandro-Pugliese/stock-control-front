@@ -7,10 +7,18 @@ import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateStock() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("PRODUCTO");
     // eslint-disable-next-line
     }, []);
@@ -194,8 +202,8 @@ function UpdateStock() {
                 sidebarKey={sidebarKey}
             />
             <div className="container__general">
-                <h3>Modificar Stock Producto</h3>
-                <div>Sku: {sku}</div> 
+                <h3 className="titulo">Modificar stock</h3>
+                <div className="stock__sku">Sku: {sku}</div> 
                 <div className="stock__lista">
                     <div>Stock: </div>
                     {stock.map((elemento, indice) => (
@@ -204,22 +212,22 @@ function UpdateStock() {
                         </div>
                     ))}
                 </div>
-                <div className="">
-                    <select onChange={onChangeOperacion} defaultValue="-">
+                <div className="container__input">
+                    <select className="input__producto" onChange={onChangeOperacion} defaultValue="-">
                         <option value="-">Operación...</option>
                         <option value="ADD">Agregar</option>
                         <option value="REMOVE">Quitar</option>
                     </select>
                 </div>
-                <div className="">
-                    <input onChange={onChangeColor} className="" id="colorInput" type="text" placeholder="Color..."/>
+                <div className="container__input">
+                    <input onChange={onChangeColor} className="input__producto" id="colorInput" type="text" placeholder="Color..."/>
                 </div>
-                <div className="">
-                    <input onChange={onChangeCantidad} className="" id="cantidadInput" type="number" placeholder="Cantidad..."/>
+                <div className="container__input">
+                    <input onChange={onChangeCantidad} className="input__producto" id="cantidadInput" type="number" placeholder="Cantidad..."/>
                 </div>
                 {
                     (!anularBoton) &&
-                    <div className="">
+                    <div className="container__button">
                         <button onClick={updateStock}> Aceptar </button>
                     </div>
                 }

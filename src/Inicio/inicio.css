@@ -1,3 +1,59 @@
-.main__container {
+.main__container-inicio {
     flex: 1 0 auto;
+}
+.logo__inicio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0rem 0rem;
+}
+.container__inicio {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+}
+.foto__container {
+    width: 50%;
+    margin: 1rem 1rem;
+}
+.foto {
+    height: 50vh;
+    width: 100%;
+    background-image: url(../Imagenes/almacenStock.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0.5rem;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
+}
+.foto2 {
+    height: 50vh;
+    width: 100%;
+    background-image: url(../Imagenes/calculadoraCostos.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0.5rem;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
+}
+.foto, .foto2{
+    animation: rotateY 3s infinite alternate;
+}
+@keyframes rotateY {
+    0% {
+        transform: perspective(500px) rotateY(2deg);
+    }
+    100% {
+        transform: perspective(500px) rotateY(-2deg);
+    }
+}
+.texto__container {
+    text-align: center;
+    background-color: rgb(226, 224, 224);
+    border: solid 0.1rem gainsboro;
+    border-radius: 0.3rem;
+    padding: 1rem 0.3rem;
+    margin-top: 1rem;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
 }

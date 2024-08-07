@@ -64,7 +64,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
-  --bs-body-bg: #fff;
+  --bs-body-bg: white;
   --bs-border-width: 1px;
   --bs-border-style: solid;
   --bs-border-color: #dee2e6;
@@ -95,6 +95,7 @@
 
 html {
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -102,7 +103,6 @@ body {
   margin: 0;
   font-size: var(--bs-body-font-size);
   font-family: "Poppins", Helvetica;
-  
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
@@ -656,6 +656,14 @@ progress {
   padding-left: calc(var(--bs-gutter-x) * 0.5);
   margin-right: auto;
   margin-left: auto;
+}
+/*Fixeamos el margin left en 6rem porque en auto mueve los elementos en distintas rutas.*/
+.container {
+  width: 100%;
+  margin-left: 0rem;
+  margin-right: 0rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
 }
 
 @media (min-width: 576px) {
@@ -3259,6 +3267,7 @@ textarea.form-control-lg {
   --bs-dropdown-header-padding-x: 1rem;
   --bs-dropdown-header-padding-y: 0.5rem;
   position: absolute;
+  right: 3rem;
   z-index: var(--bs-dropdown-zindex);
   display: none;
   min-width: var(--bs-dropdown-min-width);
@@ -3785,11 +3794,13 @@ textarea.form-control-lg {
 .navbar-brand {
   padding-top: var(--bs-navbar-brand-padding-y);
   padding-bottom: var(--bs-navbar-brand-padding-y);
-  margin-right: var(--bs-navbar-brand-margin-end);
+  /* margin-right: var(--bs-navbar-brand-margin-end); */
   font-size: var(--bs-navbar-brand-font-size);
   color: var(--bs-navbar-brand-color);
   text-decoration: none;
   white-space: nowrap;
+  width: 30%;
+  text-align: center;
 }
 .navbar-brand:hover, .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
@@ -3807,6 +3818,7 @@ textarea.form-control-lg {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  width: 70%;
 }
 .navbar-nav .show > .nav-link,
 .navbar-nav .nav-link.active {
@@ -7715,9 +7727,10 @@ textarea.form-control-lg {
   margin-left: 3rem !important;
 }
 
-.ms-auto {
+/* Aca ponemos el margin para posicionar el menu desplegable de la navbar */
+/* .ms-auto {
   margin-left: auto !important;
-}
+} */
 
 .p-0 {
   padding: 0 !important;

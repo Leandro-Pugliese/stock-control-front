@@ -1,5 +1,6 @@
 import "../App.css";
 import "./insumos.css";
+import "../Productos/productos.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
@@ -7,11 +8,20 @@ import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 
 function ListaInsumos() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("INSUMO");
+    // eslint-disable-next-line
     }, []);
 
     // Contexto para la sidebar.
@@ -107,6 +117,7 @@ function ListaInsumos() {
 
     const filtrar = () => {
         let cumplenFiltro = []
+        // eslint-disable-next-line
         insumos.filter((insumo) => {
             const { nombre, precio } = insumo;
             const cumpleNombre = nombre.includes(filtroNombre);
@@ -119,6 +130,11 @@ function ListaInsumos() {
         setFiltrosActivos(true);
     }
     
+    // Función para formatear número a moneda.
+    const formateoMoneda = (valor) => {
+        return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    }
+
     return (
         <div className="container__main">
             <Sidebar 
@@ -133,18 +149,34 @@ function ListaInsumos() {
             {
                 (filtrosActivos) &&
                 <div className="container__general">
-                <h3 className="titulo"> Lista Insumos </h3>
-                {
-                    listaInsumosFiltrados.map((elemento, indice) => (
-                        <div className="" key={indice}> 
-                            <div>Insumo: {elemento.nombre}</div> 
-                            <div>Precio: ${elemento.precio}</div>
-                            <div>Descripción: {elemento.descripcion}</div>
-                            <button onClick={() => modificarInsumo(elemento._id)}>Modificar</button>
-                            <hr/>
-                        </div>
-                    ))
-                }
+                    <h3 className="titulo"> Lista Insumos </h3>
+                    {
+                        listaInsumosFiltrados.map((elemento, indice) => (
+                            <div className="insumo__data" key={indice}> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Insumo </div>
+                                    </div>
+                                    <div>{elemento.nombre}</div>
+                                </div> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Precio </div>
+                                    </div>
+                                    <div>{formateoMoneda(elemento.precio)}</div>
+                                </div> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Descripción </div>
+                                    </div>
+                                    <div>{elemento.descripcion}</div>
+                                </div> 
+                                <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                    Modificar
+                                </button>
+                            </div>
+                        ))
+                    }
                 </div>
             }
             {
@@ -153,12 +185,28 @@ function ListaInsumos() {
                     <h3 className="titulo"> Lista Insumos </h3>
                     {
                         insumos.map((elemento, indice) => (
-                            <div className="" key={indice}> 
-                                <div>Insumo: {elemento.nombre}</div> 
-                                <div>Precio: ${elemento.precio}</div>
-                                <div>Descripción: {elemento.descripcion}</div>
-                                <button onClick={() => modificarInsumo(elemento._id)}>Modificar</button>
-                                <hr/>
+                            <div className="insumo__data" key={indice}> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Insumo </div>
+                                    </div>
+                                    <div>{elemento.nombre}</div>
+                                </div> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Precio </div>
+                                    </div>
+                                    <div>{formateoMoneda(elemento.precio)}</div>
+                                </div> 
+                                <div className="data__container-insumo">
+                                    <div className="container__dataFija-insumo">
+                                        <div className="dataFija__titulo"> Descripción </div>
+                                    </div>
+                                    <div>{elemento.descripcion}</div>
+                                </div> 
+                                <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                    Modificar
+                                </button>
                             </div>
                         ))
                     }

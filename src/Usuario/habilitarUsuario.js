@@ -9,15 +9,25 @@ import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 
 function HabilitarUsuario() {
-
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    const sesionIniciada = () => {
+        const hayToken = sessionStorage.getItem("token");
+        console.log(hayToken)
+        if (!hayToken) {
+            window.location.href = "/";
+        }
+    }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
     useEffect(() => {
+        sesionIniciada();
         navContext.cambiarKey("ADMIN");
+    // eslint-disable-next-line
     }, []);
-
     // Contexto para la sidebar.
     const sidebarKey = "ADMIN MENU";
+    // Sub Contexto para la sidebar.
+    const sidebarSubKey = "HABILITAR-USUARIO";
 
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
@@ -93,27 +103,28 @@ function HabilitarUsuario() {
         <div className="container__main">
             <Sidebar 
                 sidebarKey={sidebarKey}
+                sidebarSubKey={sidebarSubKey}
             />
             <div className="container__general">
                 <h3 className="titulo"> Habilitar Usuario </h3>
                 <div className="">
-                    <input onChange={onChangeUsuarioNombre} className="" id="nombreInput" type="text" placeholder="Usuario..."/>
+                    <input onChange={onChangeUsuarioNombre} className="login__input habilitarInput" id="nombreInput" type="text" placeholder="Usuario..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeUsuarioEmail} className="" id="emailInput" type="email" placeholder="Email..."/>
+                    <input onChange={onChangeUsuarioEmail} className="login__input habilitarInput" id="emailInput" type="email" placeholder="Email..."/>
                 </div>
                 <div className="">
-                    <input onChange={onChangeClaveAcceso} className="" id="claveInput" type="text" placeholder="Clave de acceso..."/>
+                    <input onChange={onChangeClaveAcceso} className="login__input habilitarInput" id="claveInput" type="text" placeholder="Clave de acceso..."/>
                 </div>
                 <div className="showPassword__container">
-                    <input onChange={onChangePin} className="" id="pinInput" type={showPassword} placeholder="Pin..."/>
+                    <input onChange={onChangePin} className="login__input habilitarInput" id="pinInput" type={showPassword} placeholder="Pin..."/>
                     <ShowPassword 
                         botonShowPassword={botonShowPassword}
                         verPassword={verPassword}
                         hidePassword={hidePassword}
                     />
                 </div>
-                <div className="">
+                <div className="container__button">
                     <button onClick={habilitar}> Habilitar </button>
                 </div>
                 <Mensajes 
