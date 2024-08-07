@@ -55,6 +55,7 @@
 /* MENSAJES */
 .container__mensajes {
     margin: 0.3rem 0.5rem;
+    font-weight: 600;
 }
 .mensaje__error {
     color: red;

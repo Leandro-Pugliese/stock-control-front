@@ -9,7 +9,6 @@ function UpdatePasswordUsuario() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
     const sesionIniciada = () => {
         const hayToken = sessionStorage.getItem("token");
-        console.log(hayToken)
         if (!hayToken) {
             window.location.href = "/";
         }

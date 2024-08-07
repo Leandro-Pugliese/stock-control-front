@@ -11,13 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 function ListaUsuarios() {
-    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
+    const [estadoSesion, setEstadoSesion] = useState(false)
     const sesionIniciada = () => {
         const hayToken = sessionStorage.getItem("token");
-        console.log(hayToken)
         if (!hayToken) {
             window.location.href = "/";
         }
+        setEstadoSesion(true);
     }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -69,7 +70,7 @@ function ListaUsuarios() {
     }
     useEffect(() => {
         getLista()
-    }, []);
+    }, [estadoSesion]);
 
     // Hooks para pop up y userInfo.
     const [popUpActivo, setPopUpActivo] = useState(false);

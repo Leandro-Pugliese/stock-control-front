@@ -8,13 +8,14 @@ import { useNavbarContext } from "../Navbar/navbarProvider";
 import Mensajes from "../Componentes/mensajes";
 
 function ListaProductos() {
-    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
+    const [estadoSesion, setEstadoSesion] = useState(false)
     const sesionIniciada = () => {
         const hayToken = sessionStorage.getItem("token");
-        console.log(hayToken)
         if (!hayToken) {
             window.location.href = "/";
         }
+        setEstadoSesion(true);
     }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -23,7 +24,6 @@ function ListaProductos() {
         sesionIniciada();
     // eslint-disable-next-line
     }, []);
-
     // Contexto para la sidebar.
     const sidebarKey = "LISTA PRODUCTOS";
     // Sub Contexto para la sidebar.
@@ -168,13 +168,12 @@ function ListaProductos() {
 
     // Veo si el usuario es admin para renderizar el boton de rentabilidad.
     const [user, setUser] = useState([]);
-
     useEffect(() => {
         setUser(sessionStorage.getItem("user"));
         listaProductos();
         insumosLista();
     // eslint-disable-next-line
-    },[])
+    },[estadoSesion])
 
     // Values de los inputs para cargar producto
     const [sku, setSku] = useState("");
@@ -408,7 +407,6 @@ function ListaProductos() {
         window.location.href = "/rentabilidad"
     }
 
-
     // Filtros ----------------------------------------------------------------
     const [filtrosActivos, setFiltrosActivos] = useState(false);
     const [listaProductosFiltrados, setListaProductosFiltrados] = useState([]);
@@ -562,6 +560,10 @@ function ListaProductos() {
                             </div>
                         </div>
                         ))
+                    }
+                    {
+                        (listaProductosFiltrados.length === 0) &&
+                        <div className="sinResultado">No hay productos que cumplan con los filtros utilizados...</div>
                     }
                 </div>
             }

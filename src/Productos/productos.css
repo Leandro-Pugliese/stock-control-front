@@ -94,6 +94,12 @@
 .dataVariable {
     width: 100%;
 }
+.sinResultado {
+    margin: 0.5rem;
+    padding: 0.3rem;
+    color: darkred;
+    font-weight: 600;
+}
 
 /* CARGAR PRODUCTO */
 .container__input {

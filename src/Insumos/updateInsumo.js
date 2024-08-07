@@ -8,13 +8,14 @@ import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateInsumo() {
-    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
+    const [estadoSesion, setEstadoSesion] = useState(false)
     const sesionIniciada = () => {
         const hayToken = sessionStorage.getItem("token");
-        console.log(hayToken)
         if (!hayToken) {
             window.location.href = "/";
         }
+        setEstadoSesion(true);
     }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -47,7 +48,7 @@ function UpdateInsumo() {
     }
     useEffect(() => {
         getIdData();
-    }, []);
+    }, [estadoSesion]);
     useEffect(() => {
         insumoData();
         // eslint-disable-next-line

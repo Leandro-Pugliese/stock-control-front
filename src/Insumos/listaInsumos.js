@@ -8,13 +8,14 @@ import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
 
 function ListaInsumos() {
-    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
+    const [estadoSesion, setEstadoSesion] = useState(false)
     const sesionIniciada = () => {
         const hayToken = sessionStorage.getItem("token");
-        console.log(hayToken)
         if (!hayToken) {
             window.location.href = "/";
         }
+        setEstadoSesion(true);
     }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -89,7 +90,7 @@ function ListaInsumos() {
 
     useEffect(() => {
         insumosLista();
-    },[])
+    },[estadoSesion])
 
     const modificarInsumo = (_id) => {
         sessionStorage.setItem("insumoID", _id);
@@ -176,6 +177,10 @@ function ListaInsumos() {
                                 </button>
                             </div>
                         ))
+                    }
+                    {
+                        (listaInsumosFiltrados.length === 0) &&
+                        <div className="sinResultado">No hay insumos que cumplan con los filtros utilizados...</div>
                     }
                 </div>
             }

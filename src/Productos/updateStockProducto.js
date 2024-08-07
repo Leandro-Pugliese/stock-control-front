@@ -7,13 +7,14 @@ import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 
 function UpdateStock() {
-    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
+    // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
+    const [estadoSesion, setEstadoSesion] = useState(false)
     const sesionIniciada = () => {
         const hayToken = sessionStorage.getItem("token");
-        console.log(hayToken)
         if (!hayToken) {
             window.location.href = "/";
         }
+        setEstadoSesion(true);
     }
     // Contexto para navbProvider.
     const navContext = useNavbarContext()
@@ -47,7 +48,7 @@ function UpdateStock() {
     }
     useEffect(() => {
         setSkuData();
-    }, []);
+    }, [estadoSesion]);
     useEffect(() => {
         productoData()
     // eslint-disable-next-line
@@ -185,7 +186,7 @@ function UpdateStock() {
             setShowMsj(true);
             setAnularBoton(true);
             setTimeout(function () {
-                window.location.href = "/productos"
+                window.location.href = "/productos/update-stock"
               }, 1000);
         } catch (error) {
             let msj = error.response.data;
