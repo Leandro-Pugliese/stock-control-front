@@ -4,6 +4,7 @@
     flex-direction: column;
     flex: 1 0 auto;
     align-items: center;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
 }
 .form__container {
     margin-top: 2rem;   
