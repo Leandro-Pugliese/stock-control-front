@@ -106,6 +106,11 @@ function LoginAdmin() {
                     <div className="">
                         <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
                     </div>
+                    <div className="linkForgotPasswordContainer">
+                        <a href="/recuperar-password">
+                            <button className="linkForgotPassword"> ¿Olvidaste tu contraseña? </button>
+                        </a>
+                    </div>
                     <div className="button-login__container">
                         <button className="button__ingresar" onClick={loginAdmin}> Ingresar </button>
                     </div>

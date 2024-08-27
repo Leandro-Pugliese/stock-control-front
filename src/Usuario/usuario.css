@@ -29,6 +29,41 @@
     display: flex;
     flex-direction: row;
 }
+/*Link recuperar cotraseña*/
+.linkForgotPasswordContainer{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 0.7rem 0rem;
+    font-size: small;
+}
+.linkForgotPassword {
+    background-color: initial;
+    border: 0;
+    padding-right: 0.8rem;
+}
+.linkForgotPassword:hover, .linkForgotPassword:active {
+    cursor: pointer;
+    text-decoration: underline;
+}
+/* Recuperar contraseña */
+#form__recuPassword {
+    display: flex;
+    flex-direction: column;
+    padding-right: 1.5rem;
+    align-items: center;
+}
+.recuperarPassword__container {
+    display: flex;
+    width: 100%;
+}
+.recuperarPassword__container input {
+    width: 100%;
+}
+#form__recuPassword button {
+    width: 100%;
+}
+/* Botones */
 .boton1 {
     margin: 1rem 0.2rem;
     padding: 0.2rem 0.5rem;
@@ -169,3 +204,5 @@
     background-color: rgb(231, 0, 0);
     border-color: rgb(231, 0, 0);
 }
+
+

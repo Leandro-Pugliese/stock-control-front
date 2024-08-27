@@ -99,6 +99,11 @@ function LoginUsuario() {
                             hidePassword={hidePassword}
                         />
                     </div>
+                    <div className="linkForgotPasswordContainer">
+                        <a href="/recuperar-pass">
+                            <button className="linkForgotPassword"> ¿Olvidaste tu contraseña? </button>
+                        </a>
+                    </div>
                     <div className="button-login__container">
                         <button className="button__ingresar" onClick={loginUsuario}> Ingresar </button>
                     </div>
