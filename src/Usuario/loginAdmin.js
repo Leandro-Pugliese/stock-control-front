@@ -1,4 +1,5 @@
-import "../App.css"
+import "../App.css";
+import "../general.css";
 import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
@@ -9,7 +10,6 @@ function LoginAdmin() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -32,10 +32,8 @@ function LoginAdmin() {
     const loginAdmin = async () => {
         try {
             if (email === "" || password === "" || pin === "") {
-                const msj = "¡Debes completar todos los campos!";
-                setMensaje(msj);
+                setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -51,26 +49,20 @@ function LoginAdmin() {
             };
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let data = response.data;
             // Guardamos el token en session storage.
             sessionStorage.setItem("token", data.token);
             sessionStorage.setItem("user", "admin");
             // Armamos msj personalizado para el ususario.
-            const msj = `Bienvenido ${data.admin.username}`;
-            setMensaje(msj);
+            setMensaje(`Bienvenido ${data.admin.username}`);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setTimeout(function () {
                 window.location.href = "/"
               }, 800);
         } catch (error) {
-            //console.log(error)
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -120,7 +112,6 @@ function LoginAdmin() {
                 mensaje={mensaje}
                 showMsj={showMsj}
                 showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
             />
         </div>
     );

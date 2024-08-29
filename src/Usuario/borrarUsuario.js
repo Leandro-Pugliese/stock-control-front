@@ -1,6 +1,5 @@
 import "../App.css";
-import "./usuario.css";
-import "../Productos/productos.css";
+import "../general.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
@@ -32,7 +31,6 @@ function BorrarUsuario() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -70,16 +68,13 @@ function BorrarUsuario() {
             let data = response.data;
             setMensaje(data);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setTimeout(function () {
                 window.location.href = "/admin/lista-usuarios"
             }, 1200);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -125,7 +120,6 @@ function BorrarUsuario() {
                     mensaje={mensaje}
                     showMsj={showMsj}
                     showErrorMsj={showErrorMsj}
-                    showErrorMsjPost={showErrorMsjPost}
                 />
             </div>
         </div>

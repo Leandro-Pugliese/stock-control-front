@@ -1,6 +1,6 @@
 import "../App.css";
-import "./insumos.css";
-import "../Productos/productos.css"
+import "../mobile.css";
+import "../general.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
@@ -31,7 +31,6 @@ function UpdateInsumo() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -57,7 +56,7 @@ function UpdateInsumo() {
     //Data del producto para ver descripción y categoría.
     const insumoData = async () => {
         try {
-            // Atajamos el error cuando se ejecuta la primera vez, por si no llega a cargar el id antes de enviar la petición.
+            // Atajo el error cuando se ejecuta la primera vez, por si no llega a cargar el id antes de enviar la petición.
             if (_id === "") {
                 return
             }
@@ -89,11 +88,9 @@ function UpdateInsumo() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
@@ -105,8 +102,7 @@ function UpdateInsumo() {
         } catch (error) {
             let msj = error.response.data;
             setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     } 
@@ -125,18 +121,14 @@ function UpdateInsumo() {
     const updateInsumo = async () => {
         try {
             if (descripcion === "") {
-                const msj = "Debes completar todos los campos.";
-                setMensaje(msj);
+                setMensaje("Debes completar todos los campos.");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (precio <= 0) {
-                const msj = "El precio no puede ser menor o igual a cero.";
-                setMensaje(msj);
+                setMensaje("El precio no puede ser menor o igual a cero.");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -168,11 +160,9 @@ function UpdateInsumo() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
@@ -181,16 +171,13 @@ function UpdateInsumo() {
             setMensaje(data);
             setShowMsj(true);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setAnularBoton(true);
             setTimeout(function () {
                 window.location.href = "/insumos"
               }, 800);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -270,12 +257,15 @@ function UpdateInsumo() {
                         <button className="boton1" id="botonCancelar" onClick={() => window.location.reload()}> Atras </button>
                     </div>
                 }
-                <Mensajes 
-                    mensaje={mensaje}
-                    showMsj={showMsj}
-                    showErrorMsj={showErrorMsj}
-                    showErrorMsjPost={showErrorMsjPost}
-                />
+                {
+                    (mensaje) &&
+                    <Mensajes 
+                        mensaje={mensaje}
+                        showMsj={showMsj}
+                        showErrorMsj={showErrorMsj}
+                    />
+                }
+                
             </div>
         </div>
     );

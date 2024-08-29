@@ -1,5 +1,5 @@
 import "../App.css";
-import "./sidebar.css";
+import "../general.css";
 import Filtros from "../Componentes/filtros";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faPlus, faTrashCan, faCheck, faGear } from '@fortawesome/free-solid-svg-icons';

@@ -1,5 +1,5 @@
 import "../App.css";
-import "./usuario.css";
+import "../general.css";
 import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
@@ -10,7 +10,6 @@ function CrearAdmin() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -53,42 +52,32 @@ function CrearAdmin() {
     const crearAdmin = async () => {
         try {
             if (username === "" || email === "" || empresa === "" || pin === "" || pin2 === "" || password === "" || password2 === "" || claveAdm === "") {
-                const msj = "¡Debes completar todos los campos!";
-                setMensaje(msj);
+                setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (password !== password2) {
-                const msj = "¡Las contraseñas ingresadas no coinciden!";
-                setMensaje(msj);
+                setMensaje("¡Las contraseñas ingresadas no coinciden!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (password.length <= 7 ) {
-                const msj = "¡La contraseña debe tener al menos 8 caracteres!";
-                setMensaje(msj);
+                setMensaje("¡La contraseña debe tener al menos 8 caracteres!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (pin !== pin2) {
-                const msj = "¡Los pines ingresados no coinciden!";
-                setMensaje(msj);
+                setMensaje("¡Los pines ingresados no coinciden!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (pin.length <= 3 ) {
-                const msj = "¡El pin debe tener al menos 4 caracteres!";
-                setMensaje(msj);
+                setMensaje("¡El pin debe tener al menos 4 caracteres!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -104,18 +93,13 @@ function CrearAdmin() {
             };
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let msj = response.data.msj;
             setMensaje(msj);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
         } catch (error) {
-            //console.log(error)
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -175,7 +159,6 @@ function CrearAdmin() {
                 mensaje={mensaje}
                 showMsj={showMsj}
                 showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
             />
         </div>
     );

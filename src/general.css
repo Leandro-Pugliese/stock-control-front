@@ -1,0 +1,912 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* NAVBAR */
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(33, 37, 41, 1);
+    height: 3.5rem;
+}
+nav a {
+    color: whitesmoke;
+    text-decoration: none;
+    padding: 0rem 2.5rem;
+}
+nav a:hover {
+    color: whitesmoke;
+}
+nav ul {
+    list-style: none;
+    margin: 0rem 0rem;
+    padding: 0rem 0rem;
+}
+.inicioButton {
+    color: ghostwhite;
+    font-size: 1.2rem;
+    padding: 0rem 2.5rem;
+    margin: 0rem;
+}
+.openMenu {
+    margin-right: 2.8rem;
+    background-color: transparent;
+    border: none;
+    color: ghostwhite;
+}
+.dropIcon {
+    margin-left: 0.3rem;
+}
+
+/* FOOTER */
+footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(33, 37, 41, 1);
+    height: 3.5rem;
+}
+footer a {
+    text-decoration: none;
+    color: whitesmoke;
+    opacity: 0.7;
+}
+footer a:hover {
+    opacity: 1;
+    color: whitesmoke;
+}
+
+/* SIDEBAR */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+    min-height: 100%;
+    border-right: solid 0.1rem rgba(33, 37, 41, 1);
+    box-sizing: border-box;
+}
+.container__botones {
+    display: flex;
+    flex-direction: column;
+}
+.sidebar h4 {
+    padding-top: 0.5rem;
+    padding-left: 0.6rem;
+}
+.sidebar__button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    border: none;
+    background-color: transparent;
+    padding: 0.3rem 0.5rem;
+    margin: 0.1rem 0.5rem;
+    font-weight: 500;
+}
+.sidebar__button:hover {
+    background-color: gainsboro;
+    border-radius: 0.5rem;
+}
+.sidebar__a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    border: none;
+    background-color: transparent;
+    padding: 0.3rem 0.5rem;
+    margin: 0.1rem 0.5rem;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+.sidebar__a:hover {
+    background-color: gainsboro;
+    border-radius: 0.5rem;
+    color: black;
+}
+.sidebar__icon {
+    margin-right: 0.6rem;
+}
+.activo {
+    background-color: gainsboro;
+    border-radius: 0.5rem;
+}
+
+/* USUARIO */
+.main__container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    align-items: center;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
+}
+.form__container {
+    margin-top: 2rem;   
+    padding: 0.3rem 1.5rem;
+    border: solid 0.2rem rgba(33, 37, 41, 1);
+    border-radius: 0.4rem;
+    padding-right: 0.4rem;
+}
+.form__titulo {
+    margin-top: 0.7rem;
+    margin-bottom: 1rem;
+}
+.login__input {
+    background-color: gainsboro;
+    border: solid 0.2rem transparent;
+    border-radius: 0.3rem;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+    margin: 0.3rem 0rem;
+}
+.showPassword__container {
+    display: flex;
+    flex-direction: row;
+}
+/*Link recuperar cotraseña*/
+.linkForgotPasswordContainer{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 0.7rem 0rem;
+    font-size: small;
+}
+.linkForgotPassword {
+    background-color: initial;
+    border: 0;
+    padding-right: 0.8rem;
+}
+.linkForgotPassword:hover, .linkForgotPassword:active {
+    cursor: pointer;
+    text-decoration: underline;
+}
+/* Recuperar contraseña */
+#form__recuPassword {
+    display: flex;
+    flex-direction: column;
+    padding-right: 1.5rem;
+    align-items: center;
+}
+.recuperarPassword__container {
+    display: flex;
+    width: 100%;
+}
+.recuperarPassword__container input {
+    width: 100%;
+}
+#form__recuPassword button {
+    width: 100%;
+}
+/* Botones */
+.boton1 {
+    margin: 1rem 0.2rem;
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(33, 37, 41, 1);
+    border: solid 0.1rem rgba(33, 37, 41, 1);
+    border-radius: 0.3rem;
+    color: whitesmoke;
+}
+.boton1:active {
+    scale: 0.95;
+}
+.button-login__container {
+    margin: 0.7rem 0rem;
+}
+.button__ingresar {
+    width: 84%;
+    background-color: darkgreen;
+    border: solid 0.1rem darkgreen;
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+    color: whitesmoke;
+}
+.button__ingresar:hover {
+    background-color: green;
+    border-color: green;
+}
+.button__ingresar:active {
+    scale: 0.95;
+}
+.container__bloquear {
+    display: flex;
+    flex-direction: row;
+}
+.popUp__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.popUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: white;
+    padding: 0.5rem 0.5rem;
+    border: solid 0.5rem white;
+    border-radius: 0.8rem;
+    z-index: 101;
+    min-height: 27%;
+    max-width: 40%;
+}
+.close__container {
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: right;
+}
+.close__container button{
+    background-color: transparent;
+    border: transparent;
+    color: red;
+}
+.bloquear__button {
+    margin-top: 0.5rem;
+    background-color: rgb(204, 0, 0);
+    border-color: rgb(204, 0, 0);
+}
+/* UPDATE PASSWORD */     
+.update__password {
+    width: 32%;
+    margin-left: 0.2rem;
+}   
+/* LISTA USUARIOS */
+.listas__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.botonera {
+    display: none;
+}
+.lista__container {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    justify-content: center;
+    text-align: left;
+    margin: 0rem 0.5rem;
+}
+.datos__usuario {
+    background-color: #f0f0f0;
+    border: solid 0.2rem #f0f0f0;
+    border-radius: 0.3rem;
+    margin: 0rem 0.2rem;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0.2rem;
+}
+.dato {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0.2rem;
+}
+#botonDeshabilitar {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+#botonBloquear {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+#botonDesbloquear {
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+}
+/* HABILITAR USUARIO */
+.habilitarInput {
+    margin-left: 0.2rem;
+    width: 32%;
+}
+/* BORRAR USUARIO */
+#boton__eliminar {
+    background-color: rgb(204, 0, 0);
+    border-color: rgb(204, 0, 0);
+}
+#boton__eliminar:hover {
+    background-color: rgb(231, 0, 0);
+    border-color: rgb(231, 0, 0);
+}
+
+/* PRODUCTOS */
+.container__main {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 auto;
+    border-top: solid 0.1rem rgba(33, 37, 41, 1);
+}
+.container__general {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding-top: 0.3rem;
+    padding-left: 0.5rem;
+    box-sizing: border-box;
+}
+.titulo {
+    margin-left: 0.5rem;
+}
+.scrollProductos {
+    overflow-y: auto;
+    height: 35rem;
+}
+.scrollProductos::-webkit-scrollbar {
+    width: 0.5rem;
+    background: transparent;
+}
+.scrollProductos::-webkit-scrollbar-thumb {
+    border: 0.5rem solid transparent;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+.scrollProductos:hover::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px var(--color-scrollbar);
+    border: 0.8rem solid lightslategrey;
+    background-color: lightslategrey;
+}
+.scrollProductos:hover::-webkit-scrollbar-thumb:hover {
+    border: 8px solid lightslategrey;
+    box-shadow: inset 0 0 0 10px var(--color-scrollbar-hover);
+}
+.scrollProductos::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin: 1rem 0rem;
+}
+.producto__data {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-right: 0.5rem;
+    border: solid 0.15rem rgba(128, 128, 128, 1);
+    border-radius: 0.25rem;
+    gap: 10px;
+}
+.data__container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+}
+.container__dataFija {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.3rem 0rem;
+    font-weight: bold;
+}
+.dataFija__titulo {
+    font-weight: bold;
+}
+.dataFija__boton {
+    display: flex;
+    justify-content: right;
+}
+.boton__modificar {
+    background-color: #0063ce;
+    color: #ffffff;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+}
+.boton__modificar:hover {
+    background-color: #0076f5;
+}
+.boton__modificar:active {
+    scale: 0.95;
+}
+.producto__stock {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.1rem 0rem;
+    width: 100%;
+}
+.stock__container {
+    background-color: rgb(157, 204, 245);
+    border: solid 0.1rem rgb(157, 204, 245);
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.4rem;
+    margin: 0.2rem 0.2rem;
+    padding-top: 0.2rem;
+}
+.producto__componentes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.1rem 0rem;
+    width: 100%;
+}
+.dataVariable {
+    width: 100%;
+}
+.sinResultado {
+    margin: 0.5rem;
+    padding: 0.3rem;
+    color: darkred;
+    font-weight: 600;
+}
+
+/* CARGAR PRODUCTO */
+.container__input {
+    display: flex;
+    flex-direction: row;
+    padding: 0.1rem 0.1rem;
+    margin: 0.2rem 0.2rem;
+    width: 80%;
+}
+.input__producto {
+    width: 40%;
+    background-color: rgba(202, 202, 202, 0.6);
+    border: solid 0.2rem transparent;
+    border-radius: 0.3rem;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+}
+.input__producto:focus {
+    border: solid 0.2rem rgba(202, 202, 202, 1);
+}
+.doble__input {
+    width: 19%;
+    margin-right: 2%;
+}
+.add__button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 28%;
+    border: solid 0.1rem rgba(33, 37, 41, 1);
+    border-radius: 0.3rem;
+    background-color: rgba(33, 37, 41, 1);
+    color: whitesmoke;
+}
+.add__button:active {
+    scale: 0.9;
+}
+.container__button {
+    display: flex;
+    flex-direction: row;
+    padding: 0.1rem 0.1rem;
+    margin: 0.7rem 0.2rem;
+}
+.container__button button {
+    width: 32%;
+    border: solid 0.1rem #198754;
+    border-radius: 0.25rem;
+    background-color: #198754;
+    color: whitesmoke;
+    padding: 0.4rem 0rem;
+}
+.container__button button:hover {
+    background-color: #1ba03c;
+    border-color: #1ba03c;
+}
+.container__button button:active {
+    scale: 0.95;
+}
+.lista__items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.1rem 0.1rem;
+    margin: 0.2rem 0.2rem;
+    width: 80%;
+ }
+ .x__button {
+     background-color: transparent;
+     border: none;
+     margin-right: 0.5rem;
+     padding: 0;
+     padding-left: 0.1rem;
+ }
+.x__button i {
+    color: red;
+}
+ .productoCargado {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+.acomodar__lista {
+    justify-content: right;
+    margin: 0rem;
+}
+/* UPDATE STOCK */
+.stock__sku {
+    display: flex;
+    padding-left: 0.5rem;
+    font-weight: bold;
+    margin-top: 0.4rem;
+}
+.stock__lista {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+    font-weight: bold;
+}
+.stock__object {
+    margin-left: 0.5rem;
+}
+
+/* UPDATE CATEGORIA */
+.modificable__container {
+    margin-top: 1rem;
+}
+.data__modificable {
+    display: flex;
+    flex-direction: column;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    border: solid 0.1rem rgb(90, 102, 114);
+    border-radius: 0.3rem;
+    background-color: #f0f0f0;
+}
+.data__modificable label {
+    padding-left: 0.3rem;
+    padding-top: 0.1rem;
+    font-weight: bold;
+}
+.modificable {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    margin: 0.5rem 0.2rem;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.modificable p {
+    margin: 0rem 0rem;
+    padding: 0rem 0rem;
+    margin-right: 0.7rem;
+}
+.modificable button {
+    width: 15%; 
+    margin: 0.2rem;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+}
+#botonAceptar {
+    background-color: #198754;
+    border-color: #198754;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+#botonCancelar {
+    background-color: rgb(231, 0, 0);
+    border-color: rgb(231, 0, 0);
+}
+/* RENTABILIDAD */
+.container__secundario {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.caluladora__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    width: 45%;
+    border: solid 0.2rem rgba(33, 37, 41, 1);
+    border-radius: 0.3rem;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+}
+.caluladora__container p {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0.7rem 0.0rem;
+}
+.componentes__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.componente__container {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.costo__total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+    padding: 0.2rem 0.5rem;
+}
+.calculadora__fija {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.rent {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.detalles {
+    background-color: #ffffff;
+    padding: 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 0.7rem;
+}
+.calculadora__funciones {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.calculadora__funciones label {
+    font-size: 1em;
+    
+    display: block;
+}
+.calculadora__funciones input {
+    width: 50%;
+}
+.calculadora__funciones button {
+    width: 30%;
+    margin-top: 0.3rem;
+}
+.noMargin {
+    margin-top: 0.4rem;
+    margin-bottom: 0rem;
+}
+
+/* INSUMOS */
+.titulo {
+    margin-left: 0.5rem;
+}
+.scrollInsumos {
+    overflow-y: auto;
+    height: 30rem;
+}
+.scrollInsumos::-webkit-scrollbar {
+    width: 0.5rem;
+    background: transparent;
+}
+.scrollInsumos::-webkit-scrollbar-thumb {
+    border: 0.5rem solid transparent;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+.scrollInsumos:hover::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px var(--color-scrollbar);
+    border: 0.8rem solid lightslategrey;
+    background-color: lightslategrey;
+}
+.scrollInsumos:hover::-webkit-scrollbar-thumb:hover {
+    border: 8px solid lightslategrey;
+    box-shadow: inset 0 0 0 10px var(--color-scrollbar-hover);
+}
+.scrollInsumos::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin: 1rem 0rem;
+}
+.insumo__data {
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    margin-bottom: 15px;
+    border: solid 0.15rem #d4d4d4;
+    border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.data__container-insumo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+}
+.container__dataFija-insumo {
+    font-weight: bold;
+}
+.dataFija__titulo {
+    font-size: 1em;
+}
+.boton__modInsumo {
+    background-color: #0063ce;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+}
+.boton__modInsumo:hover {
+    background-color: #0076f5;
+}
+.boton__modInsumo:active {
+    scale: 0.95;
+}
+/* CARGAR INSUMO */
+.container__input {
+    display: flex;
+    flex-direction: row;
+    padding: 0.1rem 0.1rem;
+    margin: 0.2rem 0.2rem;
+    width: 80%;
+}
+.input__insumo {
+    width: 40%;
+    background-color: rgba(202, 202, 202, 0.6);
+    border: solid 0.2rem transparent;
+    border-radius: 0.3rem;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+}
+.input__insumo:focus {
+    border: solid 0.2rem rgba(202, 202, 202, 1);
+}
+.boton__modInsumo {
+    width: 20%;
+    margin: 0rem 0rem;
+    margin-top: 0.5rem;
+}
+.insumo__cargado {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: #f0f0f0;
+    border: solid 0.1rem #f0f0f0;
+    border-radius: 0.3rem;
+    padding-top: 0.8rem;
+    margin: 0.3rem 0.5rem;
+}
+.dato__cargado {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.3rem 3rem;
+    padding: 0.5rem 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.boton-otro__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#botonCargarOtro {
+    width: 25%;
+    background-color: #198754;
+    border: solid 0.1rem #198754; 
+    color: whitesmoke;
+}
+#botonCargarOtro:hover {
+    background-color: #20aa6a;
+    border: solid 0.1rem #20aa6a; 
+}
+
+/* FILTROS */
+.filtros__general {
+    background-color: rgba(202, 202, 202, 0.6);
+    border: solid 0.5rem white;
+    border-radius: 0.8rem;
+    padding: 0.1rem 0.2rem ;
+}
+.icono__filtro {
+    color: #004c9e;
+    padding-left: 0.5rem;
+    padding-top: 0.3rem;
+}
+.filtro__container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.filtro__container input, select {
+    border: solid 0.15rem white;
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.3rem;
+    outline: none;
+}
+.filtro__container input:hover, select:hover {
+    cursor: pointer;
+}
+.container__boton-filtro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+.boton__filtro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0063ce;
+    border: solid 0.1rem #0063ce;
+    border-radius: 0.3rem;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.25rem;
+}
+.boton__filtro:hover {
+    background-color: rgb(27, 119, 211);
+    border-color: rgb(27, 119, 211);
+}
+.boton__filtro:active {
+    scale: 0.95;    
+}
+
+/* MENSAJES */
+.container__mensajes {
+    margin: 0.3rem 0.5rem;
+    font-weight: 600;
+}
+.mensaje__error {
+    color: red;
+}
+.mensaje__ok {
+    color: green;
+}
+
+/* PASSWORD BUTTON */
+.eyeButton {
+    min-width: 2.5rem;
+    background-color: transparent;
+    border: solid 0.2rem transparent;
+    outline: none;
+    padding: 0.1rem 0.3rem;
+    margin: 0.3rem 0rem;
+}

@@ -1,5 +1,5 @@
 import "../App.css";
-import "./productos.css";
+import "../general.css";
 import { React, useState, useEffect} from "react";
 import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
@@ -30,7 +30,6 @@ function Rentabilidad() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Hooks para producto.
@@ -68,10 +67,8 @@ function Rentabilidad() {
             let config = {};
             // Armamos la config de axios para enviar la petición (varia si es un usuario o un administrador).
             if (user === "usuario") {
-                const msj = `No tienes permiso para utilizar esta ruta.`;
-                setMensaje(msj);
+                setMensaje(`No tienes permiso para utilizar esta ruta.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             } else if (user === "admin") {
@@ -86,10 +83,8 @@ function Rentabilidad() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -101,10 +96,8 @@ function Rentabilidad() {
             setCategoria(data.categoria);
             setDescripcion(data.descripcion);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     } 
@@ -129,10 +122,8 @@ function Rentabilidad() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto usuario administrador.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto usuario administrador.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -141,10 +132,8 @@ function Rentabilidad() {
             let data = response.data;
             setInsumos(data);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -215,7 +204,7 @@ function Rentabilidad() {
                     <div className="stock__sku"> Categoría: {categoria} </div> 
                     <div className="stock__sku"> Descripción: {descripcion} </div>
                 </div>
-                <div className="container__secundario">
+                <div className="container__secundario scroll__rentabilidad">
                     <div className="caluladora__container">
                         <p> Costos Producto </p>
                         <div className="componentes__lista"> 
@@ -265,12 +254,14 @@ function Rentabilidad() {
                         
                     </div>
                 </div>
-                <Mensajes 
-                    mensaje={mensaje}
-                    showMsj={showMsj}
-                    showErrorMsj={showErrorMsj}
-                    showErrorMsjPost={showErrorMsjPost}
-                />
+                {
+                    (mensaje) &&
+                    <Mensajes 
+                        mensaje={mensaje}
+                        showMsj={showMsj}
+                        showErrorMsj={showErrorMsj}
+                    />
+                }
             </div>
         </div>
     );
