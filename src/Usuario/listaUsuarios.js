@@ -8,7 +8,7 @@ import axios from "../axios"
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faAngleDown, faBars} from '@fortawesome/free-solid-svg-icons';
 
 function ListaUsuarios() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -201,11 +201,35 @@ function ListaUsuarios() {
         }
     }
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
                 sidebarSubKey={sidebarSubKey}
+                estadoSidebar={estadoSidebar}
             />
             <div className="container__general" id="container__listaUsuarios">
                 <div className="listas__container">
@@ -308,7 +332,7 @@ function ListaUsuarios() {
                         </div>
                         {
                             (bloqueoInput) &&
-                            <div>
+                            <div className="popUp__content">
                                 <div>
                                 {
                                     (bloqueo === true) &&
@@ -358,7 +382,7 @@ function ListaUsuarios() {
                         </div>
                         {
                             (bloqueoInput) &&
-                            <div>
+                            <div className="popUp__content">
                                 <div>¿Deshabilitar {usuarioEmail}?</div>
                                 <div className="showPassword__container">
                                     <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..." />

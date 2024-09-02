@@ -148,5 +148,114 @@
 
 /* Celular */
 @media screen and (max-width: 750px) {
-    
+    /* Inicio */
+    .logo__inicio img {
+        width: 80%;
+    }
+    .container__inicio {
+        flex-direction: column;
+    }
+    .foto__container {
+        width: 90%;
+    }
+    .foto {
+        height: 25vh;
+    }
+    .foto2 {
+        height: 25vh;
+    }
+
+    /* Usuario */
+    .layout__sidebarActiva {
+        display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+    }
+    .boton__activarSidebar {
+        display: flex;
+        position: absolute;
+        top: 4rem;
+        left: 1.5rem;
+        background-color: transparent;
+        border: solid 0.1rem transparent;
+        border-radius: 0.5rem;
+        padding: 0.3rem;
+        cursor: pointer;
+    }
+    .activarSidebar__icono {
+        width: 2rem;
+        height: 2rem;
+    }
+    .sidebar {
+        position: fixed;
+        left: 0rem;
+        top: 0rem;
+        background-color: whitesmoke;
+        border: none;
+        justify-content: flex-start;
+        width: 60%;
+        height: 100%;
+        z-index: 1000;
+        transform: translateX(0);
+        opacity: 1; 
+        visibility: visible; 
+        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    }
+    .sidebar__off {
+        transform: translateX(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    }
+    #container__listaUsuarios {
+        width: 100%;
+        margin-top: 2.5rem;
+    }
+    /* PopUp */
+    .popUp {
+        max-width: 90%;
+        align-items: center;
+    }
+    .popUp__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    /* Habilitar Usuario */
+    #container__habilitarUsuario {
+        margin-top: 4rem;
+        width: 100%;
+        padding-left: 2rem;
+    }
+    .habilitarInput {
+        width: 85%;
+    }
+    #boton__habilitar {
+        width: 85%;
+    }
+    /* Borrar Usuario */
+    #container__borrarUsuario {
+        margin-top: 4rem;
+        width: 100%;
+        padding-left: 2rem;
+    }
+    #boton__eliminar {
+        width: 85%;
+    }
+    /* Update Admin */
+    #container__updateAdmin {
+        margin-top: 4rem;
+        width: 100%;
+        padding-left: 2rem;
+    }
+    .update__password {
+        width: 85%;
+    }
+    #boton__updatePassword {
+        width: 85%;
+    }
 }
