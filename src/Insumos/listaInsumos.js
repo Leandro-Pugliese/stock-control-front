@@ -6,6 +6,8 @@ import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function ListaInsumos() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -124,6 +126,7 @@ function ListaInsumos() {
         })
         setListaInsumosFiltrados(cumplenFiltro);
         setFiltrosActivos(true);
+        activarSidebar("-");
     }
     
     // Función para formatear número a moneda.
@@ -131,8 +134,31 @@ function ListaInsumos() {
         return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
     }
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
                 indicador={indicador}
@@ -141,10 +167,11 @@ function ListaInsumos() {
                 handleChangePrecioMax={handleChangePrecioMax}
                 filtrar={filtrar}
                 insumos={insumos}
+                estadoSidebar={estadoSidebar}
             />
             {
                 (filtrosActivos) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Insumos Filtrados </h3>
                     <div className="scrollInsumos">
                         {
@@ -183,7 +210,7 @@ function ListaInsumos() {
             }
             {
                 (!filtrosActivos) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Lista Insumos </h3>
                     <div className="scrollInsumos">
                         {
@@ -217,7 +244,7 @@ function ListaInsumos() {
                 </div>
             }
             {
-                (mensaje) &&
+                (showMsj || showErrorMsj) &&
                 <Mensajes 
                     mensaje={mensaje}
                     showMsj={showMsj}

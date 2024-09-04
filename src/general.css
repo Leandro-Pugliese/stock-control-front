@@ -172,6 +172,9 @@ footer a:hover {
     background-color: gainsboro;
     border-radius: 0.5rem;
 }
+.boton__activarSidebar {
+    display: none;
+}
 
 /* USUARIO */
 .main__container {
@@ -288,28 +291,28 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
     background: white;
     padding: 0.5rem 0.5rem;
     border: solid 0.5rem white;
     border-radius: 0.8rem;
     z-index: 101;
-    min-height: 27%;
     max-width: 40%;
 }
-.close__container {
+.buttonContainer__popUp {
+    display: flex;
     width: 100%;
-    margin-bottom: 1rem;
-    text-align: right;
-}
-.close__container button{
-    background-color: transparent;
-    border: transparent;
-    color: red;
+    justify-content: space-around;
 }
 .bloquear__button {
     margin-top: 0.5rem;
     background-color: rgb(204, 0, 0);
     border-color: rgb(204, 0, 0);
+}
+.cancelar__button {
+    margin-top: 0.5rem;
+    background-color: #0063ce;
+    border-color: #0063ce;
 }
 /* UPDATE PASSWORD */     
 .update__password {
@@ -527,8 +530,11 @@ footer a:hover {
 .input__producto:focus {
     border: solid 0.2rem rgba(202, 202, 202, 1);
 }
+.div__dobleInput {
+    width: 42%;
+}
 .doble__input {
-    width: 19%;
+    width: 46.5%;
     margin-right: 2%;
 }
 .add__button {

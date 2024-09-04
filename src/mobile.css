@@ -258,4 +258,71 @@
     #boton__updatePassword {
         width: 85%;
     }
+    /* Filtros */
+    .filtros__general {
+        border: solid 0.5rem transparent;
+        margin: 0.5rem;
+    }
+    /* INSUMOS */
+    /* Lista insumos */
+    .general__mobile {
+        width: 100%;
+        margin-top: 4rem;
+    }
+    .scrollInsumos {
+        height: 45rem;
+    }
+    /* Cargar insumo */
+    #container__cargarInsumo {
+        margin-top: 4rem;
+        width: 100%;
+        padding-left: 2rem;
+    }
+    .input__insumo {
+        width: 100%;
+    }
+    #boton__cargarInsumo {
+        width: 81%;
+    }
+    /* PRODUCTOS */
+    /* Lista Productos */
+    .scrollProductos {
+        height: 45rem;
+    }
+    /* Cargar Producto */
+    .cargarProdcuto__input {
+        width: 95%;
+    }
+    .input__producto {
+        width: 100%;
+    }
+    .container__dobleInput {
+        display: flex;
+        width: 95%;
+    }
+    .div__dobleInput {
+        width: 70%;
+        margin-right: 0.5rem;
+    }
+    .doble__input {
+        margin: 0.15rem 0rem;
+    }
+    #boton__cargarProducto {
+        width: 95%;
+    }
+    #botonCargarOtro {
+        width: 98%;
+    }
+    /* Modificar Componentes */
+    #boton__modificarComponentes {
+        width: 81%;
+    }
+    /* Modificar Stock */
+    #boton__modificarStock {
+        width: 81%;
+    }
+    /* Rentabilidad */
+    .scroll__rentabilidad {
+        height: 37rem;
+    }
 }

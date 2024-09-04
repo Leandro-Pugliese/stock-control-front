@@ -6,6 +6,8 @@ import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function CrearInsumo() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
@@ -121,12 +123,36 @@ function CrearInsumo() {
         return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
     }
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
+                estadoSidebar={estadoSidebar}
             />
-            <div className="container__general">
+            <div className="container__general general__mobile" id="container__cargarInsumo">
                 <h3 className="titulo"> Cargar Insumo </h3>
                 {
                     (!showInsumo) &&

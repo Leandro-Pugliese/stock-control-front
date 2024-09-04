@@ -8,7 +8,7 @@ import axios from "../axios"
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faAngleDown, faBars} from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faBars} from '@fortawesome/free-solid-svg-icons';
 
 function ListaUsuarios() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -325,11 +325,6 @@ function ListaUsuarios() {
                 (popUpActivo) &&
                 <div className="popUp__overlay">
                     <div className="popUp">
-                        <div className="close__container">
-                            <button onClick={cerrarPopUp}>
-                                <FontAwesomeIcon icon={faCircleXmark}/>
-                            </button>
-                        </div>
                         {
                             (bloqueoInput) &&
                             <div className="popUp__content">
@@ -351,7 +346,7 @@ function ListaUsuarios() {
                                         hidePassword={hidePassword}
                                     />
                                 </div>
-                                <div>
+                                <div className="buttonContainer__popUp">
                                     {
                                         (bloqueo === true) &&
                                         <button className="bloquear__button boton1" onClick={bloquear}> Bloquear </button>
@@ -360,14 +355,18 @@ function ListaUsuarios() {
                                         (bloqueo === false) &&
                                         <button className="bloquear__button boton1" onClick={bloquear}> Desbloquear </button>
                                     }
+                                    <button className="cancelar__button boton1" onClick={cerrarPopUp}> Cancelar </button>
                                 </div>
                             </div>
                         }
-                        <Mensajes
-                            mensaje={mensaje}
-                            showMsj={showMsj}
-                            showErrorMsj={showErrorMsj}
-                        />
+                        {
+                            (showMsj || showErrorMsj) &&
+                            <Mensajes
+                                mensaje={mensaje}
+                                showMsj={showMsj}
+                                showErrorMsj={showErrorMsj}
+                            />
+                        }
                     </div>
                 </div>
             }
@@ -375,11 +374,6 @@ function ListaUsuarios() {
                 (popUpActivo2) &&
                 <div className="popUp__overlay">
                     <div className="popUp">
-                        <div className="close__container">
-                            <button onClick={cerrarPopUp}>
-                                <FontAwesomeIcon icon={faCircleXmark}/>
-                            </button>
-                        </div>
                         {
                             (bloqueoInput) &&
                             <div className="popUp__content">
@@ -392,16 +386,20 @@ function ListaUsuarios() {
                                         hidePassword={hidePassword}
                                     />
                                 </div>
-                                <div> 
+                                <div className="buttonContainer__popUp"> 
                                     <button className="bloquear__button boton1" onClick={deshabilitar}> Deshabilitar </button>
+                                    <button className="cancelar__button boton1" onClick={cerrarPopUp}> Cancelar </button>
                                 </div>
                             </div>
                         }
-                        <Mensajes
-                            mensaje={mensaje}
-                            showMsj={showMsj}
-                            showErrorMsj={showErrorMsj}
-                        />
+                        {
+                            (showMsj || showErrorMsj) &&
+                            <Mensajes
+                                mensaje={mensaje}
+                                showMsj={showMsj}
+                                showErrorMsj={showErrorMsj}
+                            />
+                        }
                     </div>
                 </div>
             }

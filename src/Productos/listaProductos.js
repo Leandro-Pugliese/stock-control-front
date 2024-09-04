@@ -6,6 +6,8 @@ import axios from "../axios";
 import Sidebar from "../Sidebar/sidebar";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function ListaProductos() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -52,6 +54,7 @@ function ListaProductos() {
         setShowMsj(false);
         setIndicador("CARGA");
         setSidebarSubKey("CARGAR-PRODUCTO");
+        activarSidebar("-");
     }
     const insumosLista = async () => {
         try {
@@ -427,10 +430,34 @@ function ListaProductos() {
         })
         setListaProductosFiltrados(cumplenFiltro);
         setFiltrosActivos(true);
+        activarSidebar("-");
+    }
+
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
     }
 
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 renderProductosLista={renderProductosLista}
                 renderProductosCarga={renderProductosCarga}
@@ -446,11 +473,12 @@ function ListaProductos() {
                 productos={productos}
                 insumos={insumos}
                 categoriasProductos={categoriasProductos}
+                estadoSidebar={estadoSidebar}
             />
             {
                 (showListaProductos && filtrosActivos) &&
-                <div className="container__general">
-                    <h3 className="titulo">Productos Filtrados</h3>
+                <div className="container__general general__mobile">
+                    <h3 className="titulo"> Productos Filtrados </h3>
                     <div className="scrollProductos">
                         {
                             listaProductosFiltrados.map((element, index) => (
@@ -531,7 +559,7 @@ function ListaProductos() {
             }
             {
                 (showListaProductos && !filtrosActivos) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Lista Productos </h3>
                     <div className="scrollProductos">
                         {
@@ -609,23 +637,25 @@ function ListaProductos() {
             }
             {
                 (showCargarProducto) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Cargar Producto </h3>
                     {
                         (!showProducto) &&
                         <div>
-                            <div className="container__input">
+                            <div className="container__input cargarProdcuto__input">
                                 <input onChange={onChangeSku} className="input__producto" id="skuInput" type="text" placeholder="Sku..."/>
                             </div>
-                            <div className="container__input">
+                            <div className="container__input cargarProdcuto__input">
                                 <input onChange={onChangeCategoria} className="input__producto" id="categoriaInput" type="text" placeholder="Categoría..."/>
                             </div>
-                            <div className="container__input">
+                            <div className="container__input cargarProdcuto__input">
                                 <input onChange={onChangeDescripcion} className="input__producto" id="descripcionInput" type="text" placeholder="Descripción..."/>
                             </div>
-                            <div className="container__input">
-                                <input onChange={onChangeStockColor} className="input__producto doble__input" id="colorStockInput" type="text" placeholder="Color..."/>
-                                <input onChange={onChangeStockUnidades} className="input__producto doble__input" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
+                            <div className="container__input container__dobleInput">
+                                <div className="div__dobleInput">
+                                    <input onChange={onChangeStockColor} className="input__producto doble__input" id="colorStockInput" type="text" placeholder="Color..."/>
+                                    <input onChange={onChangeStockUnidades} className="input__producto doble__input" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
+                                </div>
                                 <button className="add__button" onClick={addStock}>
                                     Agregar al stock
                                 </button>
@@ -645,18 +675,20 @@ function ListaProductos() {
                                 }
                                 </div>
                             }
-                            <div className="container__input">
-                                <select className="input__producto doble__input" onChange={onChangeComponenteNombre} defaultValue="-">
-                                    <option value="-">Componente...</option>
-                                {
-                                    insumos.map((element, index) => (
-                                        <option key={index} value={element.nombre}>
-                                            {element.nombre}
-                                        </option>
-                                    ))
-                                }
-                                </select>
-                                <input onChange={onChangeComponenteCantidad} className="input__producto doble__input" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
+                            <div className="container__input container__dobleInput">
+                                <div className="div__dobleInput">
+                                    <select className="input__producto doble__input" onChange={onChangeComponenteNombre} defaultValue="-">
+                                        <option value="-">Componente...</option>
+                                    {
+                                        insumos.map((element, index) => (
+                                            <option key={index} value={element.nombre}>
+                                                {element.nombre}
+                                            </option>
+                                        ))
+                                    }
+                                    </select>
+                                    <input onChange={onChangeComponenteCantidad} className="input__producto doble__input" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
+                                </div>
                                 <button className="add__button" onClick={addComponente}>
                                     Agregar componente
                                 </button>
@@ -682,7 +714,7 @@ function ListaProductos() {
                         </div>
                     }
                     {
-                        (mensaje) &&
+                        (showMsj || showErrorMsj) &&
                         <Mensajes 
                             mensaje={mensaje}
                             showMsj={showMsj}
