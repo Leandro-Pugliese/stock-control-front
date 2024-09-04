@@ -1,11 +1,13 @@
 import "../App.css";
-import "./insumos.css";
-import "../Productos/productos.css";
+import "../mobile.css";
+import "../general.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function ListaInsumos() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -33,7 +35,6 @@ function ListaInsumos() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values para mostrar.
@@ -68,11 +69,9 @@ function ListaInsumos() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
@@ -80,10 +79,8 @@ function ListaInsumos() {
             let data = response.data;
             setInsumos(data);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -129,6 +126,7 @@ function ListaInsumos() {
         })
         setListaInsumosFiltrados(cumplenFiltro);
         setFiltrosActivos(true);
+        activarSidebar("-");
     }
     
     // Función para formatear número a moneda.
@@ -136,8 +134,31 @@ function ListaInsumos() {
         return valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
     }
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
                 indicador={indicador}
@@ -146,83 +167,90 @@ function ListaInsumos() {
                 handleChangePrecioMax={handleChangePrecioMax}
                 filtrar={filtrar}
                 insumos={insumos}
+                estadoSidebar={estadoSidebar}
             />
             {
                 (filtrosActivos) &&
-                <div className="container__general">
-                    <h3 className="titulo"> Lista Insumos </h3>
-                    {
-                        listaInsumosFiltrados.map((elemento, indice) => (
-                            <div className="insumo__data" key={indice}> 
-                                <div className="data__container-insumo">
-                                    <div className="container__dataFija-insumo">
-                                        <div className="dataFija__titulo"> Insumo </div>
-                                    </div>
-                                    <div>{elemento.nombre}</div>
-                                </div> 
-                                <div className="data__container-insumo">
-                                    <div className="container__dataFija-insumo">
-                                        <div className="dataFija__titulo"> Precio </div>
-                                    </div>
-                                    <div>{formateoMoneda(elemento.precio)}</div>
-                                </div> 
-                                <div className="data__container-insumo">
-                                    <div className="container__dataFija-insumo">
-                                        <div className="dataFija__titulo"> Descripción </div>
-                                    </div>
-                                    <div>{elemento.descripcion}</div>
-                                </div> 
-                                <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
-                                    Modificar
-                                </button>
-                            </div>
-                        ))
-                    }
-                    {
+                <div className="container__general general__mobile">
+                    <h3 className="titulo"> Insumos Filtrados </h3>
+                    <div className="scrollInsumos">
+                        {
+                            listaInsumosFiltrados.map((elemento, indice) => (
+                                <div className="insumo__data" key={indice}> 
+                                    <div className="data__container-insumo">
+                                        <div className="container__dataFija-insumo">
+                                            <div className="dataFija__titulo"> Insumo </div>
+                                        </div>
+                                        <div>{elemento.nombre}</div>
+                                    </div> 
+                                    <div className="data__container-insumo">
+                                        <div className="container__dataFija-insumo">
+                                            <div className="dataFija__titulo"> Precio </div>
+                                        </div>
+                                        <div>{formateoMoneda(elemento.precio)}</div>
+                                    </div> 
+                                    <div className="data__container-insumo">
+                                        <div className="container__dataFija-insumo">
+                                            <div className="dataFija__titulo"> Descripción </div>
+                                        </div>
+                                        <div>{elemento.descripcion}</div>
+                                    </div> 
+                                    <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                        Modificar
+                                    </button>
+                                </div>
+                            ))
+                        }
+                        {
                         (listaInsumosFiltrados.length === 0) &&
-                        <div className="sinResultado">No hay insumos que cumplan con los filtros utilizados...</div>
-                    }
+                            <div className="sinResultado">No hay insumos que cumplan con los filtros utilizados...</div>
+                        }
+                    </div>
                 </div>
             }
             {
                 (!filtrosActivos) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Lista Insumos </h3>
-                    {
-                        insumos.map((elemento, indice) => (
-                            <div className="insumo__data" key={indice}> 
-                                <div className="data__container-insumo">
-                                    <div className="container__dataFija-insumo">
-                                        <div className="dataFija__titulo"> Insumo </div>
-                                    </div>
-                                    <div>{elemento.nombre}</div>
-                                </div> 
-                                <div className="data__container-insumo">
-                                    <div className="container__dataFija-insumo">
-                                        <div className="dataFija__titulo"> Precio </div>
-                                    </div>
-                                    <div>{formateoMoneda(elemento.precio)}</div>
-                                </div> 
-                                <div className="data__container-insumo">
-                                    <div className="container__dataFija-insumo">
-                                        <div className="dataFija__titulo"> Descripción </div>
-                                    </div>
-                                    <div>{elemento.descripcion}</div>
-                                </div> 
-                                <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
-                                    Modificar
-                                </button>
-                            </div>
-                        ))
-                    }
+                    <div className="scrollInsumos">
+                        {
+                            insumos.map((elemento, indice) => (
+                                <div className="insumo__data" key={indice}> 
+                                    <div className="data__container-insumo">
+                                        <div className="container__dataFija-insumo">
+                                            <div className="dataFija__titulo"> Insumo </div>
+                                        </div>
+                                        <div>{elemento.nombre}</div>
+                                    </div> 
+                                    <div className="data__container-insumo">
+                                        <div className="container__dataFija-insumo">
+                                            <div className="dataFija__titulo"> Precio </div>
+                                        </div>
+                                        <div>{formateoMoneda(elemento.precio)}</div>
+                                    </div> 
+                                    <div className="data__container-insumo">
+                                        <div className="container__dataFija-insumo">
+                                            <div className="dataFija__titulo"> Descripción </div>
+                                        </div>
+                                        <div>{elemento.descripcion}</div>
+                                    </div> 
+                                    <button className="boton__modInsumo" onClick={() => modificarInsumo(elemento._id)}>
+                                        Modificar
+                                    </button>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
             }
-            <Mensajes 
-                mensaje={mensaje}
-                showMsj={showMsj}
-                showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
-            />
+            {
+                (showMsj || showErrorMsj) &&
+                <Mensajes 
+                    mensaje={mensaje}
+                    showMsj={showMsj}
+                    showErrorMsj={showErrorMsj}
+                />
+            }
         </div>
     );
 }

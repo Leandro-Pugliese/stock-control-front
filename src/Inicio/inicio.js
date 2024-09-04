@@ -1,5 +1,5 @@
 import "../App.css";
-import "./inicio.css";
+import "../general.css";
 import { React, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import logo from "../Imagenes/logoStockControl.jpg";
@@ -13,7 +13,7 @@ function Inicio() {
     }, []);
 
     return (
-        <div className="main__container-inicio">
+        <div className="main__container">
             <div className="logo__inicio">
                 <img src={logo} alt="Logo"/>
             </div>

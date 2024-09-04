@@ -1,5 +1,5 @@
 import "../App.css";
-import "./usuario.css";
+import "../general.css";
 import axios from "../axios";
 import { React, useEffect, useState} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
@@ -30,7 +30,6 @@ function RecuperarPass() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     const recuperarPassword = async() => {
@@ -48,11 +47,9 @@ function RecuperarPass() {
             setMensaje(response.data);
             setShowMsj(true);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
         } catch (error) {
             setMensaje(error.response.data);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true)
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -72,7 +69,6 @@ function RecuperarPass() {
                 mensaje={mensaje}
                 showMsj={showMsj}
                 showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
             />
         </div>
     );

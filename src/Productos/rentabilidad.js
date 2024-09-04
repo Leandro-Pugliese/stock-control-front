@@ -1,10 +1,12 @@
 import "../App.css";
-import "./productos.css";
+import "../general.css";
 import { React, useState, useEffect} from "react";
 import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function Rentabilidad() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -30,7 +32,6 @@ function Rentabilidad() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Hooks para producto.
@@ -68,10 +69,8 @@ function Rentabilidad() {
             let config = {};
             // Armamos la config de axios para enviar la petición (varia si es un usuario o un administrador).
             if (user === "usuario") {
-                const msj = `No tienes permiso para utilizar esta ruta.`;
-                setMensaje(msj);
+                setMensaje(`No tienes permiso para utilizar esta ruta.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             } else if (user === "admin") {
@@ -86,10 +85,8 @@ function Rentabilidad() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -101,10 +98,8 @@ function Rentabilidad() {
             setCategoria(data.categoria);
             setDescripcion(data.descripcion);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     } 
@@ -129,10 +124,8 @@ function Rentabilidad() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto usuario administrador.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto usuario administrador.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -141,10 +134,8 @@ function Rentabilidad() {
             let data = response.data;
             setInsumos(data);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -194,12 +185,36 @@ function Rentabilidad() {
         setCalcularRent(num);
     };
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }    
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
+                estadoSidebar={estadoSidebar}
             />
-            <div className="container__general">
+            <div className="container__general general__mobile">
                 <h3 className="titulo"> Rentabilidad </h3>
                 <div className="">
                     <div className="stock__sku"> Sku: {sku} </div> 
@@ -215,7 +230,7 @@ function Rentabilidad() {
                     <div className="stock__sku"> Categoría: {categoria} </div> 
                     <div className="stock__sku"> Descripción: {descripcion} </div>
                 </div>
-                <div className="container__secundario">
+                <div className="container__secundario scroll__rentabilidad">
                     <div className="caluladora__container">
                         <p> Costos Producto </p>
                         <div className="componentes__lista"> 
@@ -265,12 +280,14 @@ function Rentabilidad() {
                         
                     </div>
                 </div>
-                <Mensajes 
-                    mensaje={mensaje}
-                    showMsj={showMsj}
-                    showErrorMsj={showErrorMsj}
-                    showErrorMsjPost={showErrorMsjPost}
-                />
+                {
+                    (mensaje) &&
+                    <Mensajes 
+                        mensaje={mensaje}
+                        showMsj={showMsj}
+                        showErrorMsj={showErrorMsj}
+                    />
+                }
             </div>
         </div>
     );

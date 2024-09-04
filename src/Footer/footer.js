@@ -1,5 +1,5 @@
-import "../App.css"
-import "./footer.css"
+import "../App.css";
+import "../general.css";
 
 function Footer() {
 

@@ -1,5 +1,5 @@
 import "../App.css";
-import "./usuario.css";
+import "../general.css";
 import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
@@ -11,7 +11,6 @@ function CrearUsuario() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -42,26 +41,20 @@ function CrearUsuario() {
     const crearUsuario = async () => {
         try {
             if (username === "" || email === "" || password === "" || password2 === "" || claveAcceso === "") {
-                const msj = "¡Debes completar todos los campos!";
-                setMensaje(msj);
+                setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (password !== password2) {
-                const msj = "¡Las contraseñas ingresadas no coinciden!";
-                setMensaje(msj);
+                setMensaje("¡Las contraseñas ingresadas no coinciden!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (password.length <= 7 ) {
-                const msj = "¡La contraseña debe tener al menos 8 caracteres!";
-                setMensaje(msj);
+                setMensaje("¡La contraseña debe tener al menos 8 caracteres!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -81,14 +74,10 @@ function CrearUsuario() {
             let msj = response.data.msj;
             setMensaje(msj);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
         } catch (error) {
-            //console.log(error)
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -139,7 +128,6 @@ function CrearUsuario() {
                 mensaje={mensaje}
                 showMsj={showMsj}
                 showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
             />
         </div>
     );

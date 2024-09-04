@@ -1,6 +1,6 @@
 import "../App.css";
-import "./usuario.css";
-import "../Productos/productos.css";
+import "../general.css";
+import "../mobile.css";
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
@@ -8,7 +8,7 @@ import axios from "../axios"
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faBars} from '@fortawesome/free-solid-svg-icons';
 
 function ListaUsuarios() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -35,7 +35,6 @@ function ListaUsuarios() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values para mostrar info
@@ -61,10 +60,8 @@ function ListaUsuarios() {
             setUsuariosHabilitados(data.usuariosHabilitadosPorAdm);
             setUsuariosCreados(data.usuariosCreadosPorAdm);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -114,17 +111,14 @@ function ListaUsuarios() {
             let data = response.data;
             setMensaje(data);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setBloqueoInput(false);
             setTimeout(function () {
                 window.location.reload()
             }, 1300);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -156,17 +150,14 @@ function ListaUsuarios() {
             let data = response.data;
             setMensaje(data);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setBloqueoInput(false);
             setTimeout(function () {
                 window.location.reload()
             }, 1300);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -179,7 +170,6 @@ function ListaUsuarios() {
         setPopUpActivo2(false);
         setUsuarioEmail("");
         setShowErrorMsj(false);
-        setShowErrorMsjPost(false);
         setShowMsj(false);
     }
 
@@ -195,16 +185,77 @@ function ListaUsuarios() {
         setBotonShowPassword(true);
     };
 
+    //Hooks para cambiar visualización de listas en mobile.
+    const [indicador, setInidcador] = useState("HABILITADOS");
+    const [verListaHabilitados, setListaHabilitados] = useState("lista__visible");
+    const [verListaCreados, setListaCreados] = useState("lista__no-visible");
+    const cambiarLista = (indicador) => {
+        if (indicador === "HABILITADOS") {
+            setInidcador("CREADOS");
+            setListaHabilitados("lista__no-visible");
+            setListaCreados("lista__visible");
+        } else {
+            setInidcador("HABILITADOS");
+            setListaHabilitados("lista__visible");
+            setListaCreados("lista__no-visible");
+        }
+    }
+
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
                 sidebarSubKey={sidebarSubKey}
+                estadoSidebar={estadoSidebar}
             />
-            <div className="container__general">
+            <div className="container__general" id="container__listaUsuarios">
                 <div className="listas__container">
-                    <div className="lista__container">
-                        <h4 className="titulo">Usuarios habilitados</h4>
+                    {/* La botonera solo es visible en css mobile */}
+                    {
+                        (indicador === "HABILITADOS") &&
+                        <div className="botonera">
+                            <p> 
+                                Habilitados 
+                                <FontAwesomeIcon className="botonera__icono" icon={faAngleDown}/>
+                            </p>
+                            <button className="boton__modificar" onClick={() => cambiarLista("HABILITADOS")}> Creados </button>
+                        </div>
+                    }
+                    {
+                        (indicador === "CREADOS") &&
+                        <div className="botonera">
+                            <button className="boton__modificar" onClick={() => cambiarLista("CREADOS")}> Habilitados </button>
+                            <p> 
+                                Creados 
+                                <FontAwesomeIcon className="botonera__icono" icon={faAngleDown}/>
+                            </p>
+                        </div>
+                    }
+                    <div className="lista__container" id={verListaHabilitados}>
+                        <h4 className="titulo"> Usuarios habilitados </h4>
                         {
                             usuariosHabilitados.map((elemento, indice) => (
                                 <div className="datos__usuario" key={indice}> 
@@ -225,7 +276,7 @@ function ListaUsuarios() {
                             ))
                         }
                     </div>
-                    <div className="lista__container">
+                    <div className="lista__container" id={verListaCreados}>
                         <h4 className="titulo">Usuarios creados</h4>
                         {
                             usuariosCreados.map((elemento, indice) => (
@@ -274,14 +325,9 @@ function ListaUsuarios() {
                 (popUpActivo) &&
                 <div className="popUp__overlay">
                     <div className="popUp">
-                        <div className="close__container">
-                            <button onClick={cerrarPopUp}>
-                                <FontAwesomeIcon icon={faCircleXmark}/>
-                            </button>
-                        </div>
                         {
                             (bloqueoInput) &&
-                            <div>
+                            <div className="popUp__content">
                                 <div>
                                 {
                                     (bloqueo === true) &&
@@ -300,7 +346,7 @@ function ListaUsuarios() {
                                         hidePassword={hidePassword}
                                     />
                                 </div>
-                                <div>
+                                <div className="buttonContainer__popUp">
                                     {
                                         (bloqueo === true) &&
                                         <button className="bloquear__button boton1" onClick={bloquear}> Bloquear </button>
@@ -309,15 +355,18 @@ function ListaUsuarios() {
                                         (bloqueo === false) &&
                                         <button className="bloquear__button boton1" onClick={bloquear}> Desbloquear </button>
                                     }
+                                    <button className="cancelar__button boton1" onClick={cerrarPopUp}> Cancelar </button>
                                 </div>
                             </div>
                         }
-                        <Mensajes
-                            mensaje={mensaje}
-                            showMsj={showMsj}
-                            showErrorMsj={showErrorMsj}
-                            showErrorMsjPost={showErrorMsjPost}
-                        />
+                        {
+                            (showMsj || showErrorMsj) &&
+                            <Mensajes
+                                mensaje={mensaje}
+                                showMsj={showMsj}
+                                showErrorMsj={showErrorMsj}
+                            />
+                        }
                     </div>
                 </div>
             }
@@ -325,14 +374,9 @@ function ListaUsuarios() {
                 (popUpActivo2) &&
                 <div className="popUp__overlay">
                     <div className="popUp">
-                        <div className="close__container">
-                            <button onClick={cerrarPopUp}>
-                                <FontAwesomeIcon icon={faCircleXmark}/>
-                            </button>
-                        </div>
                         {
                             (bloqueoInput) &&
-                            <div>
+                            <div className="popUp__content">
                                 <div>¿Deshabilitar {usuarioEmail}?</div>
                                 <div className="showPassword__container">
                                     <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..." />
@@ -342,17 +386,20 @@ function ListaUsuarios() {
                                         hidePassword={hidePassword}
                                     />
                                 </div>
-                                <div> 
+                                <div className="buttonContainer__popUp"> 
                                     <button className="bloquear__button boton1" onClick={deshabilitar}> Deshabilitar </button>
+                                    <button className="cancelar__button boton1" onClick={cerrarPopUp}> Cancelar </button>
                                 </div>
                             </div>
                         }
-                        <Mensajes
-                            mensaje={mensaje}
-                            showMsj={showMsj}
-                            showErrorMsj={showErrorMsj}
-                            showErrorMsjPost={showErrorMsjPost}
-                        />
+                        {
+                            (showMsj || showErrorMsj) &&
+                            <Mensajes
+                                mensaje={mensaje}
+                                showMsj={showMsj}
+                                showErrorMsj={showErrorMsj}
+                            />
+                        }
                     </div>
                 </div>
             }

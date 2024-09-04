@@ -1,10 +1,12 @@
 import "../App.css";
-import "./productos.css";
+import "../general.css";
 import { React, useState, useEffect} from "react";
 import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function UpdateComponentes() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -30,7 +32,6 @@ function UpdateComponentes() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Hooks para value inputs
@@ -86,11 +87,9 @@ function UpdateComponentes() {
                 };
                 
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
@@ -98,10 +97,8 @@ function UpdateComponentes() {
             let data = response.data;
             setInsumosLista(data);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -153,11 +150,9 @@ function UpdateComponentes() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
@@ -165,10 +160,8 @@ function UpdateComponentes() {
             let data = response.data;
             setComponentes(data.componentes);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     } 
@@ -178,18 +171,14 @@ function UpdateComponentes() {
     const updateComponentes = async () => {
         try {
             if (operacion === "-" || insumo === "") {
-                const msj = "Debes completar todos los campos.";
-                setMensaje(msj);
+                setMensaje("Debes completar todos los campos.");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (cantidad <= 0) {
-                const msj = "La cantidad no puede ser menor o igual a 0.";
-                setMensaje(msj);
+                setMensaje("La cantidad no puede ser menor o igual a 0.");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -221,11 +210,9 @@ function UpdateComponentes() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
@@ -233,27 +220,48 @@ function UpdateComponentes() {
             let data = response.data;
             setMensaje(data);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setAnularBoton(true);
             setTimeout(function () {
                 window.location.href = "/productos/update-componentes"
               }, 1000);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     } 
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
+                estadoSidebar={estadoSidebar}
             />
-            <div className="container__general">
+            <div className="container__general general__mobile">
                 <h3 className="titulo">Modificar Componentes</h3>
                 <div className="stock__sku">Sku: {sku}</div> 
                 <div className="stock__lista">
@@ -289,15 +297,17 @@ function UpdateComponentes() {
                 {
                     (!anularBoton) &&
                     <div className="container__button">
-                        <button onClick={updateComponentes}> Aceptar </button>
+                        <button onClick={updateComponentes} id="boton__modificarComponentes"> Aceptar </button>
                     </div>
                 }
-                <Mensajes 
-                    mensaje={mensaje}
-                    showMsj={showMsj}
-                    showErrorMsj={showErrorMsj}
-                    showErrorMsjPost={showErrorMsjPost}
-                />
+                {
+                    (showMsj || showErrorMsj) &&
+                    <Mensajes 
+                        mensaje={mensaje}
+                        showMsj={showMsj}
+                        showErrorMsj={showErrorMsj}
+                    />
+                }
             </div>
         </div>
     );

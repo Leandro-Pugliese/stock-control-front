@@ -1,4 +1,5 @@
 import "../App.css";
+import "../general.css";
 import { useState } from "react";
 import axios from "../axios";
 import Mensajes from "../Componentes/mensajes";
@@ -9,7 +10,6 @@ function LoginUsuario() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -28,10 +28,8 @@ function LoginUsuario() {
     const loginUsuario = async () => {
         try {
             if (email === "" || password === "") {
-                const msj = "¡Debes completar todos los campos!";
-                setMensaje(msj);
+                setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -47,7 +45,6 @@ function LoginUsuario() {
             };
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let data = response.data;
             // Guardamos el token en session storage.
             sessionStorage.setItem("token", data.token);
@@ -56,17 +53,13 @@ function LoginUsuario() {
             const msj = `Bienvenido ${data.user.username}, iniciaste sesión exitosamente.`;
             setMensaje(msj);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setTimeout(function () {
                 window.location.href = "/"
               }, 800);
         } catch (error) {
-            //console.log(error)
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -113,7 +106,6 @@ function LoginUsuario() {
                 mensaje={mensaje}
                 showMsj={showMsj}
                 showErrorMsj={showErrorMsj}
-                showErrorMsjPost={showErrorMsjPost}
             />
         </div>
     );

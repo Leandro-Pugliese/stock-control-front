@@ -1,5 +1,5 @@
 import "../App.css";
-import "./sidebar.css";
+import "../general.css";
 import Filtros from "../Componentes/filtros";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faPlus, faTrashCan, faCheck, faGear } from '@fortawesome/free-solid-svg-icons';
@@ -8,11 +8,11 @@ function Sidebar({  renderProductosLista, renderProductosCarga, sidebarKey, side
                     indicador, filtrar, productos, insumos, 
                     handleChangeSku, handleChangeStockMin, handleChangeStockMax,
                     handleChangeInsumo, handleChangeCategoria, categoriasProductos,
-                    handleChangeInsumoNombre, handleChangePrecioMin, handleChangePrecioMax
+                    handleChangeInsumoNombre, handleChangePrecioMin, handleChangePrecioMax, estadoSidebar
                 }){
 
     return (
-        <aside className="sidebar">
+        <aside className={estadoSidebar}>
             {
                 (sidebarKey === "LISTA PRODUCTOS") &&
                 <div className="container__botones">

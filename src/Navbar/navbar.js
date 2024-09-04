@@ -1,5 +1,5 @@
 import "../App.css";
-import "./navbar.css";
+import "../general.css"
 import { React, useState, useEffect} from "react";
 import { useNavbarContext } from "./navbarProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

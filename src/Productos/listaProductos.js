@@ -1,11 +1,13 @@
 import "../App.css";
-import "./productos.css";
-import "../Insumos/insumos.css";
+import "../mobile.css";
+import "../general.css";
 import { useState, useEffect } from "react";
 import axios from "../axios";
 import Sidebar from "../Sidebar/sidebar";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Mensajes from "../Componentes/mensajes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function ListaProductos() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión asi evito llamado a la BD.
@@ -34,7 +36,6 @@ function ListaProductos() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Hooks para renderizado de lista de productos o formulario de carga de producto y lista de insumos.
@@ -50,10 +51,10 @@ function ListaProductos() {
         setShowCargarProducto(true);
         setShowProducto(false);
         setShowErrorMsj(false);
-        setShowErrorMsjPost(false);
         setShowMsj(false);
         setIndicador("CARGA");
         setSidebarSubKey("CARGAR-PRODUCTO");
+        activarSidebar("-");
     }
     const insumosLista = async () => {
         try {
@@ -84,25 +85,18 @@ function ListaProductos() {
                 };
                 
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let data = response.data;
             setInsumos(data);
-            //console.log(data);
         } catch (error) {
-            //console.log(error)
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -143,25 +137,18 @@ function ListaProductos() {
             } else {
                 setShowListaProductos(true);
                 setShowCargarProducto(false);
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
-                setShowMsj(true);
+                setShowMsj(false);
                 return
             }
             // llamado axios con la config lista.
             const response = await axios(config);
-            //console.log(response);
             let data = response.data;
             setProductos(data);
-            //console.log(data);
         } catch (error) {
-            //console.log(error)
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -205,26 +192,20 @@ function ListaProductos() {
         let stockCopia = [...stock];
         const filtroRepetido = stockCopia.filter((stock) => stock.color === stockColor.toUpperCase());
         if (filtroRepetido.length >= 1) {
-            const msj = "Color ya ingresado.";
-            setMensaje(msj);
+            setMensaje("Color ya ingresado.");
             setShowErrorMsj(true);
-            setShowErrorMsjPost(false);
             setShowMsj(false);
             return
         }
         if (stockColor === "" || stockColor === " " || stockColor === "-") {
-            const msj = "Ingresa un color válido.";
-            setMensaje(msj);
+            setMensaje("Ingresa un color válido.");
             setShowErrorMsj(true);
-            setShowErrorMsjPost(false);
             setShowMsj(false);
             return
         }
         if (stockUnidades < 0 || stockUnidades === "") {
-            const msj = "Ingresa una cantidad válida de unidades.";
-            setMensaje(msj);
+            setMensaje("Ingresa una cantidad válida de unidades.");
             setShowErrorMsj(true);
-            setShowErrorMsjPost(false);
             setShowMsj(false);
             return
         }
@@ -235,7 +216,6 @@ function ListaProductos() {
         stockCopia.push(nuevoObjStock);
         setStock(stockCopia);
         setShowErrorMsj(false);
-        setShowErrorMsjPost(false);
         setShowMsj(false);
     }
 
@@ -254,26 +234,20 @@ function ListaProductos() {
         let componentesCopia = [...componentes];
         const filtroRepetido = componentesCopia.filter((componente) => componente.insumo === componenteNombre);
         if (filtroRepetido.length >= 1) {
-            const msj = "Componente ya ingresado.";
-            setMensaje(msj);
+            setMensaje("Componente ya ingresado.");
             setShowErrorMsj(true);
-            setShowErrorMsjPost(false);
             setShowMsj(false);
             return
         }
         if (componenteNombre === "-") {
-            const msj = "Tienes que seleccionar un componente.";
-            setMensaje(msj);
+            setMensaje("Tienes que seleccionar un componente.");
             setShowErrorMsj(true);
-            setShowErrorMsjPost(false);
             setShowMsj(false);
             return
         }
         if (componenteCantidad <= 0) {
-            const msj = "La cantidad del componente no puede ser menor o igual a cero.";
-            setMensaje(msj);
+            setMensaje("La cantidad del componente no puede ser menor o igual a cero.");
             setShowErrorMsj(true);
-            setShowErrorMsjPost(false);
             setShowMsj(false);
             return
         }
@@ -284,7 +258,6 @@ function ListaProductos() {
         componentesCopia.push(nuevoObjComponente);
         setComponentes(componentesCopia);
         setShowErrorMsj(false);
-        setShowErrorMsjPost(false);
         setShowMsj(false);
     }
 
@@ -306,18 +279,14 @@ function ListaProductos() {
     const cargarProducto = async () => {
         try {
             if (sku === "" || categoria === "" || descripcion === "" || stock.length === 0 || componentes.length === 0) {
-                const msj = "Debes completar todos los campos.";
-                setMensaje(msj);
+                setMensaje("Debes completar todos los campos.");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (sku.length <= 9 || sku.length >= 11) {
-                const msj = "El sku debe contener 10 caracteres.";
-                setMensaje(msj);
+                setMensaje("El sku debe contener 10 caracteres.");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -349,10 +318,8 @@ function ListaProductos() {
                     },
                 };
             } else {
-                const msj = `Error: No se detecto el formato de usuario.`;
-                setMensaje(msj);
+                setMensaje(`Error: No se detecto el formato de usuario.`);
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(true);
                 return
             }
@@ -362,14 +329,11 @@ function ListaProductos() {
             setMensaje(data.msj);
             setShowMsj(true);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setProductoCargado(data.producto);
             setShowProducto(true);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -385,7 +349,6 @@ function ListaProductos() {
         setComponenteCantidad(0);
         setShowProducto(false);
         setShowErrorMsj(false);
-        setShowErrorMsjPost(false);
         setShowMsj(false);
     }
 
@@ -467,10 +430,34 @@ function ListaProductos() {
         })
         setListaProductosFiltrados(cumplenFiltro);
         setFiltrosActivos(true);
+        activarSidebar("-");
+    }
+
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
     }
 
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 renderProductosLista={renderProductosLista}
                 renderProductosCarga={renderProductosCarga}
@@ -486,182 +473,189 @@ function ListaProductos() {
                 productos={productos}
                 insumos={insumos}
                 categoriasProductos={categoriasProductos}
+                estadoSidebar={estadoSidebar}
             />
             {
                 (showListaProductos && filtrosActivos) &&
-                <div className="container__general">
-                    <h3 className="titulo">Productos Filtrados</h3>
-                    {
-                        listaProductosFiltrados.map((element, index) => (
-                        <div className="producto__data" key={index}>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> SKU </div>
-                                    {
-                                        (user === "admin") &&
+                <div className="container__general general__mobile">
+                    <h3 className="titulo"> Productos Filtrados </h3>
+                    <div className="scrollProductos">
+                        {
+                            listaProductosFiltrados.map((element, index) => (
+                            <div className="producto__data" key={index}>
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> SKU </div>
+                                        {
+                                            (user === "admin") &&
+                                            <div className="dataFija__boton">
+                                                <button className="boton__modificar" onClick={() => verRentabilidad(element.sku)}>Rentabilidad</button>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div className="dataVariable"> {element.sku} </div>
+                                </div>
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> STOCK  </div>
                                         <div className="dataFija__boton">
-                                            <button className="boton__modificar" onClick={() => verRentabilidad(element.sku)}>Rentabilidad</button>
+                                            <button className="boton__modificar" onClick={() => modificarStock(element.sku)}>Modificar</button>
                                         </div>
-                                    }
-                                </div>
-                                <div className="dataVariable"> {element.sku} </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> STOCK  </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarStock(element.sku)}>Modificar</button>
-                                    </div>
-                                </div> 
-                                <div className="producto__stock">
-                                    {
-                                        element.stock.map((elemento, indice) => (
-                                            <div className="stock__container" key={indice}> 
-                                                {`[${elemento.color}: ${elemento.unidades}]`}
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> COMPONENTES </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarComponentes(element.sku)}>Modificar</button> 
+                                    </div> 
+                                    <div className="producto__stock">
+                                        {
+                                            element.stock.map((elemento, indice) => (
+                                                <div className="stock__container" key={indice}> 
+                                                    {`[${elemento.color}: ${elemento.unidades}]`}
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
-                                <div className="producto__componentes">
-                                    {
-                                        element.componentes.map((elemento, indice) => (
-                                            <div className="stock__container" key={indice}> 
-                                                {`[${elemento.insumo}: ${elemento.cantidad}]`}
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> CATEGORÍA </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> COMPONENTES </div>
+                                        <div className="dataFija__boton">
+                                            <button className="boton__modificar" onClick={() => modificarComponentes(element.sku)}>Modificar</button> 
+                                        </div>
                                     </div>
-                                </div> 
-                                <div className="dataVariable"> {element.categoria} </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> DESCRIPCIÓN </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                    <div className="producto__componentes">
+                                        {
+                                            element.componentes.map((elemento, indice) => (
+                                                <div className="stock__container" key={indice}> 
+                                                    {`[${elemento.insumo}: ${elemento.cantidad}]`}
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
-                                <div className="dataVariable">{element.descripcion} </div>
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> CATEGORÍA </div>
+                                        <div className="dataFija__boton">
+                                            <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                        </div>
+                                    </div> 
+                                    <div className="dataVariable"> {element.categoria} </div>
+                                </div>
+                                <div className="data__container">
+                                    <div className="container__dataFija">
+                                        <div className="dataFija__titulo"> DESCRIPCIÓN </div>
+                                        <div className="dataFija__boton">
+                                            <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                        </div>
+                                    </div>
+                                    <div className="dataVariable">{element.descripcion} </div>
+                                </div>
                             </div>
-                        </div>
-                        ))
-                    }
-                    {
-                        (listaProductosFiltrados.length === 0) &&
-                        <div className="sinResultado">No hay productos que cumplan con los filtros utilizados...</div>
-                    }
+                            ))
+                        }
+                        {
+                            (listaProductosFiltrados.length === 0) &&
+                            <div className="sinResultado">No hay productos que cumplan con los filtros utilizados...</div>
+                        }
+                    </div>
                 </div>
             }
             {
                 (showListaProductos && !filtrosActivos) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Lista Productos </h3>
-                    {
-                    productos.map((element, index) => (
-                        <div className="producto__data" key={index}>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> SKU </div>
-                                    {
-                                        (user === "admin") &&
-                                        <div className="dataFija__boton">
-                                            <button className="boton__modificar" onClick={() => verRentabilidad(element.sku)}>Rentabilidad</button>
+                    <div className="scrollProductos">
+                        {
+                            productos.map((element, index) => (
+                                <div className="producto__data" key={index}>
+                                    <div className="data__container">
+                                        <div className="container__dataFija">
+                                            <div className="dataFija__titulo"> SKU </div>
+                                            {
+                                                (user === "admin") &&
+                                                <div className="dataFija__boton">
+                                                    <button className="boton__modificar" onClick={() => verRentabilidad(element.sku)}>Rentabilidad</button>
+                                                </div>
+                                            }
                                         </div>
-                                    }
-                                </div>
-                                <div className="dataVariable"> {element.sku} </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> STOCK  </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarStock(element.sku)}>Modificar</button>
+                                        <div className="dataVariable"> {element.sku} </div>
                                     </div>
-                                </div> 
-                                <div className="producto__stock">
-                                    {
-                                        element.stock.map((elemento, indice) => (
-                                            <div className="stock__container" key={indice}> 
-                                                {`${elemento.color} [${elemento.unidades}]`}
+                                    <div className="data__container">
+                                        <div className="container__dataFija">
+                                            <div className="dataFija__titulo"> STOCK  </div>
+                                            <div className="dataFija__boton">
+                                                <button className="boton__modificar" onClick={() => modificarStock(element.sku)}>Modificar</button>
                                             </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> COMPONENTES </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarComponentes(element.sku)}>Modificar</button> 
+                                        </div> 
+                                        <div className="producto__stock">
+                                            {
+                                                element.stock.map((elemento, indice) => (
+                                                    <div className="stock__container" key={indice}> 
+                                                        {`${elemento.color} [${elemento.unidades}]`}
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="producto__componentes">
-                                    {
-                                        element.componentes.map((elemento, indice) => (
-                                            <div className="stock__container" key={indice}> 
-                                                {`${elemento.insumo} [${elemento.cantidad}]`}
+                                    <div className="data__container">
+                                        <div className="container__dataFija">
+                                            <div className="dataFija__titulo"> COMPONENTES </div>
+                                            <div className="dataFija__boton">
+                                                <button className="boton__modificar" onClick={() => modificarComponentes(element.sku)}>Modificar</button> 
                                             </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> CATEGORÍA </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                        </div>
+                                        <div className="producto__componentes">
+                                            {
+                                                element.componentes.map((elemento, indice) => (
+                                                    <div className="stock__container" key={indice}> 
+                                                        {`${elemento.insumo} [${elemento.cantidad}]`}
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
                                     </div>
-                                </div> 
-                                <div className="dataVariable"> {element.categoria} </div>
-                            </div>
-                            <div className="data__container">
-                                <div className="container__dataFija">
-                                    <div className="dataFija__titulo"> DESCRIPCIÓN </div>
-                                    <div className="dataFija__boton">
-                                        <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                    <div className="data__container">
+                                        <div className="container__dataFija">
+                                            <div className="dataFija__titulo"> CATEGORÍA </div>
+                                            <div className="dataFija__boton">
+                                                <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                            </div>
+                                        </div> 
+                                        <div className="dataVariable"> {element.categoria} </div>
+                                    </div>
+                                    <div className="data__container">
+                                        <div className="container__dataFija">
+                                            <div className="dataFija__titulo"> DESCRIPCIÓN </div>
+                                            <div className="dataFija__boton">
+                                                <button className="boton__modificar" onClick={() => modificarCategoria(element.sku)}>Modificar</button> 
+                                            </div>
+                                        </div>
+                                        <div className="dataVariable">{element.descripcion}</div>
                                     </div>
                                 </div>
-                                <div className="dataVariable">{element.descripcion}</div>
-                            </div>
-                        </div>
-                    ))
-                    }
+                            ))
+                        }
+                    </div>
                 </div>
             }
             {
                 (showCargarProducto) &&
-                <div className="container__general">
+                <div className="container__general general__mobile">
                     <h3 className="titulo"> Cargar Producto </h3>
                     {
                         (!showProducto) &&
                         <div>
-                            <div className="container__input">
+                            <div className="container__input cargarProdcuto__input">
                                 <input onChange={onChangeSku} className="input__producto" id="skuInput" type="text" placeholder="Sku..."/>
                             </div>
-                            <div className="container__input">
+                            <div className="container__input cargarProdcuto__input">
                                 <input onChange={onChangeCategoria} className="input__producto" id="categoriaInput" type="text" placeholder="Categoría..."/>
                             </div>
-                            <div className="container__input">
+                            <div className="container__input cargarProdcuto__input">
                                 <input onChange={onChangeDescripcion} className="input__producto" id="descripcionInput" type="text" placeholder="Descripción..."/>
                             </div>
-                            <div className="container__input">
-                                <input onChange={onChangeStockColor} className="input__producto doble__input" id="colorStockInput" type="text" placeholder="Color..."/>
-                                <input onChange={onChangeStockUnidades} className="input__producto doble__input" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
+                            <div className="container__input container__dobleInput">
+                                <div className="div__dobleInput">
+                                    <input onChange={onChangeStockColor} className="input__producto doble__input" id="colorStockInput" type="text" placeholder="Color..."/>
+                                    <input onChange={onChangeStockUnidades} className="input__producto doble__input" id="unidadesStockInput" type="number" placeholder="Unidades..."/>
+                                </div>
                                 <button className="add__button" onClick={addStock}>
                                     Agregar al stock
                                 </button>
@@ -681,18 +675,20 @@ function ListaProductos() {
                                 }
                                 </div>
                             }
-                            <div className="container__input">
-                                <select className="input__producto doble__input" onChange={onChangeComponenteNombre} defaultValue="-">
-                                    <option value="-">Componente...</option>
-                                {
-                                    insumos.map((element, index) => (
-                                        <option key={index} value={element.nombre}>
-                                            {element.nombre}
-                                        </option>
-                                    ))
-                                }
-                                </select>
-                                <input onChange={onChangeComponenteCantidad} className="input__producto doble__input" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
+                            <div className="container__input container__dobleInput">
+                                <div className="div__dobleInput">
+                                    <select className="input__producto doble__input" onChange={onChangeComponenteNombre} defaultValue="-">
+                                        <option value="-">Componente...</option>
+                                    {
+                                        insumos.map((element, index) => (
+                                            <option key={index} value={element.nombre}>
+                                                {element.nombre}
+                                            </option>
+                                        ))
+                                    }
+                                    </select>
+                                    <input onChange={onChangeComponenteCantidad} className="input__producto doble__input" id="insumoCantidadInput" type="number" placeholder="Cantidad..."/>
+                                </div>
                                 <button className="add__button" onClick={addComponente}>
                                     Agregar componente
                                 </button>
@@ -713,16 +709,18 @@ function ListaProductos() {
                                 </div>
                             }
                             <div className="container__button">
-                                <button onClick={cargarProducto}> CARGAR </button>
+                                <button onClick={cargarProducto} id="boton__cargarProducto"> CARGAR </button>
                             </div>
                         </div>
                     }
-                    <Mensajes 
-                        mensaje={mensaje}
-                        showMsj={showMsj}
-                        showErrorMsj={showErrorMsj}
-                        showErrorMsjPost={showErrorMsjPost}
-                    />
+                    {
+                        (showMsj || showErrorMsj) &&
+                        <Mensajes 
+                            mensaje={mensaje}
+                            showMsj={showMsj}
+                            showErrorMsj={showErrorMsj}
+                        />
+                    }
                     {
                         (showProducto) &&
                         <div className="producto__data">

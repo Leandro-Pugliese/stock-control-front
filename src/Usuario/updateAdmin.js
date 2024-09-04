@@ -1,10 +1,13 @@
-import "../App.css"
+import "../App.css";
+import "../general.css";
 import { useState, useEffect } from "react";
 import axios from "../axios";
 import { useNavbarContext } from "../Navbar/navbarProvider";
 import Sidebar from "../Sidebar/sidebar";
 import Mensajes from "../Componentes/mensajes";
 import ShowPassword from "../Componentes/verPassword";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function UpdatePasswordAdmin() {
     // Chequeo si el usuario esta logueado o ingreso a la ruta sin iniciar sesión.
@@ -29,7 +32,6 @@ function UpdatePasswordAdmin() {
     // Hooks para mostrar msj al usuario.
     const [mensaje, setMensaje] = useState("");
     const [showErrorMsj, setShowErrorMsj] = useState(false);
-    const [showErrorMsjPost, setShowErrorMsjPost] = useState(false);
     const [showMsj, setShowMsj] = useState(false);
 
     // Values de los inputs
@@ -60,26 +62,20 @@ function UpdatePasswordAdmin() {
     const updatePassword = async () => {
         try {
             if (email === "" || passwordActual === "" || nuevaPassword === "" || nuevaPassword2 === "" || pin === "") {
-                const msj = "¡Debes completar todos los campos!";
-                setMensaje(msj);
+                setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (nuevaPassword !== nuevaPassword2) {
-                const msj = "¡Las contraseñas nuevas no coinciden!";
-                setMensaje(msj);
+                setMensaje("¡Las contraseñas nuevas no coinciden!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
             if (nuevaPassword.length <= 7) {
-                const msj = "¡La contraseña debe tener al menos 8 caracteres!";
-                setMensaje(msj);
+                setMensaje("¡La contraseña debe tener al menos 8 caracteres!");
                 setShowErrorMsj(true);
-                setShowErrorMsjPost(false);
                 setShowMsj(false);
                 return
             }
@@ -101,16 +97,13 @@ function UpdatePasswordAdmin() {
             let data = response.data;
             setMensaje(data);
             setShowErrorMsj(false);
-            setShowErrorMsjPost(false);
             setShowMsj(true);
             setTimeout(function () {
                 window.location.href = "/"
             }, 1000);
         } catch (error) {
-            let msj = error.response.data;
-            setMensaje(msj);
-            setShowErrorMsj(false);
-            setShowErrorMsjPost(true);
+            setMensaje(error.response.data);
+            setShowErrorMsj(true);
             setShowMsj(false);
         }
     }
@@ -127,13 +120,37 @@ function UpdatePasswordAdmin() {
         setBotonShowPassword(true);
     };
 
+    //Hook para visualizar sidebar en mobile.
+    const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
+    const [sidebarActiva, setsidebarActiva] = useState(false);
+    const activarSidebar = (indicador) => {
+        if (indicador === "ACTIVAR") {
+            setEstadoSidebar("sidebar");
+            setsidebarActiva(true);
+        } else {
+            setEstadoSidebar("sidebar sidebar__off");
+            setsidebarActiva(false);
+        }
+    }
+
     return (
         <div className="container__main">
+            {
+                (!sidebarActiva) &&
+                <button className="boton__activarSidebar" onClick={() => activarSidebar("ACTIVAR")}>
+                    <FontAwesomeIcon className="activarSidebar__icono" icon={faBars} />
+                </button>
+            }
+            {
+                (sidebarActiva) &&
+                <div className="layout__sidebarActiva" onClick={() => activarSidebar("-")}></div>
+            }
             <Sidebar 
                 sidebarKey={sidebarKey}
                 sidebarSubKey={sidebarSubKey}
+                estadoSidebar={estadoSidebar}
             />
-            <div className="container__general">
+            <div className="container__general" id="container__updateAdmin">
                 <h3 className="titulo">Modificar contraseña</h3>
                 <div>
                     <div className="">
@@ -157,14 +174,13 @@ function UpdatePasswordAdmin() {
                         <input onChange={onChangePin} className="login__input update__password" id="pinInput" type={showPassword} placeholder="Pin..." />
                     </div>
                     <div className="container__button">
-                        <button className="" onClick={updatePassword}> Modificar </button>
+                        <button id="boton__updatePassword" onClick={updatePassword}> Modificar </button>
                     </div>
                 </div>
                 <Mensajes 
                     mensaje={mensaje}
                     showMsj={showMsj}
                     showErrorMsj={showErrorMsj}
-                    showErrorMsjPost={showErrorMsjPost}
                 />
             </div>
         </div>
