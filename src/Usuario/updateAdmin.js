@@ -39,7 +39,6 @@ function UpdatePasswordAdmin() {
     const [passwordActual, setPasswordActual] = useState("");
     const [nuevaPassword, setNuevaPassword] = useState("");
     const [nuevaPassword2, setNuevaPassword2] = useState("");
-    const [pin, setPin] = useState("");
 
     // Hooks para guardar y pasar input value al body del post.
     const onChangeEmail = function (evento) {
@@ -54,14 +53,11 @@ function UpdatePasswordAdmin() {
     const onChangeNuevaPassword2 = function (evento) {
         setNuevaPassword2(evento.target.value);
     };
-    const onChangePin = function (evento) {
-        setPin(evento.target.value);
-    };
 
     // Función para enviar petición a la api.
     const updatePassword = async () => {
         try {
-            if (email === "" || passwordActual === "" || nuevaPassword === "" || nuevaPassword2 === "" || pin === "") {
+            if (email === "" || passwordActual === "" || nuevaPassword === "" || nuevaPassword2 === "") {
                 setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
                 setShowMsj(false);
@@ -85,7 +81,7 @@ function UpdatePasswordAdmin() {
                 method: "put",
                 url: "/admin/update",
                 json: true,
-                data: {email, passwordActual, nuevaPassword, pin},
+                data: {email, passwordActual, nuevaPassword2},
                 headers: {
                   "Content-Type": "application/json",
                   "Authorization": tokenAxios,
@@ -169,9 +165,6 @@ function UpdatePasswordAdmin() {
                     </div>
                     <div className="">
                         <input onChange={onChangeNuevaPassword2} className="login__input update__password" id="pass2Input" type={showPassword} placeholder="Repetir nueva contraseña..." />
-                    </div>
-                    <div className="">
-                        <input onChange={onChangePin} className="login__input update__password" id="pinInput" type={showPassword} placeholder="Pin..." />
                     </div>
                     <div className="container__button">
                         <button id="boton__updatePassword" onClick={updatePassword}> Modificar </button>

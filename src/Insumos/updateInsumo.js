@@ -70,9 +70,7 @@ function UpdateInsumo() {
             if (user === "usuario") {
                 config = {
                     method: "post",
-                    url: "/insumo",
-                    json: true,
-                    data: {_id},
+                    url: `/insumo/${_id}`,
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -81,9 +79,7 @@ function UpdateInsumo() {
             } else if (user === "admin") {
                 config = {
                     method: "post",
-                    url: "/insumo-admin",
-                    json: true,
-                    data: {_id},
+                    url: `/insumo-admin/${_id}`,
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -142,9 +138,8 @@ function UpdateInsumo() {
             if (user === "usuario") {
                 config = {
                     method: "put",
-                    url: "/insumo/update",
-                    json: true,
-                    data: {_id ,precio, descripcion},
+                    url: `/insumo/update/${_id}`,
+                    data: {precio, descripcion},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,
@@ -153,9 +148,8 @@ function UpdateInsumo() {
             } else if (user === "admin") {
                 config = {
                     method: "put",
-                    url: "/insumo/update-admin",
-                    json: true,
-                    data: {_id, precio, descripcion},
+                    url: `/insumo/update-admin/${_id}`,
+                    data: {precio, descripcion},
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": tokenAxios,

@@ -16,8 +16,6 @@ function CrearAdmin() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [empresa, setEmpresa] = useState("");
-    const [pin, setPin] = useState("");
-    const [pin2, setPin2] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [claveAdm, setClaveAdm] = useState("");
@@ -32,12 +30,6 @@ function CrearAdmin() {
     const onChangeEmpresa = function (evento) {
         setEmpresa(evento.target.value);
     };
-    const onChangePin= function (evento) {
-        setPin(evento.target.value);
-    };
-    const onChangePin2= function (evento) {
-        setPin2(evento.target.value);
-    };
     const onChangePassword = function (evento) {
         setPassword(evento.target.value);
     };
@@ -51,7 +43,7 @@ function CrearAdmin() {
     // Función para enviar petición a la api.
     const crearAdmin = async () => {
         try {
-            if (username === "" || email === "" || empresa === "" || pin === "" || pin2 === "" || password === "" || password2 === "" || claveAdm === "") {
+            if (username === "" || email === "" || empresa === "" || password === "" || password2 === "" || claveAdm === "") {
                 setMensaje("¡Debes completar todos los campos!");
                 setShowErrorMsj(true);
                 setShowMsj(false);
@@ -69,24 +61,12 @@ function CrearAdmin() {
                 setShowMsj(false);
                 return
             }
-            if (pin !== pin2) {
-                setMensaje("¡Los pines ingresados no coinciden!");
-                setShowErrorMsj(true);
-                setShowMsj(false);
-                return
-            }
-            if (pin.length <= 3 ) {
-                setMensaje("¡El pin debe tener al menos 4 caracteres!");
-                setShowErrorMsj(true);
-                setShowMsj(false);
-                return
-            }
             // Armamos la config de axios para enviar la petición.
             const config = {
                 method: "post",
                 url: "/admin/crear",
                 json: true,
-                data: { username, email, empresa, pin, password, claveAdm },
+                data: { username, email, empresa, password, claveAdm },
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -140,12 +120,6 @@ function CrearAdmin() {
                     </div>
                     <div className="">
                         <input onChange={onChangePassword2} className="login__input" id="password2Input" type={showPassword} placeholder="Repita la contraseña..."/>
-                    </div>
-                    <div className="">
-                        <input onChange={onChangePin} className="login__input" id="pinInput" type={showPassword} placeholder="Pin..."/>
-                    </div>
-                    <div className="">
-                        <input onChange={onChangePin2} className="login__input" id="pin2Input" type={showPassword} placeholder="Repita el pin..."/>
                     </div>
                     <div className="">
                         <input onChange={onChangeClaveAdm} className="login__input" id="claveAdmInput" type={showPassword} placeholder="Clave..."/>

@@ -38,7 +38,6 @@ function HabilitarUsuario() {
     const [usuarioNombre, setUsuarioNombre] = useState("");
     const [usuarioEmail, setUsuarioEmail] = useState("");
     const [claveAcceso, setClaveAcceso] = useState("");
-    const [pin, setPin] = useState("");
 
     const onChangeUsuarioNombre = function (evento) {
         let usuario = evento.target.value.toUpperCase()
@@ -51,9 +50,6 @@ function HabilitarUsuario() {
     const onChangeClaveAcceso = function (evento) {
         setClaveAcceso(evento.target.value);
     };
-    const onChangePin = function (evento) {
-        setPin(evento.target.value);
-    };
 
     // Función para enviar petición a la api.
     const habilitar = async () => {
@@ -63,7 +59,7 @@ function HabilitarUsuario() {
                 method: "put",
                 url: "/admin/habilitar-usuario",
                 json: true,
-                data: { usuarioNombre, usuarioEmail, claveAcceso, pin },
+                data: {usuarioNombre, usuarioEmail, claveAcceso},
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": tokenAxios,
@@ -82,18 +78,6 @@ function HabilitarUsuario() {
             setShowMsj(false);
         }
     }
-
-    //Hook para ver password
-    const [showPassword, setShowPassword] = useState("password");
-    const [botonShowPassword, setBotonShowPassword] = useState(true);
-    const verPassword = () => {
-        setShowPassword("text");
-        setBotonShowPassword(false);
-    };
-    const hidePassword = () => {
-        setShowPassword("password");
-        setBotonShowPassword(true);
-    };
 
     //Hook para visualizar sidebar en mobile.
     const [estadoSidebar, setEstadoSidebar] = useState("sidebar sidebar__off");
@@ -135,14 +119,6 @@ function HabilitarUsuario() {
                 </div>
                 <div className="">
                     <input onChange={onChangeClaveAcceso} className="login__input habilitarInput" id="claveInput" type="text" placeholder="Clave de acceso..."/>
-                </div>
-                <div className="showPassword__container">
-                    <input onChange={onChangePin} className="login__input habilitarInput" id="pinInput" type={showPassword} placeholder="Pin..."/>
-                    <ShowPassword 
-                        botonShowPassword={botonShowPassword}
-                        verPassword={verPassword}
-                        hidePassword={hidePassword}
-                    />
                 </div>
                 <div className="container__button">
                     <button onClick={habilitar} id="boton__habilitar"> Habilitar </button>
